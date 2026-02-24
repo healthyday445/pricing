@@ -28,7 +28,7 @@ const Header = () => {
           <a href="/#pricing" className="text-healthyday-orange font-medium text-sm">
             PRICING
           </a>
-          <a href="https://healthyday.co.in/free-programmes/" className="text-healthyday-navy font-medium text-sm hover:text-healthyday-orange transition-colors">
+          <a href="https://yoga.healthyday.co.in" className="text-healthyday-navy font-medium text-sm hover:text-healthyday-orange transition-colors">
             FREE PROGRAMMES
           </a>
           <a href="https://healthyday.co.in/contact-us/" className="text-healthyday-navy font-medium text-sm hover:text-healthyday-orange transition-colors">
@@ -37,7 +37,7 @@ const Header = () => {
         </nav>
 
         {/* CTA Button */}
-        <a href="https://healthyday.co.in/free-programmes/">
+        <a href="https://yoga.healthyday.co.in">
           <Button className="bg-healthyday-orange hover:bg-healthyday-orange/90 text-white font-semibold px-6 text-sm">
             JOIN FREE CLASSES
           </Button>
