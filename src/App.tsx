@@ -1,5 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+const JoinRedirect = () => {
+  useEffect(() => {
+    window.location.replace('https://healthyday.co.in/free-programmes');
+  }, []);
+  return null;
+};
 import Home from './pages/Home';
 import ThankYou from './pages/ThankYou';
 import FreeProgrammes from './pages/free-programmes';
@@ -15,6 +22,7 @@ const App = () => {
         <Route path="/checkout" element={<PlanCheckout />} />
         <Route path="/free-programmes" element={<FreeProgrammes />} />
         <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
+        <Route path="/join" element={<JoinRedirect />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Router>
