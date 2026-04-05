@@ -57,7 +57,7 @@ const SharedHeader = () => {
 
                         <div className="flex flex-col items-center space-y-6 text-[17px] font-semibold text-[#202020] uppercase tracking-wide">
                             <a href="https://wa.me/918008153968" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="hover:text-[#ffb129] transition-colors">HOME</a>
-                            <Link to="/#pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-[#ffb129] transition-colors">PRICING</Link>
+                            <Link to="/pricing" onClick={() => setIsMenuOpen(false)} className="hover:text-[#ffb129] transition-colors">PRICING</Link>
                             <a href="https://healthyday.co.in/free-programmes" onClick={() => setIsMenuOpen(false)} className="hover:text-[#ffb129] transition-colors">FREE PROGRAMMES</a>
                             <a href="https://wa.me/918008153968" target="_blank" rel="noopener noreferrer" onClick={() => setIsMenuOpen(false)} className="hover:text-[#ffb129] transition-colors">CONTACT US</a>
                             <a href="https://healthyday.co.in/free-programmes" onClick={() => setIsMenuOpen(false)}>

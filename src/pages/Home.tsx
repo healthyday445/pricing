@@ -96,7 +96,10 @@ const Home = () => {
                                 <h2 className="text-[25px] leading-7 font-semibold text-[#0D468B] mb-2">{plan.title}</h2>
                                 <div className="flex items-baseline space-x-2 mb-4">
                                     <span className="text-[#919191] line-through text-[22px] leading-7">₹{plan.originalPrice}/-</span>
-                                    <span className="text-4xl font-semibold text-[#0D468B]">₹{plan.discountPrice}/-</span>
+                                    <span
+                                        onClick={(e) => { e.stopPropagation(); navigate('/pricing'); }}
+                                        className="text-4xl font-semibold text-[#0D468B] cursor-pointer"
+                                    >₹{plan.discountPrice}/-</span>
                                 </div>
                                 <div className="mb-6">
                                     <span className="bg-[#FF0000] text-white text-xs font-bold px-3 py-1 rounded-full">
