@@ -27,7 +27,7 @@ const SharedHeader = () => {
 
                 <nav className="hidden md:flex items-center space-x-12 text-[15px] font-semibold text-[#202020] tracking-wide uppercase">
                     <a href="https://wa.me/918008153968" target="_blank" rel="noopener noreferrer" className="hover:text-[#ffb129] transition-colors">HOME</a>
-                    <Link to="/#pricing" className="hover:text-[#ffb129] transition-colors">PRICING</Link>
+                    <Link to="/pricing" className="hover:text-[#ffb129] transition-colors">PRICING</Link>
                     <a href="https://healthyday.co.in/free-programmes" className="hover:text-[#ffb129] transition-colors">FREE PROGRAMMES</a>
                     <a href="https://wa.me/918008153968" target="_blank" rel="noopener noreferrer" className="hover:text-[#ffb129] transition-colors">CONTACT US</a>
                 </nav>
