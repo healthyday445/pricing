@@ -51,6 +51,14 @@ const PlanCheckout = () => {
 
     useEffect(() => {
         window.scrollTo(0, 0);
+        // Load Razorpay script only when checkout page is visited
+        if (!document.getElementById('razorpay-script')) {
+            const script = document.createElement('script');
+            script.id = 'razorpay-script';
+            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
+            script.async = true;
+            document.body.appendChild(script);
+        }
     }, []);
 
     const handleCheckout = (e: React.FormEvent) => {
@@ -132,6 +140,7 @@ const PlanCheckout = () => {
                                     src="https://s3.ap-south-1.amazonaws.com/rzp-prod-merchant-assets/payment-link/description/qm8mh28e2z5ev4.jpeg"
                                     alt="Yoga pose"
                                     className="w-full h-auto object-cover"
+                                    loading="lazy"
                                 />
                             </div>
 

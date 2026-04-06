@@ -88,7 +88,7 @@ const SharedTestimonials = () => {
                     {testimonials.map((t, idx) => (
                         <div key={idx} className="bg-white rounded-[30px] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)] p-6 flex flex-col items-center border border-slate-50 relative h-auto min-w-[calc(100vw-32px)] w-[calc(100vw-32px)] snap-center">
                             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md mb-4">
-                                <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                                <img src={t.image} alt={t.name} className="w-full h-full object-cover" loading="lazy" />
                             </div>
                             <h4 className="font-bold text-slate-800 text-sm tracking-wide text-center">{t.name}</h4>
                             <p className="text-[10px] font-bold text-[#919191] mb-6">{t.stats}</p>
@@ -109,7 +109,7 @@ const SharedTestimonials = () => {
                     {currentTestimonials.map((t, idx) => (
                         <div key={idx} className="bg-white rounded-[30px] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)] p-6 flex flex-col items-center border border-slate-50 relative h-[500px]">
                             <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md mb-4">
-                                <img src={t.image} alt={t.name} className="w-full h-full object-cover" />
+                                <img src={t.image} alt={t.name} className="w-full h-full object-cover" loading="lazy" />
                             </div>
                             <h4 className="font-bold text-slate-800 text-sm tracking-wide text-center">{t.name}</h4>
                             <p className="text-[10px] font-bold text-[#919191] mb-6">{t.stats}</p>

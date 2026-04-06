@@ -69,7 +69,7 @@ const FreeProgrammes = () => {
                     {/* Left Column: Instructor Info */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-[13px] px-4 py-[20px] lg:py-[52px] order-2 lg:order-none">
                         <div className="w-full max-w-[650px] h-auto mb-3">
-                            <img src={frame129} alt="Jagan" className="w-full h-full object-contain transform scale-[1.15]" />
+                            <img src={frame129} alt="Jagan" className="w-full h-full object-contain transform scale-[1.15]" loading="lazy" />
                         </div>
                         <div className="flex flex-col items-center gap-px">
                             <span className="font-semibold text-[16px] text-center underline text-[#202020]">WITH</span>
