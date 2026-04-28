@@ -26,6 +26,8 @@ const App = () => {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<FreeProgrammes />} />
+          <Route path="/English" element={<FreeProgrammes defaultLanguage="English" />} />
+          <Route path="/Telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/pricing" element={<Home />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<PlanCheckout />} />

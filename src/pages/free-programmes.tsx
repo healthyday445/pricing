@@ -7,12 +7,16 @@ import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'luci
 import frame129 from '../assets/image (36) (1).png';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
 import PhoneInputCustom from '../components/PhoneInputCustom';
-const FreeProgrammes = () => {
+interface FreeProgrammesProps {
+    defaultLanguage?: 'Telugu' | 'English';
+}
+
+const FreeProgrammes = ({ defaultLanguage = 'Telugu' }: FreeProgrammesProps) => {
     const [formData, setFormData] = useState({
         name: '',
         phone: '',
         dialCode: '+91',
-        language: 'Telugu'
+        language: defaultLanguage
     });
     const [popupStatus, setPopupStatus] = useState<string | null>(null);
 
