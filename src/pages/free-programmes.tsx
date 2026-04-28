@@ -53,7 +53,39 @@ const FreeProgrammes = ({ defaultLanguage = 'Telugu' }: FreeProgrammesProps) => 
             const data = await response.json().catch(() => ({}));
 
             if (response.ok || response.status === 409) {
-                setPopupStatus(data.status || 'success');
+                const resolvedStatus = data.status || 'success';
+
+                // --- GTM Data Layer Push ---
+                // Format phone number: strip spaces/dashes, ensure +91 prefix
+                let rawPhone = formData.dialCode + formData.phone;
+                let formattedPhone = rawPhone.replace(/\s+/g, '').replace(/-/g, '');
+                if (!formattedPhone.startsWith('+')) {
+                    formattedPhone = '+91' + formattedPhone;
+                }
+
+                // Determine popup_id based on status and language
+                const isNewReg = resolvedStatus === 'success' || resolvedStatus === 'new_registration';
+                const isFreeAgain = resolvedStatus === 'free_eligible_again';
+                let currentPopupId: number;
+                if (formData.language === 'Telugu') {
+                    currentPopupId = isFreeAgain ? 1330 : isNewReg ? 1316 : 1316;
+                } else {
+                    currentPopupId = isFreeAgain ? 1331 : isNewReg ? 1589 : 1589;
+                }
+
+                (window as any).dataLayer = (window as any).dataLayer || [];
+                (window as any).dataLayer.push({
+                    'event': 'registration_success',
+                    'user_data': {
+                        'phone_number': formattedPhone,
+                        'first_name': formData.name
+                    },
+                    'popup_id': currentPopupId,
+                    'page_language': formData.language === 'English' ? 'English' : 'Telugu'
+                });
+                // --- End GTM Data Layer Push ---
+
+                setPopupStatus(resolvedStatus);
             } else {
                 console.error('Registration failed');
                 alert(`Registration failed: ${data.message || 'Please try again.'}`);
