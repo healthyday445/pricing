@@ -35,13 +35,29 @@ const FreeProgrammes = ({ defaultLanguage = 'Telugu' }: FreeProgrammesProps) => 
             const searchParams = new URLSearchParams(window.location.search);
             const source = searchParams.get('source') || 'website_organic';
 
+            const gclid = sessionStorage.getItem('gclid_persistent');
+            const fbclid = sessionStorage.getItem('fbclid_persistent');
+            
+            let id_type = undefined;
+            let id_value = undefined;
+
+            if (gclid) {
+                id_type = 'gclid';
+                id_value = gclid;
+            } else if (fbclid) {
+                id_type = 'fbclid';
+                id_value = fbclid;
+            }
+
             const payload = {
                 name: formData.name,
                 mobile: formData.dialCode + formData.phone,
                 source: 'Website',
                 language: formData.language,
-                gclid: sessionStorage.getItem('gclid_persistent'),
-                fbclid: sessionStorage.getItem('fbclid_persistent'),
+                id_type,
+                id_value,
+                gclid,
+                fbclid,
                 ad_name: sessionStorage.getItem('ad_name_persistent')
             };
 
