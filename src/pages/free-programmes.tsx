@@ -39,7 +39,10 @@ const FreeProgrammes = ({ defaultLanguage = 'Telugu' }: FreeProgrammesProps) => 
                 name: formData.name,
                 mobile: formData.dialCode + formData.phone,
                 source: 'Website',
-                language: formData.language
+                language: formData.language,
+                gclid: sessionStorage.getItem('gclid_persistent'),
+                fbclid: sessionStorage.getItem('fbclid_persistent'),
+                ad_name: sessionStorage.getItem('ad_name_persistent')
             };
 
             const response = await fetch('/api/register', {
@@ -79,6 +82,11 @@ const FreeProgrammes = ({ defaultLanguage = 'Telugu' }: FreeProgrammesProps) => 
                         'phone_number': formattedPhone,
                         'first_name': formData.name,
                         'page_language': formData.language === 'English' ? 'English' : 'Telugu'
+                    },
+                    'attribution_data': {
+                        'gclid': sessionStorage.getItem('gclid_persistent'),
+                        'fbclid': sessionStorage.getItem('fbclid_persistent'),
+                        'ad_name': sessionStorage.getItem('ad_name_persistent')
                     },
                     'popup_id': currentPopupId
                 });
