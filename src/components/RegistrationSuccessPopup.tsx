@@ -8,6 +8,7 @@ type ApiStatus =
     | 'already_registered'
     | 'free_ongoing'
     | 'free_completed_recent'
+    | 'free_batch_limit_reached'
     | 'paid_user'
     | 'subscription_expired_recently';
 
@@ -29,7 +30,7 @@ interface StatusContent {
     contactNumber?: string;
 }
 
-const PLANS_URL = 'https://plans.healthyday.co.in';
+const PLANS_URL = 'https://healthyday.co.in/pricing';
 
 const TimingsBlock: React.FC<{ language: 'Telugu' | 'English' }> = ({ language }) => (
     <div className="flex flex-col gap-1 items-center">
@@ -146,6 +147,7 @@ function getStatusContent(status: string): StatusContent {
             };
 
         case 'free_completed_recent':
+        case 'free_batch_limit_reached':
             return {
                 image: successPopupSvg,
                 header: {
