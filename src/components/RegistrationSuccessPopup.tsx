@@ -8,7 +8,6 @@ type ApiStatus =
     | 'already_registered'
     | 'free_ongoing'
     | 'free_completed_recent'
-    | 'free_batch_limit_reached'
     | 'paid_user'
     | 'subscription_expired_recently';
 
@@ -147,7 +146,6 @@ function getStatusContent(status: string): StatusContent {
             };
 
         case 'free_completed_recent':
-        case 'free_batch_limit_reached':
             return {
                 image: successPopupSvg,
                 header: {
