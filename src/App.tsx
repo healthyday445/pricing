@@ -6,6 +6,7 @@ const ThankYou = lazy(() => import('./pages/ThankYou'));
 const FreeProgrammes = lazy(() => import('./pages/free-programmes'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
+const Renew = lazy(() => import('./pages/Renew'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -29,6 +30,8 @@ const App = () => {
           <Route path="/English" element={<FreeProgrammes defaultLanguage="English" />} />
           <Route path="/Telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/pricing" element={<Home />} />
+          <Route path="/renew" element={<Renew />} />
+          <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<PlanCheckout />} />
           <Route path="/free-programmes" element={<FreeProgrammes />} />
