@@ -45,7 +45,7 @@ const TimingsBlock: React.FC<{ language: 'Telugu' | 'English' }> = ({ language }
         ) : (
             <>
                 <p>☀️ Morning: 5:30 AM | 6:30 AM | 7:30 AM | 8:30 AM</p>
-                <p>🌙 Evening: 4:30 AM | 5:30 AM | 6:30 AM</p>
+                <p>🌙 Evening: 4:30 PM | 5:30 PM | 6:30 PM</p>
             </>
         )}
     </div>
