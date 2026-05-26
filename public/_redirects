@@ -1,8 +1,0 @@
-# QR Code Redirect Routes (query params forwarded automatically)
-/ofl  https://yoga.healthyday.co.in/ofl?ref=mp  302!
-
-# API Proxy
-/api/*  https://healthyday-backend-773381060399.asia-south1.run.app/api/:splat  200
-
-# SPA catch-all (must be last)
-/*  /index.html  200

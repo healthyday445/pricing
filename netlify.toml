@@ -2,36 +2,6 @@
   command = "npm run build"
   publish = "dist"
 
-# ── QR Code Redirect Routes ──────────────────
-# Netlify native 302 redirects. Query params are forwarded automatically.
-# To change a destination, just edit the "to" URL and redeploy.
-# Later, you can switch these to proxy to the FastAPI service on Cloud Run.
-
-[[redirects]]
-  from = "/ofl"
-  to = "https://register.dailyyogawithjagan.com"
-  status = 302
-  force = true
-
-# [[redirects]]
-#   from = "/event"
-#   to = "https://example.com/event-page"
-#   status = 302
-#   force = true
-
-# [[redirects]]
-#   from = "/offer"
-#   to = "https://example.com/offer-page"
-#   status = 302
-#   force = true
-
-# [[redirects]]
-#   from = "/camp"
-#   to = "https://example.com/camp-page"
-#   status = 302
-#   force = true
-
-# ── API Proxy ─────────────────────────────────
 [[redirects]]
   from = "/api/*"
   to = "https://healthyday-backend-773381060399.asia-south1.run.app/api/:splat"
