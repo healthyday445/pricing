@@ -3,33 +3,33 @@
   publish = "dist"
 
 # ── QR Code Redirect Routes ──────────────────
-# Proxied to the redirect microservice on Cloud Run.
-# Replace YOUR_REDIRECT_SERVICE_URL with the actual Cloud Run URL after deployment.
-# e.g., https://redirect-service-XXXXX-el.a.run.app
+# Netlify native 302 redirects. Query params are forwarded automatically.
+# To change a destination, just edit the "to" URL and redeploy.
+# Later, you can switch these to proxy to the FastAPI service on Cloud Run.
 
 [[redirects]]
   from = "/ofl"
-  to = "https://YOUR_REDIRECT_SERVICE_URL/ofl"
-  status = 200
+  to = "https://register.dailyyogawithjagan.com"
+  status = 302
   force = true
 
-[[redirects]]
-  from = "/event"
-  to = "https://YOUR_REDIRECT_SERVICE_URL/event"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/event"
+#   to = "https://example.com/event-page"
+#   status = 302
+#   force = true
 
-[[redirects]]
-  from = "/offer"
-  to = "https://YOUR_REDIRECT_SERVICE_URL/offer"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/offer"
+#   to = "https://example.com/offer-page"
+#   status = 302
+#   force = true
 
-[[redirects]]
-  from = "/camp"
-  to = "https://YOUR_REDIRECT_SERVICE_URL/camp"
-  status = 200
-  force = true
+# [[redirects]]
+#   from = "/camp"
+#   to = "https://example.com/camp-page"
+#   status = 302
+#   force = true
 
 # ── API Proxy ─────────────────────────────────
 [[redirects]]
