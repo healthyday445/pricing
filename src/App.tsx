@@ -18,16 +18,16 @@ const JoinRedirect = () => {
 /**
  * QR / Offline Campaign Redirect
  *
- * /ofl/ref=mp   → https://register.dailyyogawithjagan.com?ref=mp
- * /ofl/ref=hyd  → https://register.dailyyogawithjagan.com?ref=hyd
- * /ofl/source=qr&ref=abc → https://register.dailyyogawithjagan.com?source=qr&ref=abc
+ * /ofl/ref=mp   → https://yoga.healthyday.co.in?ref=mp
+ * /ofl/ref=hyd  → https://yoga.healthyday.co.in?ref=hyd
+ * /ofl/source=qr&ref=abc → https://yoga.healthyday.co.in?source=qr&ref=abc
  */
-const OFL_DESTINATION = 'https://register.dailyyogawithjagan.com';
+const OFL_DESTINATION = 'https://yoga.healthyday.co.in';
 
 const OflRedirect = () => {
   const { '*': wildcard } = useParams();
   useEffect(() => {
-    const queryString = wildcard ? `?${wildcard}` : '';
+    const queryString = wildcard ? `?${wildcard}` : ''; https://yoga.healthyday.co.in/
     window.location.replace(`${OFL_DESTINATION}${queryString}`);
   }, [wildcard]);
   return null;
