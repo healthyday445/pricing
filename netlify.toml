@@ -2,6 +2,36 @@
   command = "npm run build"
   publish = "dist"
 
+# ── QR Code Redirect Routes ──────────────────
+# Proxied to the redirect microservice on Cloud Run.
+# Replace YOUR_REDIRECT_SERVICE_URL with the actual Cloud Run URL after deployment.
+# e.g., https://redirect-service-XXXXX-el.a.run.app
+
+[[redirects]]
+  from = "/ofl"
+  to = "https://YOUR_REDIRECT_SERVICE_URL/ofl"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/event"
+  to = "https://YOUR_REDIRECT_SERVICE_URL/event"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/offer"
+  to = "https://YOUR_REDIRECT_SERVICE_URL/offer"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/camp"
+  to = "https://YOUR_REDIRECT_SERVICE_URL/camp"
+  status = 200
+  force = true
+
+# ── API Proxy ─────────────────────────────────
 [[redirects]]
   from = "/api/*"
   to = "https://healthyday-backend-773381060399.asia-south1.run.app/api/:splat"
