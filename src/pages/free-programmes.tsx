@@ -260,9 +260,9 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                             <span className="font-semibold text-[14px] sm:text-[16px] text-[#0d468b]">Evening Slots</span>
                                         </div>
                                         <span className="font-normal text-[12px] sm:text-[14px] text-center text-[#202020] leading-relaxed">
+                                            4:30 PM - 5:30 PM<br />
                                             5:30 PM - 6:30 PM<br />
-                                            6:30 PM - 7:30 PM<br />
-                                            7:30 PM - 8:30 PM
+                                            6:30 PM - 7:30 PM
                                         </span>
                                     </div>
                                 </div>
