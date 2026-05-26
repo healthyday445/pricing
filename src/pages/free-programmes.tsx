@@ -44,7 +44,7 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
 
             const gclid = sessionStorage.getItem('gclid_persistent');
             const fbclid = sessionStorage.getItem('fbclid_persistent');
-            
+
             let id_type = undefined;
             let id_value = undefined;
 
@@ -260,9 +260,9 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                             <span className="font-semibold text-[14px] sm:text-[16px] text-[#0d468b]">Evening Slots</span>
                                         </div>
                                         <span className="font-normal text-[12px] sm:text-[14px] text-center text-[#202020] leading-relaxed">
-                                            5:30 AM - 6:30 AM<br />
-                                            6:30 AM - 7:30 AM<br />
-                                            7:30 AM - 8:30 AM
+                                            5:30 PM - 6:30 PM<br />
+                                            6:30 PM - 7:30 PM<br />
+                                            7:30 PM - 8:30 PM
                                         </span>
                                     </div>
                                 </div>
