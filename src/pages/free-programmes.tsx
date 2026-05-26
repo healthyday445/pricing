@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import SharedTestimonials from '../components/SharedTestimonials';
@@ -7,6 +7,7 @@ import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'luci
 import frame129 from '../assets/image (36) (1).png';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
 import PhoneInputCustom from '../components/PhoneInputCustom';
+import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -20,6 +21,11 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     });
     const [languageError, setLanguageError] = useState(false);
     const [popupStatus, setPopupStatus] = useState<string | null>(null);
+
+    // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
+    useEffect(() => {
+        enforceReferralLimit();
+    }, []);
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -115,6 +121,8 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 });
                 // --- End GTM Data Layer Push ---
 
+                // Track this referral usage in localStorage
+                recordReferralUse();
                 setPopupStatus(resolvedStatus);
             } else {
                 console.error('Registration failed');

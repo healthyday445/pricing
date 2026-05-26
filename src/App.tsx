@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
 
 const Home = lazy(() => import('./pages/Home'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
@@ -12,6 +12,24 @@ const JoinRedirect = () => {
   useEffect(() => {
     window.location.replace('https://healthyday.co.in/free-programmes');
   }, []);
+  return null;
+};
+
+/**
+ * QR / Offline Campaign Redirect
+ *
+ * /ofl/ref=mp   → https://register.dailyyogawithjagan.com?ref=mp
+ * /ofl/ref=hyd  → https://register.dailyyogawithjagan.com?ref=hyd
+ * /ofl/source=qr&ref=abc → https://register.dailyyogawithjagan.com?source=qr&ref=abc
+ */
+const OFL_DESTINATION = 'https://register.dailyyogawithjagan.com';
+
+const OflRedirect = () => {
+  const { '*': wildcard } = useParams();
+  useEffect(() => {
+    const queryString = wildcard ? `?${wildcard}` : '';
+    window.location.replace(`${OFL_DESTINATION}${queryString}`);
+  }, [wildcard]);
   return null;
 };
 
@@ -37,6 +55,7 @@ const App = () => {
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
           <Route path="/join" element={<JoinRedirect />} />
+          <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
