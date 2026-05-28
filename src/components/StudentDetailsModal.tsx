@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Loader2 } from 'lucide-react';
-import { State, City } from 'country-state-city';
+import indiaData from '../utils/india.json';
 
 interface StudentDetailsModalProps {
     isOpen: boolean;
@@ -26,7 +26,7 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
     const [error, setError] = useState('');
 
     useEffect(() => {
-        setStates(State.getStatesOfCountry('IN'));
+        setStates(indiaData.states);
     }, []);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -47,7 +47,8 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
             city: ''
         });
 
-        setCities(City.getCitiesOfState('IN', stateCode));
+        const stateCities = (indiaData.citiesByState as Record<string, any[]>)[stateCode] || [];
+        setCities(stateCities);
     };
 
     if (!isOpen) return null;

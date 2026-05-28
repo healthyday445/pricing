@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-
 const Home = lazy(() => import('./pages/Home'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
 const FreeProgrammes = lazy(() => import('./pages/free-programmes'));
+const TwentyOneDays = lazy(() => import('./pages/21-days'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
 const Renew = lazy(() => import('./pages/Renew'));
@@ -54,6 +55,7 @@ const App = () => {
           <Route path="/checkout" element={<PlanCheckout />} />
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
+          <Route path="/21days" element={<TwentyOneDays />} />
           <Route path="/join" element={<JoinRedirect />} />
           <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
