@@ -79,13 +79,14 @@ function getStatusContent(status: string): StatusContent {
                             ✨ 21 Days Yoga Challenge లో మీరు{' '}
                             <span className="font-bold inline-flex items-center gap-1">
                                 <img draggable="false" role="img" className="w-5 h-5" alt="🗓️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f5d3.svg" />
-                                1st june to 21st june
+                                21st June To 21th July
                             </span>{' '}
                             నుండి join కావచ్చు!
                         </p>
                     ),
                     en: (
-                        <p>✨ Your 21 Days FREE Yoga Challenge runs from 1st june to 21st june</p>
+                        <p>✨ Your 21 Days FREE Yoga Challenge Starts From 21st June To 21th July
+                        </p>
                     ),
                 },
                 showTimings: true,
@@ -105,13 +106,14 @@ function getStatusContent(status: string): StatusContent {
                             ✨ 21 Days Yoga Challenge లో మీరు{' '}
                             <span className="font-bold inline-flex items-center gap-1">
                                 <img draggable="false" role="img" className="w-5 h-5" alt="🗓️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f5d3.svg" />
-                                1st june to 21st june
+                                21st June To 21th July
                             </span>{' '}
                             నుండి join కావచ్చు!
                         </p>
                     ),
                     en: (
-                        <p>✨ Your 21 Days FREE Yoga Challenge runs from 1st june to 21st june</p>
+                        <p>✨ Your 21 Days FREE Yoga Challenge Starts From 21st June To 21th July
+                        </p>
                     ),
                 },
                 showTimings: true,
