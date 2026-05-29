@@ -11,7 +11,7 @@ const SharedFooter = () => {
                             <img src="/logo.png" alt="Healthyday Logo" className="h-9 w-auto object-contain" />
                         </div>
                         <p className="text-[16px] leading-[24px] font-normal tracking-normal text-slate-900 lg:max-w-md">
-                            Healthyday is a wellness community of over 6.75 Lakh+ students. Founded in 2024 by Jagan, an Internationally Certified Yoga Instructor, Healthyday conducts online Yoga and wellness programs. These programs help members work toward their personal health and fitness goals through consistent yoga practice and community support.
+                            Healthyday is a wellness community of over 6.04 Lakh+ students. Founded in 2024 by Jagan, an Internationally Certified Yoga Instructor, Healthyday conducts online Yoga and wellness programs. These programs help members work toward their personal health and fitness goals through consistent yoga practice and community support.
                         </p>
                     </div>
 
