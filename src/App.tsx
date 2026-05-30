@@ -56,6 +56,17 @@ const App = () => {
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
           <Route path="/21days" element={<TwentyOneDays />} />
+          <Route path="/21days/English" element={<TwentyOneDays defaultLanguage="English" />} />
+          <Route path="/21days/english" element={<TwentyOneDays defaultLanguage="English" />} />
+          <Route path="/21days/Telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
+          <Route path="/21days/telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
+          <Route path="/21days/telagu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
+          <Route path="/21-day" element={<TwentyOneDays />} />
+          <Route path="/21-day/English" element={<TwentyOneDays defaultLanguage="English" />} />
+          <Route path="/21-day/english" element={<TwentyOneDays defaultLanguage="English" />} />
+          <Route path="/21-day/Telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
+          <Route path="/21-day/telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
+          <Route path="/21-day/telagu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
           <Route path="/join" element={<JoinRedirect />} />
           <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
