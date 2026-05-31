@@ -176,7 +176,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                         {/* Heading */}
                         <div className="flex flex-col items-center gap-3 text-center">
                             <span className="font-semibold text-[36.48px] md:text-[48px] text-[#0d468b] leading-tight">21 Days FREE Yoga</span>
-                            <span className="font-semibold text-[18px] md:text-[22px] text-center text-[#202020]">Starts From 21st June To 21th July</span>
+                            <span className="font-semibold text-[18px] md:text-[22px] text-center text-[#202020]">Starts From 21st June To 12th July</span>
                         </div>
 
                         {/* Unified Card Container */}
