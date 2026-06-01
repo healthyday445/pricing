@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import SharedHeader from '../components/SharedHeader';
-import SharedFooter from '../components/SharedFooter';
-import SharedTestimonials from '../components/SharedTestimonials';
+import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
+import TwentyOneDaysFooter from '../components/TwentyOneDaysFooter';
+import TwentyOneDaysTestimonials from '../components/TwentyOneDaysTestimonials';
 import RegistrationSuccessPopup21day from '../components/RegistrationSuccessPopup21day';
-import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'lucide-react';
-import frame129 from '../assets/image (36) (1).png';
+
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
@@ -135,52 +134,20 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     };
 
     return (
-        <div className="min-h-screen bg-white font-sans text-slate-800 flex flex-col overflow-x-hidden">
-            <SharedHeader />
+        <div className="min-h-screen bg-white font-sans text-slate-800 flex flex-col overflow-x-hidden max-w-[520px] mx-auto relative">
+            <TwentyOneDaysHeader />
 
-            <main className="flex-grow flex flex-col items-center justify-center pt-24 md:pt-32 pb-20 px-0">
-                <div className="w-full max-w-[1200px] flex flex-col lg:flex-row justify-center items-center lg:items-start gap-10 lg:gap-[0px] py-[50px] lg:pt-[48px] lg:pb-[100px]">
-                    {/* Left Column: Instructor Info */}
-                    <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-[13px] px-4 py-[20px] lg:py-[52px] order-2 lg:order-none">
-                        <div className="w-full max-w-[650px] h-auto mb-3">
-                            <img src={frame129} alt="Jagan" className="w-full h-full object-contain transform scale-[1.15]" loading="lazy" />
-                        </div>
-                        <div className="flex flex-col items-center gap-px">
-                            <span className="font-semibold text-[16px] text-center underline text-[#202020]">WITH</span>
-                            <span className="font-semibold text-[28px] md:text-[36px] text-center text-[#202020]">Jagan</span>
-                        </div>
-                        <div className="flex flex-wrap items-center justify-center gap-4 px-2 pb-4 lg:pb-0">
-                            {/* Card 1 */}
-                            <div className="h-[160px] md:h-[201px] w-[calc(50%-8px)] flex flex-col justify-center items-center gap-2.5 bg-[#0d468b] p-4 md:p-5 rounded-2xl shadow-lg">
-                                <div className="w-[57px] h-[57px] flex items-center justify-center">
-                                    <svg aria-hidden="true" className="w-[50px] h-[47px]" viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg" fill="#FEAB27"><path d="M275.3 250.5c7 7.4 18.4 7.4 25.5 0l108.9-114.2c31.6-33.2 29.8-88.2-5.6-118.8-30.8-26.7-76.7-21.9-104.9 7.7L288 36.9l-11.1-11.6C248.7-4.4 202.8-9.2 172 17.5c-35.3 30.6-37.2 85.6-5.6 118.8l108.9 114.2zm290 77.6c-11.8-10.7-30.2-10-42.6 0L430.3 402c-11.3 9.1-25.4 14-40 14H272c-8.8 0-16-7.2-16-16s7.2-16 16-16h78.3c15.9 0 30.7-10.9 33.3-26.6 3.3-20-12.1-37.4-31.6-37.4H192c-27 0-53.1 9.3-74.1 26.3L71.4 384H16c-8.8 0-16 7.2-16 16v96c0 8.8 7.2 16 16 16h356.8c14.5 0 28.6-4.9 40-14L564 377c15.2-12.1 16.4-35.3 1.3-48.9z"></path></svg>
-                                </div>
-                                <span className="font- text-[16px] leading-[25px] text-center text-white">
-                                    Internationally Certified Yoga Instructor
-                                </span>
-                            </div>
-                            {/* Card 2 */}
-                            <div className="h-[160px] md:h-[201px] w-[calc(50%-8px)] flex flex-col justify-center items-center gap-2.5 bg-[#0d468b] p-4 md:p-5 rounded-2xl shadow-lg">
-                                <div className="w-[57px] h-[57px] flex items-center justify-center">
-                                    <svg aria-hidden="true" className="w-[50px] h-[47px]" viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg" fill="#FEAB27"><path d="M622.34 153.2L343.4 67.5c-15.2-4.67-31.6-4.67-46.79 0L17.66 153.2c-23.54 7.23-23.54 38.36 0 45.59l48.63 14.94c-10.67 13.19-17.23 29.28-17.88 46.9C38.78 266.15 32 276.11 32 288c0 10.78 5.68 19.85 13.86 25.65L20.33 428.53C18.11 438.52 25.71 448 35.94 448h56.11c10.24 0 17.84-9.48 15.62-19.47L82.14 313.65C90.32 307.85 96 298.78 96 288c0-11.57-6.47-21.25-15.66-26.87.76-15.02 8.44-28.3 20.69-36.72L296.6 284.5c9.06 2.78 26.44 6.25 46.79 0l278.95-85.7c23.55-7.24 23.55-38.36 0-45.6zM352.79 315.09c-28.53 8.76-52.84 3.92-65.59 0l-145.02-44.55L128 384c0 35.35 85.96 64 192 64s192-28.65 192-64l-14.18-113.47-145.03 44.56z"></path></svg>
-                                </div>
-                                <span className="font- text-[16px] leading-[25px] text-center text-white">
-                                    6,04,017+ Participated Already
-                                </span>
-                            </div>
-                        </div>
+            <main className="flex-grow flex flex-col items-center justify-start pt-[80px] pb-4 px-0">
+                <div className="w-full flex flex-col">
+                    {/* Hero Image */}
+                    <div className="w-full">
+                        <img src="/src/assets/IYD-reg-page-hero.png" alt="21 Days FREE Yoga" className="w-full" />
                     </div>
 
-                    {/* Right Column: Registration & details */}
-                    <div className="w-full lg:w-[584px] flex flex-col items-center gap-[40px] lg:gap-[51px] px-4 lg:px-10 order-1 lg:order-none">
-                        {/* Heading */}
-                        <div className="flex flex-col items-center gap-3 text-center">
-                            <span className="font-semibold text-[36.48px] md:text-[48px] text-[#0d468b] leading-tight">21 Days FREE Yoga</span>
-                            <span className="font-semibold text-[18px] md:text-[22px] text-center text-[#202020]">Starts From 21st June To 12th July</span>
-                        </div>
-
+                    {/* Card Column */}
+                    <div className="w-full flex flex-col items-center bg-[#EEF4FF] pb-6">
                         {/* Unified Card Container */}
-                        <div className="w-full max-w-[500px] flex flex-col items-center gap-8 bg-white p-5 md:p-8 rounded-[30px] shadow-[0px_10px_40px_rgba(0,0,0,0.25)] border border-slate-100">
+                        <div className="w-[90%] max-w-[500px] flex flex-col items-center gap-8 bg-white p-5 md:p-8 rounded-[30px] shadow-[0px_10px_40px_rgba(0,0,0,0.25)] border border-slate-100 relative z-10 -mt-12">
                             {/* Registration Form Inside Card */}
                             <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-5">
                                 <div className="w-full flex flex-col gap-3">
@@ -241,41 +208,6 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                 <span className="font-semibold text-[16px] text-center text-[#0d468b]">6,04,017+ members participated</span>
                             </form>
 
-                            {/* Batch Timings Inside Card */}
-                            <div className="w-full flex flex-col items-center gap-5 bg-[#fff2dd] p-4 md:p-6 rounded-2xl border border-[#fff2dd]">
-                                <div className="flex items-center gap-2.5">
-                                    <div className="w-[18px] h-[18px]">
-                                        <Clock className="w-[15px] h-[15px] text-[#feab27]" />
-                                    </div>
-                                    <span className="font-semibold text-[18px] text-center text-[#feab27]">Flexible Batch Timings</span>
-                                </div>
-                                <div className="flex flex-row justify-between gap-3 w-full">
-                                    <div className="flex-1 flex flex-col items-center gap-1.5">
-                                        <div className="w-full h-[30px] flex justify-center items-center gap-2.5 bg-[#ffeac8] px-2 py-[3px] rounded-[5px]">
-                                            <Sun className="w-[18px] h-[18px] text-[#0d468b]" />
-                                            <span className="font-semibold text-[14px] sm:text-[16px] text-[#0d468b]">Morning Slots</span>
-                                        </div>
-                                        <span className="font-normal text-[12px] sm:text-[14px] text-center text-[#202020] leading-relaxed">
-                                            5:30 AM - 6:30 AM<br />
-                                            6:30 AM - 7:30 AM<br />
-                                            7:30 AM - 8:30 AM<br />
-                                            8:30 AM - 9:30 AM
-                                        </span>
-                                    </div>
-                                    <div className="flex-1 flex flex-col items-center gap-1.5">
-                                        <div className="w-full h-[30px] flex justify-center items-center gap-2.5 bg-[#ffeac8] px-2 py-[3px] rounded-[5px]">
-                                            <Moon className="w-[18px] h-[18px] text-[#0d468b]" />
-                                            <span className="font-semibold text-[14px] sm:text-[16px] text-[#0d468b]">Evening Slots</span>
-                                        </div>
-                                        <span className="font-normal text-[12px] sm:text-[14px] text-center text-[#202020] leading-relaxed">
-                                            4:30 PM - 5:30 PM<br />
-                                            5:30 PM - 6:30 PM<br />
-                                            6:30 PM - 7:30 PM
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-
                             {/* Benefits Inside Card */}
                             <div className="flex flex-col items-center gap-5 w-full">
                                 <span className="font-semibold text-[18px] text-center text-[#feab27]">Benefits</span>
@@ -311,10 +243,10 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     </div>
                 </div>
 
-                <SharedTestimonials />
+                <TwentyOneDaysTestimonials />
             </main>
 
-            <SharedFooter />
+            <TwentyOneDaysFooter />
             <RegistrationSuccessPopup21day
                 isOpen={popupStatus !== null}
                 onClose={() => setPopupStatus(null)}
