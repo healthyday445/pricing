@@ -141,7 +141,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 <div className="w-full flex flex-col">
                     {/* Hero Image */}
                     <div className="w-full">
-                        <img src="/src/assets/IYD-reg-page-hero.png" alt="21 Days FREE Yoga" className="w-full" />
+                        <img src="https://storage.googleapis.com/whatsapp_banners_assets/IYD_2026/IYD-reg-page-hero.png" alt="21 Days FREE Yoga" className="w-full" />
                     </div>
 
                     {/* Card Column */}
