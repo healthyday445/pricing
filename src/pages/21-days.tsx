@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
 import TwentyOneDaysFooter from '../components/TwentyOneDaysFooter';
 import TwentyOneDaysTestimonials from '../components/TwentyOneDaysTestimonials';
 import RegistrationSuccessPopup21day from '../components/RegistrationSuccessPopup21day';
@@ -135,22 +134,20 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
 
     return (
         <div className="min-h-screen bg-white font-sans text-slate-800 flex flex-col overflow-x-hidden max-w-[520px] mx-auto relative">
-            <TwentyOneDaysHeader />
-
-            <main className="flex-grow flex flex-col items-center justify-start pt-[80px] pb-4 px-0">
+            <main className="flex-grow flex flex-col items-center justify-start pb-4 px-0">
                 <div className="w-full flex flex-col">
                     {/* Hero Image */}
                     <div className="w-full">
-                        <img src="https://storage.googleapis.com/whatsapp_banners_assets/IYD_2026/IYD-reg-page-hero.png" alt="21 Days FREE Yoga" className="w-full" />
+                        <img src="https://storage.googleapis.com/whatsapp_banners_assets/IYD_2026/iyd-reg-page-hero-3.png" alt="21 Days FREE Yoga" className="w-full" />
                     </div>
 
                     {/* Card Column */}
                     <div className="w-full flex flex-col items-center bg-[#EEF4FF] pb-6">
                         {/* Unified Card Container */}
-                        <div className="w-[90%] max-w-[500px] flex flex-col items-center gap-8 bg-white p-5 md:p-8 rounded-[30px] shadow-[0px_10px_40px_rgba(0,0,0,0.25)] border border-slate-100 relative z-10 -mt-12">
+                        <div className="w-[90%] max-w-[500px] flex flex-col items-center gap-4 bg-white p-4 md:p-6 rounded-[30px] shadow-[0px_10px_40px_rgba(0,0,0,0.25)] border border-slate-100 relative z-10 -mt-20">
                             {/* Registration Form Inside Card */}
-                            <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-5">
-                                <div className="w-full flex flex-col gap-3">
+                            <form onSubmit={handleSubmit} className="w-full flex flex-col items-center gap-3">
+                                <div className="w-full flex flex-col gap-2.5">
                                     <div className="w-full h-[55px] flex items-center gap-2.5 bg-white px-5 py-4 rounded-lg border-[1.2px] border-solid border-[#b4b4b4]">
                                         <input
                                             type="text"
@@ -209,7 +206,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                             </form>
 
                             {/* Benefits Inside Card */}
-                            <div className="flex flex-col items-center gap-5 w-full">
+                            <div className="flex flex-col items-center gap-3 w-full">
                                 <span className="font-semibold text-[18px] text-center text-[#feab27]">Benefits</span>
                                 <div className="flex flex-wrap justify-between items-start w-full px-2">
                                     <div className="w-[30%] flex flex-col items-center gap-[6px]">
