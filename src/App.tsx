@@ -1,9 +1,8 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from 'react-router-dom';
 
 const Home = lazy(() => import('./pages/Home'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
-const FreeProgrammes = lazy(() => import('./pages/free-programmes'));
 const TwentyOneDays = lazy(() => import('./pages/21-days'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
@@ -11,7 +10,7 @@ const Renew = lazy(() => import('./pages/Renew'));
 
 const JoinRedirect = () => {
   useEffect(() => {
-    window.location.replace('https://healthyday.co.in/free-programmes');
+    window.location.replace('https://healthyday.co.in/21days');
   }, []);
   return null;
 };
@@ -45,16 +44,20 @@ const App = () => {
     <Router>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/" element={<FreeProgrammes />} />
-          <Route path="/English" element={<FreeProgrammes defaultLanguage="English" />} />
-          <Route path="/Telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
+          <Route path="/" element={<Navigate to="/21days" replace />} />
+          <Route path="/English" element={<Navigate to="/21days/english" replace />} />
+          <Route path="/english" element={<Navigate to="/21days/english" replace />} />
+          <Route path="/englis" element={<Navigate to="/21days/english" replace />} />
+          <Route path="/Telugu" element={<Navigate to="/21days/telugu" replace />} />
+          <Route path="/telugu" element={<Navigate to="/21days/telugu" replace />} />
+          <Route path="/talagu" element={<Navigate to="/21days/telugu" replace />} />
           <Route path="/pricing" element={<Home />} />
           <Route path="/renew" element={<Renew />} />
           <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<PlanCheckout />} />
-          <Route path="/free-programmes" element={<FreeProgrammes />} />
-          <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
+          <Route path="/free-programmes" element={<Navigate to="/21days" replace />} />
+          <Route path="/FreeProgrammes" element={<Navigate to="/21days" replace />} />
           <Route path="/21days" element={<TwentyOneDays />} />
           <Route path="/21days/English" element={<TwentyOneDays defaultLanguage="English" />} />
           <Route path="/21days/english" element={<TwentyOneDays defaultLanguage="English" />} />
