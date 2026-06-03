@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import RegistrationSuccessPopup21day from '../components/RegistrationSuccessPopup21day';
 import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
-
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 interface FreeProgrammesProps {
@@ -16,7 +14,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
         language: defaultLanguage
     });
     const [languageError, setLanguageError] = useState(false);
-    const [popupStatus, setPopupStatus] = useState<string | null>(null);
+    const [phoneError, setPhoneError] = useState(false);
 
     // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
     useEffect(() => {
@@ -34,6 +32,15 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        const digits = formData.phone.replace(/\D/g, '');
+        const expectedDigits = formData.dialCode === '+91' ? 10 : null;
+        const validPhone = expectedDigits ? digits.length === expectedDigits : digits.length >= 7 && digits.length <= 15;
+        if (!validPhone) {
+            setPhoneError(true);
+            return;
+        }
+        setPhoneError(false);
+
         if (!formData.language) {
             setLanguageError(true);
             return;
@@ -42,7 +49,8 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
 
         try {
             const searchParams = new URLSearchParams(window.location.search);
-            const source = searchParams.get('source') || searchParams.get('ref') || 'website_organic';
+            const rawSource = searchParams.get('source') || searchParams.get('ref');
+            const source = rawSource ? `${rawSource}_iydref` : 'iydref';
 
             const gclid = sessionStorage.getItem('gclid_persistent');
             const fbclid = sessionStorage.getItem('fbclid_persistent');
@@ -70,7 +78,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                 ad_name: sessionStorage.getItem('ad_name_persistent')
             };
 
-            const response = await fetch('/api/register', {
+            const response = await fetch('/api/register/iyd-rfc', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -81,24 +89,12 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
             const data = await response.json().catch(() => ({}));
 
             if (response.ok || response.status === 409) {
-                const resolvedStatus = data.status || 'success';
-
                 // --- GTM Data Layer Push ---
                 // Format phone number: strip spaces/dashes, ensure +91 prefix
                 let rawPhone = formData.dialCode + formData.phone;
                 let formattedPhone = rawPhone.replace(/\s+/g, '').replace(/-/g, '');
                 if (!formattedPhone.startsWith('+')) {
                     formattedPhone = '+91' + formattedPhone;
-                }
-
-                // Determine popup_id based on status and language
-                const isNewReg = resolvedStatus === 'success' || resolvedStatus === 'new_registration';
-                const isFreeAgain = resolvedStatus === 'free_eligible_again';
-                let currentPopupId: number;
-                if (formData.language === 'Telugu') {
-                    currentPopupId = isFreeAgain ? 1330 : isNewReg ? 1316 : 1316;
-                } else {
-                    currentPopupId = isFreeAgain ? 1331 : isNewReg ? 1589 : 1589;
                 }
 
                 (window as any).dataLayer = (window as any).dataLayer || [];
@@ -112,14 +108,17 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                         'gclid': sessionStorage.getItem('gclid_persistent'),
                         'fbclid': sessionStorage.getItem('fbclid_persistent'),
                         'ad_name': sessionStorage.getItem('ad_name_persistent')
-                    },
-                    'popup_id': currentPopupId
+                    }
                 });
                 // --- End GTM Data Layer Push ---
 
                 // Track this referral usage in localStorage
                 recordReferralUse();
-                setPopupStatus(resolvedStatus);
+
+                // Open WhatsApp with share template
+                const mobileRef = (formData.dialCode + formData.phone).replace('+', '');
+                const waMessage = `I am Inviting you to join me in\n*21-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *21st JUNE*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\nhttps://yoga.healthyday.co.in/21days?ref=${mobileRef}`;
+                window.open(`https://wa.me/?text=${encodeURIComponent(waMessage)}`, '_blank');
             } else {
                 console.error('Registration failed');
                 alert(`Registration failed: ${data.message || 'Please try again.'}`);
@@ -133,19 +132,16 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
     return (
         <div className="min-h-screen bg-white font-sans text-slate-800 flex flex-col overflow-x-hidden max-w-[520px] mx-auto relative">
             <TwentyOneDaysHeader />
-            <main className="flex-grow flex flex-col items-center justify-start px-4 pt-[120px] pb-8">
-                <div className="w-full flex flex-col gap-6">
-                    {/* Heading */}
-                    <div className="flex flex-col items-center gap-2 text-center px-2">
-                        <span className="font-semibold text-[28px] text-[#0d468b] leading-tight">Register for</span>
-                        <span className="font-semibold text-[28px] text-[#0d468b] leading-tight">Yoga-Day Give Away</span>
-                        <span className="font-medium text-[16px] text-[#202020]">500 Winners - 500 Kits</span>
+            <main className="flex-grow flex flex-col items-center justify-start pb-4 px-0">
+                <div className="w-full flex flex-col">
+                    {/* Hero Image */}
+                    <div className="w-full pt-[80px]">
+                        <img src="https://storage.googleapis.com/whatsapp_banners_assets/IYD_2026/Referral%20Poster%20for%20registration%20page.png" alt="Yoga Day Referral Contest" className="w-full" />
                     </div>
 
                     {/* Card */}
-                    <div className="w-full flex flex-col items-center">
-                        <div className="w-full max-w-[460px] flex flex-col gap-4 bg-white p-5 rounded-2xl shadow-[0px_8px_32px_rgba(0,0,0,0.12)] border border-slate-100">
-                            {/* Registration Form Inside Card */}
+                    <div className="w-full flex flex-col items-center pb-6">
+                        <div className="w-[90%] max-w-[500px] flex flex-col gap-4 bg-white p-4 md:p-6 rounded-[30px] shadow-[0px_10px_40px_rgba(0,0,0,0.25)] border border-slate-100 relative z-10 -mt-20">
                             <form onSubmit={handleSubmit} className="w-full flex flex-col gap-3">
                                 <div className="w-full flex flex-col gap-3">
                                     <div className="w-full h-[55px] flex items-center gap-2.5 bg-white px-5 py-4 rounded-lg border-[1.2px] border-solid border-[#b4b4b4]">
@@ -162,11 +158,14 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                                     <div className="w-full">
                                         <PhoneInputCustom
                                             value={formData.phone}
-                                            onChange={(phone, dialCode) => setFormData(prev => ({ ...prev, phone, dialCode }))}
+                                            onChange={(phone, dialCode) => { setFormData(prev => ({ ...prev, phone, dialCode })); setPhoneError(false); }}
                                             placeholder="Enter Your Whatsapp Number"
                                             required
                                             defaultCountry="in"
                                         />
+                                        {phoneError && (
+                                            <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid {formData.dialCode === '+91' ? '10-digit' : ''} mobile number.</span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="w-full flex flex-col gap-1.5">
@@ -207,13 +206,6 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                     </div>
                 </div>
             </main>
-
-            <RegistrationSuccessPopup21day
-                isOpen={popupStatus !== null}
-                onClose={() => setPopupStatus(null)}
-                status={popupStatus}
-                language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
-            />
         </div>
     );
 };
