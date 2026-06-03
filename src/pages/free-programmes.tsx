@@ -8,6 +8,7 @@ import frame129 from '../assets/image (36) (1).png';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
+import { validatePhone, formatPhone } from '../utils/phoneValidation';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -20,6 +21,7 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
         language: defaultLanguage
     });
     const [languageError, setLanguageError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
     const [popupStatus, setPopupStatus] = useState<string | null>(null);
 
     // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
@@ -37,6 +39,12 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        if (!validatePhone(formData.phone, formData.dialCode)) {
+            setPhoneError(true);
+            return;
+        }
+        setPhoneError(false);
 
         if (!formData.language) {
             setLanguageError(true);
@@ -88,12 +96,7 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 const resolvedStatus = data.status || 'success';
 
                 // --- GTM Data Layer Push ---
-                // Format phone number: strip spaces/dashes, ensure +91 prefix
-                let rawPhone = formData.dialCode + formData.phone;
-                let formattedPhone = rawPhone.replace(/\s+/g, '').replace(/-/g, '');
-                if (!formattedPhone.startsWith('+')) {
-                    formattedPhone = '+91' + formattedPhone;
-                }
+                const formattedPhone = formatPhone(formData.phone, formData.dialCode);
 
                 // Determine popup_id based on status and language
                 const isNewReg = resolvedStatus === 'success' || resolvedStatus === 'new_registration';
@@ -198,11 +201,14 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                     <div className="w-full">
                                         <PhoneInputCustom
                                             value={formData.phone}
-                                            onChange={(phone, dialCode) => setFormData(prev => ({ ...prev, phone, dialCode }))}
+                                            onChange={(phone, dialCode) => { setFormData(prev => ({ ...prev, phone, dialCode })); setPhoneError(false); }}
                                             placeholder="Enter Your Whatsapp Number"
                                             required
                                             defaultCountry="in"
                                         />
+                                        {phoneError && (
+                                            <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid mobile number.</span>
+                                        )}
                                     </div>
                                 </div>
                                 <div className="w-full flex flex-col gap-1">

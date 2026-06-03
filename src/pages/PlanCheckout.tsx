@@ -4,6 +4,7 @@ import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import { ArrowLeft } from 'lucide-react';
 import PhoneInputCustom from '../components/PhoneInputCustom';
+import { validatePhone } from '../utils/phoneValidation';
 import StudentDetailsModal from '../components/StudentDetailsModal';
 
 const SolidCheckCircle = () => (
@@ -44,6 +45,7 @@ const PlanCheckout = () => {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dialCode, setDialCode] = useState('+91');
     const [language, setLanguage] = useState('Telugu');
+    const [phoneError, setPhoneError] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [paymentId, setPaymentId] = useState('');
 
@@ -63,10 +65,11 @@ const PlanCheckout = () => {
 
     const handleCheckout = (e: React.FormEvent) => {
         e.preventDefault();
-        if (!phoneNumber) {
-            alert("Please enter your WhatsApp number");
+        if (!validatePhone(phoneNumber, dialCode)) {
+            setPhoneError(true);
             return;
         }
+        setPhoneError(false);
 
         const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
@@ -224,11 +227,15 @@ const PlanCheckout = () => {
                                             onChange={(phone, code) => {
                                                 setPhoneNumber(phone);
                                                 setDialCode(code);
+                                                setPhoneError(false);
                                             }}
                                             placeholder="Enter Your Whatsapp Number"
                                             required
                                             defaultCountry="in"
                                         />
+                                        {phoneError && (
+                                            <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid mobile number.</span>
+                                        )}
                                     </div>
 
                                     <div className="mb-8 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">

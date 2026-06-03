@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
+import { validatePhone, formatPhone } from '../utils/phoneValidation';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -32,10 +33,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        const digits = formData.phone.replace(/\D/g, '');
-        const expectedDigits = formData.dialCode === '+91' ? 10 : null;
-        const validPhone = expectedDigits ? digits.length === expectedDigits : digits.length >= 7 && digits.length <= 15;
-        if (!validPhone) {
+        if (!validatePhone(formData.phone, formData.dialCode)) {
             setPhoneError(true);
             return;
         }
@@ -90,12 +88,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
 
             if (response.ok || response.status === 409) {
                 // --- GTM Data Layer Push ---
-                // Format phone number: strip spaces/dashes, ensure +91 prefix
-                let rawPhone = formData.dialCode + formData.phone;
-                let formattedPhone = rawPhone.replace(/\s+/g, '').replace(/-/g, '');
-                if (!formattedPhone.startsWith('+')) {
-                    formattedPhone = '+91' + formattedPhone;
-                }
+                const formattedPhone = formatPhone(formData.phone, formData.dialCode);
 
                 (window as any).dataLayer = (window as any).dataLayer || [];
                 (window as any).dataLayer.push({
