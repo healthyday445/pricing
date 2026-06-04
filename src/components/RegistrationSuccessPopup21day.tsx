@@ -307,12 +307,14 @@ const RegistrationSuccessPopup21day: React.FC<RegistrationSuccessPopup21dayProps
                         </span>
                     </a>
                 ) : (
-                    <button
-                        onClick={() => window.open('https://wa.aisensy.com/+918008153968?text=REFER%20%26%20WIN%20A%20YOGA%20KIT', '_blank')}
-                        className="w-auto px-6 h-[55px] bg-[#f9a825] border-[2px] border-transparent hover:bg-white hover:border-[#f9a825] transition-all transform active:scale-95 rounded-full flex items-center justify-center cursor-pointer shadow-lg mt-2 group"
+                    <a
+                        href="https://api.whatsapp.com/send?phone=918008153968&text=REFER%20%26%20WIN%20A%20YOGA%20KIT"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-auto px-6 h-[55px] bg-[#f9a825] border-[2px] border-transparent hover:bg-white hover:border-[#f9a825] transition-all transform active:scale-95 rounded-full flex items-center justify-center cursor-pointer shadow-lg mt-2 group no-underline"
                     >
                         <span className="font-semibold text-[16px] text-[#202020] uppercase tracking-wide group-hover:text-[#202020] whitespace-nowrap">{"REFER & WIN A YOGA KIT"}</span>
-                    </button>
+                    </a>
                 )}
             </div>
         </div>
