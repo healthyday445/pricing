@@ -71,7 +71,7 @@ const App = () => {
           <Route path="/21-day/Telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
           <Route path="/21-day/telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
           <Route path="/21-day/telagu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
-          <Route path="/referralContestRegistration" element={<ReferralContestRegistration />} />
+          <Route path="/500yogakits" element={<ReferralContestRegistration />} />
           <Route path="/join" element={<JoinRedirect />} />
           <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
