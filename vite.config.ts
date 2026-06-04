@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => ({
     },
     proxy: {
       '/api': {
-        target: 'https://test-healthyday-backend-773381060399.asia-south1.run.app',
+        target: 'https://healthyday-backend-773381060399.asia-south1.run.app',
         changeOrigin: true,
         secure: false,
       }
