@@ -7,6 +7,7 @@ import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
+import { safeSessionStorageGet } from '../utils/storage';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -54,8 +55,8 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             const searchParams = new URLSearchParams(window.location.search);
             const source = searchParams.get('source') || searchParams.get('ref') || 'website_organic';
 
-            const gclid = sessionStorage.getItem('gclid_persistent');
-            const fbclid = sessionStorage.getItem('fbclid_persistent');
+            const gclid = safeSessionStorageGet('gclid_persistent');
+            const fbclid = safeSessionStorageGet('fbclid_persistent');
 
             let id_type = undefined;
             let id_value = undefined;
@@ -77,7 +78,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 id_value,
                 gclid,
                 fbclid,
-                ad_name: sessionStorage.getItem('ad_name_persistent')
+                ad_name: safeSessionStorageGet('ad_name_persistent')
             };
 
             const response = await fetch('/api/register', {
@@ -114,9 +115,9 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                         'page_language': formData.language === 'English' ? 'English' : 'Telugu'
                     },
                     'attribution_data': {
-                        'gclid': sessionStorage.getItem('gclid_persistent'),
-                        'fbclid': sessionStorage.getItem('fbclid_persistent'),
-                        'ad_name': sessionStorage.getItem('ad_name_persistent')
+                        'gclid': safeSessionStorageGet('gclid_persistent'),
+                        'fbclid': safeSessionStorageGet('fbclid_persistent'),
+                        'ad_name': safeSessionStorageGet('ad_name_persistent')
                     },
                     'popup_id': currentPopupId
                 });

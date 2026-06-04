@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from 'rea
 
 const Home = lazy(() => import('./pages/Home'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
+const FreeProgrammes = lazy(() => import('./pages/free-programmes'));
 const TwentyOneDays = lazy(() => import('./pages/21-days'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
@@ -45,20 +46,20 @@ const App = () => {
     <Router>
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route path="/" element={<Navigate to="/21days" replace />} />
-          <Route path="/English" element={<Navigate to="/21days/english" replace />} />
-          <Route path="/english" element={<Navigate to="/21days/english" replace />} />
-          <Route path="/englis" element={<Navigate to="/21days/english" replace />} />
-          <Route path="/Telugu" element={<Navigate to="/21days/telugu" replace />} />
-          <Route path="/telugu" element={<Navigate to="/21days/telugu" replace />} />
-          <Route path="/talagu" element={<Navigate to="/21days/telugu" replace />} />
+          <Route path="/" element={<FreeProgrammes />} />
+          <Route path="/English" element={<FreeProgrammes defaultLanguage="English" />} />
+          <Route path="/english" element={<FreeProgrammes defaultLanguage="English" />} />
+          <Route path="/englis" element={<FreeProgrammes defaultLanguage="English" />} />
+          <Route path="/Telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
+          <Route path="/telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
+          <Route path="/talagu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/pricing" element={<Home />} />
           <Route path="/renew" element={<Renew />} />
           <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<PlanCheckout />} />
-          <Route path="/free-programmes" element={<Navigate to="/21days" replace />} />
-          <Route path="/FreeProgrammes" element={<Navigate to="/21days" replace />} />
+          <Route path="/free-programmes" element={<FreeProgrammes />} />
+          <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
           <Route path="/21days" element={<TwentyOneDays />} />
           <Route path="/21days/English" element={<TwentyOneDays defaultLanguage="English" />} />
           <Route path="/21days/english" element={<TwentyOneDays defaultLanguage="English" />} />

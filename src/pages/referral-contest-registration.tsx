@@ -3,6 +3,7 @@ import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
+import { safeSessionStorageGet } from '../utils/storage';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -50,8 +51,8 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
             const rawSource = searchParams.get('source') || searchParams.get('ref');
             const source = rawSource ? `${rawSource}_iydref` : 'iydref';
 
-            const gclid = sessionStorage.getItem('gclid_persistent');
-            const fbclid = sessionStorage.getItem('fbclid_persistent');
+            const gclid = safeSessionStorageGet('gclid_persistent');
+            const fbclid = safeSessionStorageGet('fbclid_persistent');
 
             let id_type = undefined;
             let id_value = undefined;
@@ -73,7 +74,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                 id_value,
                 gclid,
                 fbclid,
-                ad_name: sessionStorage.getItem('ad_name_persistent')
+                ad_name: safeSessionStorageGet('ad_name_persistent')
             };
 
             const response = await fetch('/api/register/iyd-rfc', {
@@ -98,9 +99,9 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                         'page_language': formData.language === 'English' ? 'English' : 'Telugu'
                     },
                     'attribution_data': {
-                        'gclid': sessionStorage.getItem('gclid_persistent'),
-                        'fbclid': sessionStorage.getItem('fbclid_persistent'),
-                        'ad_name': sessionStorage.getItem('ad_name_persistent')
+                        'gclid': safeSessionStorageGet('gclid_persistent'),
+                        'fbclid': safeSessionStorageGet('fbclid_persistent'),
+                        'ad_name': safeSessionStorageGet('ad_name_persistent')
                     }
                 });
                 // --- End GTM Data Layer Push ---
