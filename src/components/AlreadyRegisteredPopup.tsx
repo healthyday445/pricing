@@ -64,7 +64,7 @@ const AlreadyRegisteredPopup: React.FC<AlreadyRegisteredPopupProps> = ({ isOpen,
 
                 {/* Home Button */}
                 <a
-                    href="https://api.whatsapp.com/send?phone=918008153968&text=REFER%20%26%20WIN%20A%20YOGA%20KIT"
+                    href="https://class.healthyday.co.in/leaderboard"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-auto px-6 h-[55px] bg-[#f9a825] border-[2px] border-transparent hover:bg-white hover:border-[#f9a825] transition-all transform active:scale-95 rounded-full flex items-center justify-center cursor-pointer shadow-lg mt-2 group no-underline"
