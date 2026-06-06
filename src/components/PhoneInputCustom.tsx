@@ -121,6 +121,7 @@ const countries: Country[] = [
 interface PhoneInputCustomProps {
     value: string;
     onChange: (phone: string, dialCode: string) => void;
+    onFocus?: () => void;
     placeholder?: string;
     required?: boolean;
     defaultCountry?: string;
@@ -129,6 +130,7 @@ interface PhoneInputCustomProps {
 const PhoneInputCustom: React.FC<PhoneInputCustomProps> = ({
     value,
     onChange,
+    onFocus,
     placeholder = 'Enter Your Whatsapp Number',
     required = false,
     defaultCountry = 'in',
@@ -196,6 +198,7 @@ const PhoneInputCustom: React.FC<PhoneInputCustomProps> = ({
                         const val = e.target.value.replace(/\D/g, '');
                         onChange(val, selectedCountry.dialCode);
                     }}
+                    onFocus={onFocus}
                     placeholder={placeholder}
                     required={required}
                     className="flex-1 h-full border-none outline-none text-[15px] text-[#4a4a4a] placeholder:text-[#999] bg-transparent"

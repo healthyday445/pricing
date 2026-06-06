@@ -28,6 +28,16 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
         enforceReferralLimit();
     }, []);
 
+    const pushDataLayer = (data: Record<string, unknown>) => {
+        const win = window as Window & { dataLayer?: Record<string, unknown>[] };
+        win.dataLayer = win.dataLayer || [];
+        win.dataLayer.push(data);
+    };
+
+    const pushFocusEvent = (field: string) => {
+        pushDataLayer({ 'event': 'input_focus', 'field': field, 'page_name': '21_days' });
+    };
+
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setFormData(prev => ({
@@ -39,14 +49,18 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        pushDataLayer({ 'event': 'form_submit_attempt', 'page_name': '21_days' });
+
         if (!validatePhone(formData.phone, formData.dialCode)) {
             setPhoneError(true);
+            pushDataLayer({ 'event': 'form_validation_error', 'field': 'phone', 'page_name': '21_days' });
             return;
         }
         setPhoneError(false);
 
         if (!formData.language) {
             setLanguageError(true);
+            pushDataLayer({ 'event': 'form_validation_error', 'field': 'language', 'page_name': '21_days' });
             return;
         }
         setLanguageError(false);
@@ -107,8 +121,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     currentPopupId = isFreeAgain ? 1331 : isNewReg ? 1589 : 1589;
                 }
 
-                (window as any).dataLayer = (window as any).dataLayer || [];
-                (window as any).dataLayer.push({
+                pushDataLayer({
                     'user_data': {
                         'phone_number': formattedPhone,
                         'first_name': formData.name,
@@ -121,16 +134,26 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     },
                     'popup_id': currentPopupId
                 });
+
+                if (isNewReg) {
+                    pushDataLayer({ 'event': 'registration_success', 'page_name': '21_days', 'language': formData.language, 'status': resolvedStatus });
+                } else if (isFreeAgain) {
+                    pushDataLayer({ 'event': 'registration_free_eligible_again', 'page_name': '21_days', 'language': formData.language });
+                } else {
+                    pushDataLayer({ 'event': 'registration_duplicate', 'page_name': '21_days', 'status': resolvedStatus });
+                }
                 // --- End GTM Data Layer Push ---
 
                 // Track this referral usage in localStorage
                 recordReferralUse();
                 setPopupStatus(resolvedStatus);
             } else {
+                pushDataLayer({ 'event': 'registration_api_error', 'page_name': '21_days', 'http_status': response.status });
                 console.error('Registration failed');
                 alert(`Registration failed: ${data.message || 'Please try again.'}`);
             }
         } catch (error) {
+            pushDataLayer({ 'event': 'registration_network_error', 'page_name': '21_days' });
             console.error('Error submitting form:', error);
             alert(`An error occurred: ${error instanceof Error ? error.message : 'Unknown error'}. Please try again.`);
         }
@@ -158,6 +181,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                             name="name"
                                             value={formData.name}
                                             onChange={handleInputChange}
+                                            onFocus={() => pushFocusEvent('name')}
                                             placeholder="Full name"
                                             className="w-full outline-none font-normal text-[16px] text-[#202020] placeholder:text-[#8e8e8e]"
                                             required
@@ -167,6 +191,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                         <PhoneInputCustom
                                             value={formData.phone}
                                             onChange={(phone, dialCode) => { setFormData(prev => ({ ...prev, phone, dialCode })); setPhoneError(false); }}
+                                            onFocus={() => pushFocusEvent('phone')}
                                             placeholder="Enter Your Whatsapp Number"
                                             required
                                             defaultCountry="in"
@@ -186,6 +211,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                                 value="Telugu"
                                                 checked={formData.language === 'Telugu'}
                                                 onChange={(e) => { handleInputChange(e); setLanguageError(false); }}
+                                                onFocus={() => pushFocusEvent('language_telugu')}
                                                 className="w-4 h-4 accent-[#0d468b]"
                                             />
                                             <span className="text-[14px] text-[#202020] font-medium">తెలుగు</span>
@@ -197,6 +223,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                                 value="English"
                                                 checked={formData.language === 'English'}
                                                 onChange={(e) => { handleInputChange(e); setLanguageError(false); }}
+                                                onFocus={() => pushFocusEvent('language_english')}
                                                 className="w-4 h-4 accent-[#0d468b]"
                                             />
                                             <span className="text-[14px] text-[#202020] font-medium">English</span>
