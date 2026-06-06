@@ -5,9 +5,10 @@ import successPopupSvg from '../assets/Frame 53 (5).png';
 interface AlreadyRegisteredPopupProps {
     isOpen: boolean;
     onClose: () => void;
+    mobileNumber?: string;
 }
 
-const AlreadyRegisteredPopup: React.FC<AlreadyRegisteredPopupProps> = ({ isOpen, onClose }) => {
+const AlreadyRegisteredPopup: React.FC<AlreadyRegisteredPopupProps> = ({ isOpen, onClose, mobileNumber }) => {
     const navigate = useNavigate();
 
     if (!isOpen) return null;
@@ -64,7 +65,7 @@ const AlreadyRegisteredPopup: React.FC<AlreadyRegisteredPopupProps> = ({ isOpen,
 
                 {/* Home Button */}
                 <a
-                    href="https://class.healthyday.co.in/leaderboard"
+                    href={mobileNumber ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard` : "https://class.healthyday.co.in/leaderboard"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-auto px-6 h-[55px] bg-[#f9a825] border-[2px] border-transparent hover:bg-white hover:border-[#f9a825] transition-all transform active:scale-95 rounded-full flex items-center justify-center cursor-pointer shadow-lg mt-2 group no-underline"

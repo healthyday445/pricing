@@ -256,6 +256,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 onClose={() => setPopupStatus(null)}
                 status={popupStatus}
                 language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
+                mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
             />
         </div>
     );
