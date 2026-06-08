@@ -179,8 +179,8 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     <div className="w-full lg:w-[584px] flex flex-col items-center gap-[40px] lg:gap-[51px] px-4 lg:px-10 order-1 lg:order-none">
                         {/* Heading */}
                         <div className="flex flex-col items-center gap-3 text-center">
-                            <span className="font-semibold text-[36.48px] md:text-[48px] text-[#0d468b] leading-tight">14 Days FREE Yoga</span>
-                            <span className="font-semibold text-[18px] md:text-[22px] text-center text-[#202020]">Next batch starting on Monday</span>
+                            <span className="font-semibold text-[36.48px] md:text-[48px] text-[#0d468b] leading-tight">21 Days FREE Yoga</span>
+                            <span className="font-semibold text-[18px] md:text-[22px] text-center text-[#202020]">Starting From 21st June </span>
                         </div>
 
                         {/* Unified Card Container */}

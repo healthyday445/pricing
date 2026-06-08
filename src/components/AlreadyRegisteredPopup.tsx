@@ -37,7 +37,7 @@ const AlreadyRegisteredPopup: React.FC<AlreadyRegisteredPopupProps> = ({ isOpen,
                         </h3>
 
                         <p className="text-[16px] text-center font-">
-                            ✨ 14 Days Yoga Challenge లో మీరు <span className="font-bold inline-flex items-center gap-1"><img draggable="false" role="img" className="w-5 h-5" alt="🗓️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f5d3.svg" /> Monday</span> నుండి join కావచ్చు!
+                            ✨ 21 Days Yoga Challenge లో మీరు <span className="font-bold inline-flex items-center gap-1"><img draggable="false" role="img" className="w-5 h-5" alt="🗓️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f5d3.svg" /> Monday</span> నుండి join కావచ్చు!
                         </p>
 
                         {/* Timings Box */}
