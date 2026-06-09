@@ -51,26 +51,26 @@ const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ language, mobileN
                         {' '}
                         <span style={{ color: '#feab27', fontWeight: 900 }}>Online Yoga</span>
                     </p>
-                    <span style={{ background: '#c1ddff', borderRadius: '5px', padding: '4px 14px', display: 'inline-block', fontFamily: 'Outfit', fontWeight: 700, color: '#0a386f', textAlign: 'center' }}>
+                    <span style={{ background: '#c1ddff', borderRadius: '5px', padding: '4px 24px', display: 'inline-block', fontFamily: 'Outfit', fontWeight: 700, color: '#0a386f', textAlign: 'center' }}>
                         {lang === 'te' ? (
                             <>21<sup style={{ fontSize: '10.32px' }}>st</sup> JUNE నుండి మొదలవుతుంది</>
                         ) : (
-                            <><span style={{ fontSize: '16px' }}>Starts on 21</span><sup style={{ fontSize: '10.32px' }}>st</sup><span style={{ fontSize: '16px' }}> JUNE</span></>
+                            <><span style={{ fontSize: '20px' }}>Starts on 21</span><sup style={{ fontSize: '10.32px' }}>st</sup><span style={{ fontSize: '20px' }}> JUNE</span></>
                         )}
                     </span>
                 </div>
 
                 {/* Timings */}
-                <div className="flex flex-col gap-1 text-[14px] text-center text-black">
+                <div className="flex flex-col gap-1">
                     {lang === 'te' ? (
                         <>
-                            <p className="flex items-center justify-center gap-1"><SunIcon /> ఉదయం: 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
-                            <p className="flex items-center justify-center gap-1"><MoonIcon /> సాయంత్రం: 4:30PM | 5:30PM | 6:30PM</p>
+                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '0.82rem', fontWeight: 600, lineHeight: 'normal' }}><SunIcon /> ఉదయం: 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
+                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '0.82rem', fontWeight: 600, lineHeight: 'normal' }}><MoonIcon /> సాయంత్రం: 4:30PM | 5:30PM | 6:30PM</p>
                         </>
                     ) : (
                         <>
-                            <p className="flex items-center justify-center gap-1"><SunIcon /> MOR - 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
-                            <p className="flex items-center justify-center gap-1"><MoonIcon /> EVE - 4:30PM | 5:30PM | 6:30PM</p>
+                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '0.82rem', fontWeight: 600, lineHeight: 'normal' }}><SunIcon /> MOR - 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
+                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '0.82rem', fontWeight: 600, lineHeight: 'normal' }}><MoonIcon /> EVE - 4:30PM | 5:30PM | 6:30PM</p>
                         </>
                     )}
                 </div>

@@ -36,7 +36,7 @@ const ReferAndWin500: React.FC<ReferAndWin500Props> = ({ onClick }) => (
         Refer &amp; Win
       </span>
       <span style={{ color: "#fff", fontFamily: "Outfit", fontSize: "14px", fontWeight: 600, lineHeight: "normal", display: "flex", alignItems: "center", gap: "4px" }}>
-        Click here <img src={whiteArrow} alt="" style={{ width: "16px", height: "16px", marginTop: "2px" }} />
+        View more <img src={whiteArrow} alt="" style={{ width: "16px", height: "16px", marginTop: "2px" }} />
       </span>
     </div>
 
@@ -54,10 +54,10 @@ const ReferAndWin500: React.FC<ReferAndWin500Props> = ({ onClick }) => (
     >
       {/* Text side */}
       <div style={{ padding: "0 0 16px 16px", display: "flex", flexDirection: "column", gap: "2px", zIndex: 1 }}>
-        <span style={{ color: "#0D468B", fontFamily: "Outfit", fontSize: "28px", fontWeight: 800, lineHeight: "1", whiteSpace: "nowrap" }}>
+        <span style={{ color: "#0D468B", fontFamily: "Outfit", fontSize: "28px", fontWeight: 900, lineHeight: "1", whiteSpace: "nowrap" }}>
           TOP 500
         </span>
-        <span style={{ color: "#FF9D00", fontFamily: "Outfit", fontSize: "20px", fontWeight: 800, lineHeight: "1", whiteSpace: "nowrap" }}>
+        <span style={{ color: "#FF9D00", fontFamily: "Outfit", fontSize: "20px", fontWeight: 900, lineHeight: "1", whiteSpace: "nowrap" }}>
           WINNERS
         </span>
         <span style={{ color: "#202020", fontFamily: "Outfit", fontSize: "15px", fontWeight: 700, lineHeight: "normal", marginTop: "4px" }}>
