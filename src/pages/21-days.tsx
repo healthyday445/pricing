@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TwentyOneDaysFooter from '../components/TwentyOneDaysFooter';
 import TwentyOneDaysTestimonials from '../components/TwentyOneDaysTestimonials';
-import RegistrationSuccessPopup21day from '../components/RegistrationSuccessPopup21day';
+import RegistrationPopup from '../components/RegistrationPopup';
 
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
 import PhoneInputCustom from '../components/PhoneInputCustom';
@@ -64,6 +64,18 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             return;
         }
         setLanguageError(false);
+
+        const selfCheckParams = new URLSearchParams(window.location.search);
+        const refParam = selfCheckParams.get('ref');
+        const sourceParam = selfCheckParams.get('source');
+        const enteredMobile = formData.dialCode + formData.phone;
+        if (
+            (refParam && '+' + refParam === enteredMobile) ||
+            (sourceParam && '+' + sourceParam === enteredMobile)
+        ) {
+            setPopupStatus('self_referral');
+            return;
+        }
 
         try {
             const searchParams = new URLSearchParams(window.location.search);
@@ -278,12 +290,13 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             </main>
 
             <TwentyOneDaysFooter />
-            <RegistrationSuccessPopup21day
+            <RegistrationPopup
                 isOpen={popupStatus !== null}
                 onClose={() => setPopupStatus(null)}
                 status={popupStatus}
                 language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
                 mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                variant="21days"
             />
         </div>
     );

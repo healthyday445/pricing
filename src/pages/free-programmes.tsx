@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import SharedTestimonials from '../components/SharedTestimonials';
-import RegistrationSuccessPopup from '../components/RegistrationSuccessPopup';
+import RegistrationPopup from '../components/RegistrationPopup';
 import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'lucide-react';
 import frame129 from '../assets/image (36) (1).png';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
@@ -66,6 +66,18 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             return;
         }
         setLanguageError(false);
+
+        const selfCheckParams = new URLSearchParams(window.location.search);
+        const refParam = selfCheckParams.get('ref');
+        const sourceParam = selfCheckParams.get('source');
+        const enteredMobile = formData.dialCode + formData.phone;
+        if (
+            (refParam && '+' + refParam === enteredMobile) ||
+            (sourceParam && '+' + sourceParam === enteredMobile)
+        ) {
+            setPopupStatus('self_referral');
+            return;
+        }
 
         try {
             const searchParams = new URLSearchParams(window.location.search);
@@ -349,12 +361,13 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             </main>
 
             <SharedFooter />
-            <RegistrationSuccessPopup
+            <RegistrationPopup
                 isOpen={popupStatus !== null}
                 onClose={() => setPopupStatus(null)}
                 status={popupStatus}
                 language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
                 mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                variant="free"
             />
         </div>
     );
