@@ -108,20 +108,6 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                     currentPopupId = isFreeAgain ? 1413 : isNewReg ? 1411 : 1412;
                 }
 
-                console.log('Pushing to dataLayer:', {
-                    'user_data': {
-                        'phone_number': formattedPhone,
-                        'first_name': formData.name,
-                        'page_language': formData.language === 'English' ? 'English' : 'Telugu'
-                    },
-                    'attribution_data': {
-                        'gclid': safeSessionStorageGet('gclid_persistent'),
-                        'fbclid': safeSessionStorageGet('fbclid_persistent'),
-                        'ad_name': safeSessionStorageGet('ad_name_persistent')
-                    },
-                    'popup_id': currentPopupId
-                });
-
                 pushDataLayer({
                     'user_data': {
                         'phone_number': formattedPhone,
