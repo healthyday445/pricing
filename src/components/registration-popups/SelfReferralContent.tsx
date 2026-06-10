@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChildPopupProps } from './types';
-import ReferAndWin500 from '../ReferAndWin500';
+import ReferWinCard from '../ReferWinCard';
 
 // Popup 3 (English) / Popup 4 (Telugu)
 // Triggered when the user enters their own referral number in the form.
@@ -8,6 +8,10 @@ const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber
     const referralsUrl = mobileNumber
         ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
         : 'https://class.healthyday.co.in/leaderboard';
+
+    const shareLink = mobileNumber
+        ? `${window.location.origin}${window.location.pathname}?ref=${mobileNumber}`
+        : window.location.href;
 
     return (
         <div className="w-full max-w-[412px] rounded-2xl overflow-hidden shadow-2xl bg-white relative">
@@ -43,7 +47,7 @@ const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber
 
             {/* Refer & Win card */}
             <div className="px-4 pb-6">
-                <ReferAndWin500 onClick={() => window.open(referralsUrl, '_blank')} />
+                <ReferWinCard shareLink={shareLink} referralsUrl={referralsUrl} />
             </div>
         </div>
     );

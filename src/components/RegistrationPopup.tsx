@@ -41,7 +41,7 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({
 
     const childProps = { language, mobileNumber, onClose, variant, status };
 
-    const isSuccess = status === 'success' || status === 'new_registration';
+    const isSuccess = status === 'success' || status === 'new_registration' || status === 'free_eligible_again';
 
     return (
         <div
