@@ -1,6 +1,7 @@
 import React from 'react';
 import { ChildPopupProps } from './types';
 import ReferAndWin500 from '../ReferAndWin500';
+import { pushDataLayer } from '../../utils/pushDataLayer';
 import whatsappIcon from '../../assets/WhatsApp.svg';
 
 const MoonIcon = () => (
@@ -17,9 +18,7 @@ const SunIcon = () => (
     </svg>
 );
 
-const SuccessContent: React.FC<ChildPopupProps> = ({ language, mobileNumber }) => {
-    const lang = language === 'English' ? 'en' : 'te';
-
+const SuccessContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => {
     const leaderboardUrl = mobileNumber
         ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
         : 'https://class.healthyday.co.in/leaderboard';
@@ -33,9 +32,7 @@ const SuccessContent: React.FC<ChildPopupProps> = ({ language, mobileNumber }) =
                     Congratulations!
                 </h2>
                 <p style={{ color: '#FFDD55', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1.0625rem', fontWeight: 600, lineHeight: 'normal', width: '20.57519rem', margin: '6px auto 0' }}>
-                    {lang === 'te'
-                        ? 'మీరు Successfully Register అయ్యారు!'
-                        : 'You are Successfully Registered!'}
+                    You are Successfully Registered!
                 </p>
             </div>
 
@@ -50,41 +47,29 @@ const SuccessContent: React.FC<ChildPopupProps> = ({ language, mobileNumber }) =
                         <span style={{ color: '#feab27', fontWeight: 900 }}>Online Yoga</span>
                     </p>
                     <span style={{ background: '#c1ddff', borderRadius: '5px', padding: '4px 24px', display: 'inline-block', fontFamily: 'Outfit', fontWeight: 700, color: '#0a386f', textAlign: 'center' }}>
-                        {lang === 'te' ? (
-                            <>21<sup style={{ fontSize: '10.32px' }}>st</sup> JUNE నుండి మొదలవుతుంది</>
-                        ) : (
-                            <><span style={{ fontSize: '16px' }}>Starts on 21</span><sup style={{ fontSize: '10.32px' }}>st</sup><span style={{ fontSize: '16px' }}> JUNE</span></>
-                        )}
+                        <span style={{ fontSize: '16px' }}>Starts on 21</span><sup style={{ fontSize: '10.32px' }}>st</sup><span style={{ fontSize: '16px' }}> JUNE</span>
                     </span>
                 </div>
 
                 {/* Timings */}
                 <div className="flex flex-col gap-1">
-                    {lang === 'te' ? (
-                        <>
-                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1rem', fontWeight: 700, lineHeight: 'normal' }}><SunIcon /> ఉదయం: 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
-                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1rem', fontWeight: 700, lineHeight: 'normal' }}><MoonIcon /> సాయంత్రం: 4:30PM | 5:30PM | 6:30PM</p>
-                        </>
-                    ) : (
-                        <>
-                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1rem', fontWeight: 700, lineHeight: 'normal' }}><SunIcon /> MOR - 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
-                            <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1rem', fontWeight: 700, lineHeight: 'normal' }}><MoonIcon /> EVE - 4:30PM | 5:30PM | 6:30PM</p>
-                        </>
-                    )}
+                    <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1rem', fontWeight: 700, lineHeight: 'normal' }}><SunIcon /> MOR - 5:30AM | 6:30AM | 7:30AM | 8:30AM</p>
+                    <p className="flex items-center justify-center gap-1" style={{ color: '#0A386F', textAlign: 'center', fontFamily: 'Outfit', fontSize: '1rem', fontWeight: 700, lineHeight: 'normal' }}><MoonIcon /> EVE - 4:30PM | 5:30PM | 6:30PM</p>
                 </div>
 
                 {/* WhatsApp notification */}
                 <div className="flex items-center gap-2">
                     <img src={whatsappIcon} alt="WhatsApp" className="w-7 h-7 flex-shrink-0" />
                     <span style={{ fontFamily: 'Outfit', fontWeight: 600, fontSize: '16px', color: '#000', lineHeight: 'normal' }}>
-                        {lang === 'te'
-                            ? 'మా Next Update WhatsApp లో వస్తుంది'
-                            : 'You will get the next update on WhatsApp'}
+                        You will get the next update on WhatsApp
                     </span>
                 </div>
 
                 {/* Refer & Win card */}
-                <ReferAndWin500 onClick={() => window.open(leaderboardUrl, '_blank')} />
+                <ReferAndWin500 onClick={() => {
+                    pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'refer_and_win', 'popup_status': status });
+                    window.open(leaderboardUrl, '_blank');
+                }} />
 
             </div>
         </div>

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ApiStatus, PopupVariant } from './registration-popups/types';
+import { pushDataLayer } from '../utils/pushDataLayer';
 import SuccessContent from './registration-popups/SuccessContent';
 import ExistingUserContent from './registration-popups/ExistingUserContent';
 
@@ -37,6 +38,15 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({
     mobileNumber,
     variant = 'free',
 }) => {
+    useEffect(() => {
+        if (!isOpen || !status) return;
+        pushDataLayer({
+            'event': 'popup_viewed',
+            'popup_status': status,
+            'popup_id': parseInt(getPopupId(status, language).replace('elementor-popup-modal-', ''), 10),
+        });
+    }, [isOpen, status, language]);
+
     if (!isOpen || !status) return null;
 
     const childProps = { language, mobileNumber, onClose, variant, status };

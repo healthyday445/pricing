@@ -13,9 +13,11 @@ interface ReferWinCardProps {
   referralsUrl: string;
   showViewMore?: boolean;
   showTitle?: boolean;
+  onCopyLink?: () => void;
+  onWhatsAppShare?: () => void;
 }
 
-const ReferWinCard: React.FC<ReferWinCardProps> = ({ shareLink, referralsUrl, showViewMore = true, showTitle = true }) => (
+const ReferWinCard: React.FC<ReferWinCardProps> = ({ shareLink, referralsUrl, showViewMore = true, showTitle = true, onCopyLink, onWhatsAppShare }) => (
   <div
     style={{
       width: "100%",
@@ -45,7 +47,7 @@ const ReferWinCard: React.FC<ReferWinCardProps> = ({ shareLink, referralsUrl, sh
     )}
     {/* Share actions */}
     <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
-      <ShareReferralActions shareLink={shareLink} referralsUrl={referralsUrl} showViewMore={showViewMore} />
+      <ShareReferralActions shareLink={shareLink} referralsUrl={referralsUrl} showViewMore={showViewMore} onCopyLink={onCopyLink} onWhatsAppShare={onWhatsAppShare} />
     </div>
   </div>
 );

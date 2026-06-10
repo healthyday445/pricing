@@ -1,24 +1,27 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
 import whatsappIcon from "../assets/image 1.png";
 
 export const ShareReferralActions = ({
   shareLink,
   referralsUrl,
   showViewMore = true,
+  onCopyLink,
+  onWhatsAppShare,
 }: {
   shareLink: string;
   referralsUrl: string;
   showViewMore?: boolean;
+  onCopyLink?: () => void;
+  onWhatsAppShare?: () => void;
 }) => {
-  const navigate = useNavigate();
-
   const handleCopyLink = () => {
+    onCopyLink?.();
     navigator.clipboard.writeText(shareLink);
     alert("Link copied to clipboard!");
   };
 
   const handleWhatsAppShare = () => {
+    onWhatsAppShare?.();
     const waMessage = `I am Inviting you to join me in\n*21-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *21st JUNE*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\n${shareLink}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(waMessage)}`, "_blank");
   };
@@ -114,7 +117,7 @@ export const ShareReferralActions = ({
             justifyContent: "center",
             gap: "4px",
           }}
-          onClick={() => navigate(referralsUrl)}
+          onClick={() => window.open(referralsUrl, '_blank')}
         >
           <span style={{ color: "#FFF", textAlign: "center", fontFamily: "Outfit", fontSize: "16px", fontStyle: "normal", fontWeight: 500, lineHeight: "normal" }}>View More</span>
           <span style={{ color: "#FFF", fontFamily: "Outfit", fontSize: "18px", fontStyle: "normal", fontWeight: 500, lineHeight: "normal", marginTop: "-2px" }}>→</span>

@@ -75,6 +75,7 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             (refParam && '+' + refParam === enteredMobile) ||
             (sourceParam && '+' + sourceParam === enteredMobile)
         ) {
+            pushDataLayer({ 'event': 'registration_self_referral', 'page_name': 'free_programmes' });
             setPopupStatus('self_referral');
             return;
         }

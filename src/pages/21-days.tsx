@@ -73,6 +73,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             (refParam && '+' + refParam === enteredMobile) ||
             (sourceParam && '+' + sourceParam === enteredMobile)
         ) {
+            pushDataLayer({ 'event': 'registration_self_referral', 'page_name': '21_days' });
             setPopupStatus('self_referral');
             return;
         }

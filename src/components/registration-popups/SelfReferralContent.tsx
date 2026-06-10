@@ -1,10 +1,11 @@
 import React from 'react';
 import { ChildPopupProps } from './types';
 import ReferWinCard from '../ReferWinCard';
+import { pushDataLayer } from '../../utils/pushDataLayer';
 
 // Popup 3 (English) / Popup 4 (Telugu)
 // Triggered when the user enters their own referral number in the form.
-const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber }) => {
+const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber, status }) => {
     const referralsUrl = mobileNumber
         ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
         : 'https://class.healthyday.co.in/leaderboard';
@@ -47,7 +48,12 @@ const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber
 
             {/* Refer & Win card */}
             <div className="px-4 pb-6">
-                <ReferWinCard shareLink={shareLink} referralsUrl={referralsUrl} />
+                <ReferWinCard
+                shareLink={shareLink}
+                referralsUrl={referralsUrl}
+                onCopyLink={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'copy_link', 'popup_status': status })}
+                onWhatsAppShare={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'whatsapp_share', 'popup_status': status })}
+            />
             </div>
         </div>
     );
