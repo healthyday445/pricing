@@ -37,7 +37,7 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     };
 
     const pushFocusEvent = (field: string) => {
-        pushDataLayer({ 'event': 'input_focus', 'field': field, 'page_name': 'free_programmes' });
+        pushDataLayer({ 'event': 'input_focus', 'field_name': field, 'page_name': 'free_programmes' });
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

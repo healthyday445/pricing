@@ -35,7 +35,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     };
 
     const pushFocusEvent = (field: string) => {
-        pushDataLayer({ 'event': 'input_focus', 'field': field, 'page_name': '21_days' });
+        pushDataLayer({ 'event': 'input_focus', 'field_name': field, 'page_name': '21_days' });
     };
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
