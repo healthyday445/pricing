@@ -31,6 +31,12 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
         }));
     };
 
+    const pushDataLayer = (data: Record<string, unknown>) => {
+        const win = window as Window & { dataLayer?: Record<string, unknown>[] };
+        win.dataLayer = win.dataLayer || [];
+        win.dataLayer.push(data);
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -88,11 +94,21 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
             const data = await response.json().catch(() => ({}));
 
             if (response.ok || response.status === 409) {
+                const resolvedStatus = data.status || 'success';
+
                 // --- GTM Data Layer Push ---
                 const formattedPhone = formatPhone(formData.phone, formData.dialCode);
 
-                (window as any).dataLayer = (window as any).dataLayer || [];
-                (window as any).dataLayer.push({
+                const isNewReg = resolvedStatus === 'success' || resolvedStatus === 'new_registration';
+                const isFreeAgain = resolvedStatus === 'free_eligible_again';
+                let currentPopupId: number;
+                if (formData.language === 'Telugu') {
+                    currentPopupId = isFreeAgain ? 1213 : isNewReg ? 1211 : 1212;
+                } else {
+                    currentPopupId = isFreeAgain ? 1413 : isNewReg ? 1411 : 1412;
+                }
+
+                console.log('Pushing to dataLayer:', {
                     'user_data': {
                         'phone_number': formattedPhone,
                         'first_name': formData.name,
@@ -102,7 +118,22 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                         'gclid': safeSessionStorageGet('gclid_persistent'),
                         'fbclid': safeSessionStorageGet('fbclid_persistent'),
                         'ad_name': safeSessionStorageGet('ad_name_persistent')
-                    }
+                    },
+                    'popup_id': currentPopupId
+                });
+
+                pushDataLayer({
+                    'user_data': {
+                        'phone_number': formattedPhone,
+                        'first_name': formData.name,
+                        'page_language': formData.language === 'English' ? 'English' : 'Telugu'
+                    },
+                    'attribution_data': {
+                        'gclid': safeSessionStorageGet('gclid_persistent'),
+                        'fbclid': safeSessionStorageGet('fbclid_persistent'),
+                        'ad_name': safeSessionStorageGet('ad_name_persistent')
+                    },
+                    'popup_id': currentPopupId
                 });
                 // --- End GTM Data Layer Push ---
 
