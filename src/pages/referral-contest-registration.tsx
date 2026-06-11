@@ -100,16 +100,11 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                 // --- GTM Data Layer Push ---
                 const formattedPhone = formatPhone(formData.phone, formData.dialCode);
 
-                const isNewReg = resolvedStatus === 'success' || resolvedStatus === 'new_registration';
-                const isFreeAgain = resolvedStatus === 'free_eligible_again';
-                let currentPopupId: number;
-                if (formData.language === 'Telugu') {
-                    currentPopupId = isFreeAgain ? 1213 : isNewReg ? 1211 : 1212;
-                } else {
-                    currentPopupId = isFreeAgain ? 1413 : isNewReg ? 1411 : 1412;
-                }
+                const isSuccess = resolvedStatus === 'success' || resolvedStatus === 'new_registration' || resolvedStatus === 'free_eligible_again';
+                const successEvent = formData.language === 'Telugu' ? 'referral_page_telugu_success' : 'referral_page_english_success';
 
                 pushDataLayer({
+                    'event': successEvent + (isSuccess ? '' : '_failed'),
                     'user_data': {
                         'phone_number': formattedPhone,
                         'first_name': formData.name,
@@ -119,8 +114,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                         'gclid': safeSessionStorageGet('gclid_persistent'),
                         'fbclid': safeSessionStorageGet('fbclid_persistent'),
                         'ad_name': safeSessionStorageGet('ad_name_persistent')
-                    },
-                    'popup_id': currentPopupId
+                    }
                 });
                 // --- End GTM Data Layer Push ---
 
