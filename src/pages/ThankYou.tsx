@@ -1,8 +1,8 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Facebook, Instagram, Youtube, ChevronUp } from 'lucide-react';
-import logo from '../assets/healthyday-logo.png';
-import image from '../assets/Frame 129.png';
+import logo from '../assets/healthyday-logo.webp';
+import image from '../assets/Frame 129.webp';
 
 const ThankYou = () => {
     const navigate = useNavigate();

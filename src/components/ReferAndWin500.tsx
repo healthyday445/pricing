@@ -1,7 +1,7 @@
 import React from "react";
 import whiteArrow from "../assets/whiteArrow.svg";
-import bgPattern from "../assets/11621406ee6eb5f29bb80937e33d2195815c78d8.png";
-import elementImg from "../assets/element.png";
+import bgPattern from "../assets/11621406ee6eb5f29bb80937e33d2195815c78d8.webp";
+import elementImg from "../assets/element.webp";
 
 interface ReferAndWin500Props {
   onClick?: () => void;

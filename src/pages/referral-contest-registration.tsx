@@ -4,6 +4,7 @@ import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
+import referralPoster from '../assets/Referral Poster for registration page.webp';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -147,7 +148,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                 <div className="w-full flex flex-col">
                     {/* Hero Image */}
                     <div className="w-full pt-[80px]">
-                        <img src="https://storage.googleapis.com/whatsapp_banners_assets/IYD_2026/Referral%20Poster%20for%20registration%20page.png" alt="Yoga Day Referral Contest" className="w-full" />
+                        <img src={referralPoster} alt="Yoga Day Referral Contest" className="w-full" />
                     </div>
 
                     {/* Card */}

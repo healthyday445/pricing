@@ -1,5 +1,5 @@
 import { Facebook, Instagram, Youtube, Phone, MapPin, ArrowUp } from "lucide-react";
-import healthydayLogo from "@/assets/healthyday-logo.png";
+import healthydayLogo from "@/assets/healthyday-logo.webp";
 
 const Footer = () => {
   const scrollToTop = () => {

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import healthydayLogo from "@/assets/healthyday-logo.png";
+import healthydayLogo from "@/assets/healthyday-logo.webp";
 
 const Header = () => {
   return (
