@@ -95,16 +95,13 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
             const data = await response.json().catch(() => ({}));
 
             if (response.ok || response.status === 409) {
-                const resolvedStatus = data.status || 'success';
-
                 // --- GTM Data Layer Push ---
                 const formattedPhone = formatPhone(formData.phone, formData.dialCode);
 
-                const isSuccess = resolvedStatus === 'success' || resolvedStatus === 'new_registration' || resolvedStatus === 'free_eligible_again';
                 const successEvent = formData.language === 'Telugu' ? 'referral_page_telugu_success' : 'referral_page_english_success';
 
                 pushDataLayer({
-                    'event': successEvent + (isSuccess ? '' : '_failed'),
+                    'event': successEvent,
                     'user_data': {
                         'phone_number': formattedPhone,
                         'first_name': formData.name,
