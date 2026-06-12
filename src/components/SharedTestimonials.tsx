@@ -20,7 +20,7 @@ const SharedTestimonials = () => {
             name: "DR. UDAY, CHITTOR",
             stats: "67 HEALTHYDAYS",
             text: "I personally noticed visible changes in my flexibility and overall fitness. Movements that once felt difficult slowly became comfortable, and my confidence in my body improved significantly over time.",
-            image: "/testimonial-2.jpg"
+            image: "/testimonial-2.webp"
         },
         {
             name: "GAJAVELLI, CHENNAI",

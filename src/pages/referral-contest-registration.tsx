@@ -4,7 +4,7 @@ import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
-import referralPoster from '../assets/Referral Poster for registration page.webp';
+import heroImg from '../assets/Referral Poster for registration page.webp';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -18,6 +18,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
     });
     const [languageError, setLanguageError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
+    const [heroLoaded, setHeroLoaded] = useState(false);
 
     // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
     useEffect(() => {
@@ -137,9 +138,24 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
             <TwentyOneDaysHeader />
             <main className="flex-grow flex flex-col items-center justify-start pb-4 px-0">
                 <div className="w-full flex flex-col">
-                    {/* Hero Image */}
+                    {/* Hero Section */}
                     <div className="w-full pt-[80px]">
-                        <img src={referralPoster} alt="Yoga Day Referral Contest" className="w-full" />
+                        <div className="w-full relative" style={{ aspectRatio: '1080/1350' }}>
+                            {!heroLoaded && (
+                                <div className="absolute inset-0 bg-gradient-to-b from-[#7EC8ED] to-[#EFF8FC] animate-pulse" />
+                            )}
+                            <img
+                                src={heroImg}
+                                alt="Refer and Win — Top 500 Winners get a Yoga Kit"
+                                width={1080}
+                                height={1350}
+                                fetchPriority="high"
+                                loading="eager"
+                                decoding="async"
+                                onLoad={() => setHeroLoaded(true)}
+                                className="w-full"
+                            />
+                        </div>
                     </div>
 
                     {/* Card */}

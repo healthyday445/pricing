@@ -23,6 +23,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     const [languageError, setLanguageError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
     const [popupStatus, setPopupStatus] = useState<string | null>(null);
+    const [heroLoaded, setHeroLoaded] = useState(false);
 
     // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
     useEffect(() => {
@@ -178,8 +179,21 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             <main className="flex-grow flex flex-col items-center justify-start pb-4 px-0">
                 <div className="w-full flex flex-col">
                     {/* Hero Image */}
-                    <div className="w-full">
-                        <img src={iydHero} alt="21 Days FREE Yoga" className="w-full" />
+                    <div className="w-full relative" style={{ aspectRatio: '1080/1350' }}>
+                        {!heroLoaded && (
+                            <div className="absolute inset-0 bg-gradient-to-b from-[#FFF3E0] to-[#FFF8F0] animate-pulse" />
+                        )}
+                        <img
+                            src={iydHero}
+                            alt="21 Days FREE Yoga"
+                            width={1080}
+                            height={1350}
+                            fetchPriority="high"
+                            loading="eager"
+                            decoding="async"
+                            onLoad={() => setHeroLoaded(true)}
+                            className="w-full"
+                        />
                     </div>
 
                     {/* Card Column */}

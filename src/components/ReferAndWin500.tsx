@@ -1,7 +1,8 @@
 import React from "react";
 import whiteArrow from "../assets/whiteArrow.svg";
 import bgPattern from "../assets/11621406ee6eb5f29bb80937e33d2195815c78d8.webp";
-import elementImg from "../assets/element.webp";
+import elementImg from "../assets/element@2x.webp";
+import elementImg1x from "../assets/element@1x.webp";
 
 interface ReferAndWin500Props {
   onClick?: () => void;
@@ -70,6 +71,8 @@ const ReferAndWin500: React.FC<ReferAndWin500Props> = ({ onClick }) => (
       {/* Illustration */}
       <img
         src={elementImg}
+        srcSet={`${elementImg1x} 300w, ${elementImg} 600w`}
+        sizes="330px"
         alt="Yoga Kit"
         style={{
           width: "10.3125rem",
