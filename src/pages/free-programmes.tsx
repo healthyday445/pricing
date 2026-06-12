@@ -5,7 +5,7 @@ import SharedTestimonials from '../components/SharedTestimonials';
 import RegistrationPopup from '../components/RegistrationPopup';
 import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'lucide-react';
 import frame129 from '../assets/image (36) (1).webp';
-import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
+import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';

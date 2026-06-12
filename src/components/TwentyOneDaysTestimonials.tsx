@@ -5,13 +5,13 @@ const testimonials = [
         name: "KAVITHA, SINGAPORE",
         stats: "106 HEALTHYDAYS",
         text: "I had long-standing neck discomfort that affected my movement and confidence. With consistent yoga focused on posture and alignment, I felt noticeably more comfortable in my body and confident returning to normal daily activities.",
-        image: "/testimonial-1.png"
+        image: "/testimonial-1.webp"
     },
     {
         name: "ARUNA, VISHAKAPATNAM",
         stats: "103 HEALTHYDAYS",
         text: "After months of consistent yoga practice, I personally felt calmer, more balanced, and in better control of my daily wellbeing. Long-standing discomfort that affected my routine reduced gradually, and yoga became an important part of my life.",
-        image: "/testimonial-3.png"
+        image: "/testimonial-3.webp"
     },
     {
         name: "DR. UDAY, CHITTOR",
@@ -23,19 +23,19 @@ const testimonials = [
         name: "GAJAVELLI, CHENNAI",
         stats: "271 HEALTHYDAYS",
         text: "At 65, after months of disciplined yoga practice and mindful eating, I felt stronger, more active, and independent in my daily life. Routine activities like climbing stairs became easier, and yoga naturally became part of my lifestyle.",
-        image: "/testimonial-4.png"
+        image: "/testimonial-4.webp"
     },
     {
         name: "DR. VIJAYAKUMARI, TIRUPATI",
         stats: "81 HEALTHYDAYS",
         text: "For years I struggled with discomfort and poor sleep that affected my confidence and daily routine. With consistent yoga practice, I personally felt more relaxed, balanced, and comfortable, which helped me regain control over my everyday life.",
-        image: "/testimonial-5.png"
+        image: "/testimonial-5.webp"
     },
     {
         name: "RAJESWARI, GUNTUR",
         stats: "63 HEALTHYDAYS",
         text: "I once struggled with low stamina and discomfort during daily activities. With consistent breath-focused yoga practice, I personally felt more comfortable staying active, climbing stairs, and handling routine movements with confidence.",
-        image: "/testimonial-6.png"
+        image: "/testimonial-6.webp"
     }
 ];
 

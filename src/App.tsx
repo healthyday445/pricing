@@ -37,7 +37,7 @@ const OflRedirect = () => {
 
 const PageLoader = () => (
   <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
-    <img src="/logo.png" alt="Healthyday" style={{ height: 36, opacity: 0.7 }} />
+    <img src="/logo.webp" alt="Healthyday" style={{ height: 36, opacity: 0.7 }} />
   </div>
 );
 

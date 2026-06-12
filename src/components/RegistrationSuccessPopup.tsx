@@ -1,6 +1,6 @@
 import React from 'react';
 import successPopupSvg from '../assets/success_popup.svg';
-import alreadyRegisteredSvg from '../assets/Frame 53 (5).png';
+import alreadyRegisteredSvg from '../assets/Frame 53 (5).webp';
 
 type ApiStatus =
     | 'success'

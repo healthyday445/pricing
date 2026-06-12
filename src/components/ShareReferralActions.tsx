@@ -1,5 +1,5 @@
 import React from "react";
-import whatsappIcon from "../assets/image 1.png";
+import whatsappIcon from "../assets/image 1.webp";
 
 export const ShareReferralActions = ({
   shareLink,

@@ -8,7 +8,7 @@ const TwentyOneDaysHeader = () => {
         <header className="absolute top-0 left-0 right-0 bg-white shadow-[0_4px_30px_rgba(0,0,0,0.1)] z-50 h-[80px]">
             <div className="w-full px-4 h-full flex items-center justify-between">
                 <a href="https://healthyday.co.in/">
-                    <img src="/logo.png" alt="Healthyday Logo" className="h-[30px] w-auto object-contain" />
+                    <img src="/logo.webp" alt="Healthyday Logo" className="h-[30px] w-auto object-contain" />
                 </a>
 
                 <button
@@ -30,7 +30,7 @@ const TwentyOneDaysHeader = () => {
 
                     <div className="mb-10">
                         <a href="https://healthyday.co.in/">
-                            <img src="/logo.png" alt="Healthyday Logo" className="h-[40px] w-auto object-contain" />
+                            <img src="/logo.webp" alt="Healthyday Logo" className="h-[40px] w-auto object-contain" />
                         </a>
                     </div>
 

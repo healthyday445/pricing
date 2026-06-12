@@ -3,7 +3,8 @@ import TwentyOneDaysFooter from '../components/TwentyOneDaysFooter';
 import TwentyOneDaysTestimonials from '../components/TwentyOneDaysTestimonials';
 import RegistrationPopup from '../components/RegistrationPopup';
 
-import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.png';
+import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
+import iydHero from '../assets/IYD-reg-page-hero.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
@@ -178,7 +179,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 <div className="w-full flex flex-col">
                     {/* Hero Image */}
                     <div className="w-full">
-                        <img src="https://storage.googleapis.com/whatsapp_banners_assets/IYD_2026/iyd-reg-page-hero-3.png" alt="21 Days FREE Yoga" className="w-full" />
+                        <img src={iydHero} alt="21 Days FREE Yoga" className="w-full" />
                     </div>
 
                     {/* Card Column */}

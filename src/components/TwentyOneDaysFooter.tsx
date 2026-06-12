@@ -7,7 +7,7 @@ const TwentyOneDaysFooter = () => {
                 {/* Brand */}
                 <div>
                     <div className="flex items-center gap-2 mb-4">
-                        <img src="/logo.png" alt="Healthyday Logo" className="h-9 w-auto object-contain" />
+                        <img src="/logo.webp" alt="Healthyday Logo" className="h-9 w-auto object-contain" />
                     </div>
                     <p className="text-[14px] leading-[22px] font-normal text-slate-900">
                         Healthyday is a wellness community of over 6.04 Lakh+ students. Founded in 2024 by Jagan, an Internationally Certified Yoga Instructor, Healthyday conducts online Yoga and wellness programs.

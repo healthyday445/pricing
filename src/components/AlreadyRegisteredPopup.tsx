@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import successPopupSvg from '../assets/Frame 53 (5).png';
+import successPopupSvg from '../assets/Frame 53 (5).webp';
 
 interface AlreadyRegisteredPopupProps {
     isOpen: boolean;

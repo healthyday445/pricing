@@ -92,7 +92,7 @@ const PlanCheckout = () => {
             currency: "INR",
             name: "Healthyday",
             description: `${plan.title} Subscription`,
-            image: "/logo.png",
+            image: "/logo.webp",
             handler: function (response: any) {
                 setPaymentId(response.razorpay_payment_id);
                 setShowModal(true);

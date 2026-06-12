@@ -11,7 +11,7 @@ const SharedHeader = () => {
                 <div className="flex items-center space-x-2">
                     <div className="flex flex-col items-center">
                         <a href="https://healthyday.co.in/">
-                            <img src="/logo.png" alt="Healthyday Logo" className="h-[30px] w-auto object-contain" />
+                            <img src="/logo.webp" alt="Healthyday Logo" className="h-[30px] w-auto object-contain" />
                         </a>
                     </div>
                 </div>
@@ -51,7 +51,7 @@ const SharedHeader = () => {
                         {/* Logo */}
                         <div className="mb-10">
                             <a href="https://healthyday.co.in/">
-                                <img src="/logo.png" alt="Healthyday Logo" className="h-[40px] w-auto object-contain" />
+                                <img src="/logo.webp" alt="Healthyday Logo" className="h-[40px] w-auto object-contain" />
                             </a>
                         </div>
 
