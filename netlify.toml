@@ -4,7 +4,7 @@
 
 [[redirects]]
   from = "/api/*"
-  to = "https://healthyday-backend-773381060399.asia-south1.run.app/api/:splat"
+  to = "https://healthyday-backend-v2-773381060399.asia-south1.run.app/api/:splat"
   status = 200
   force = true
 
