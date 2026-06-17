@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
 import PhoneInputCustom from '../components/PhoneInputCustom';
-import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
+import { enforceReferralLimit, recordReferralUse, isReferralLimitReached } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
+import { getIpAddress } from '../utils/getIpAddress';
+import RegistrationPopup from '../components/RegistrationPopup';
 import heroImg from '../assets/Referral Poster for registration page.webp';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
@@ -18,6 +20,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
     });
     const [languageError, setLanguageError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
+    const [popupStatus, setPopupStatus] = useState<string | null>(null);
     const [heroLoaded, setHeroLoaded] = useState(false);
 
     // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
@@ -54,6 +57,12 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
         }
         setLanguageError(false);
 
+        if (isReferralLimitReached()) {
+            pushDataLayer({ 'event': 'registration_device_limit', 'page_name': 'referral_contest' });
+            setPopupStatus('device_limit_reached');
+            return;
+        }
+
         try {
             const searchParams = new URLSearchParams(window.location.search);
             const rawSource = searchParams.get('source') || searchParams.get('ref');
@@ -73,6 +82,8 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                 id_value = fbclid;
             }
 
+            const ip_address = await getIpAddress();
+
             const payload = {
                 name: formData.name,
                 mobile: formData.dialCode + formData.phone,
@@ -82,7 +93,8 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                 id_value,
                 gclid,
                 fbclid,
-                ad_name: safeSessionStorageGet('ad_name_persistent')
+                ad_name: safeSessionStorageGet('ad_name_persistent'),
+                ip_address
             };
 
             const response = await fetch('/api/register/iyd-rfc', {
@@ -225,6 +237,14 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                     </div>
                 </div>
             </main>
+            <RegistrationPopup
+                isOpen={popupStatus !== null}
+                onClose={() => setPopupStatus(null)}
+                status={popupStatus}
+                language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
+                mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                variant="free"
+            />
         </div>
     );
 };

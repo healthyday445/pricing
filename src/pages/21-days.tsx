@@ -6,9 +6,10 @@ import RegistrationPopup from '../components/RegistrationPopup';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
 import iydHero from '../assets/IYD-reg-page-hero.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
-import { enforceReferralLimit, recordReferralUse } from '../utils/referralGuard';
+import { enforceReferralLimit, recordReferralUse, isReferralLimitReached } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
+import { getIpAddress } from '../utils/getIpAddress';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -80,6 +81,12 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             return;
         }
 
+        if (isReferralLimitReached()) {
+            pushDataLayer({ 'event': 'registration_device_limit', 'page_name': '21_days' });
+            setPopupStatus('device_limit_reached');
+            return;
+        }
+
         try {
             const searchParams = new URLSearchParams(window.location.search);
             const source = searchParams.get('source') || searchParams.get('ref') || 'website_organic';
@@ -98,6 +105,8 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 id_value = fbclid;
             }
 
+            const ip_address = await getIpAddress();
+
             const payload = {
                 name: formData.name,
                 mobile: formData.dialCode + formData.phone,
@@ -107,7 +116,8 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 id_value,
                 gclid,
                 fbclid,
-                ad_name: safeSessionStorageGet('ad_name_persistent')
+                ad_name: safeSessionStorageGet('ad_name_persistent'),
+                ip_address
             };
 
             const response = await fetch('/api/register', {

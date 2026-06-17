@@ -34,26 +34,43 @@ function saveUsageMap(map: RefUsageMap): void {
 }
 
 /**
- * Call this on page load. If the current ?ref= code has been used
- * MAX_REFERRAL_USES or more times, strips the ref param and redirects
- * to the plain URL so the referral doesn't count.
- *
- * Returns `true` if the page is about to redirect (caller should stop rendering).
+ * Call this before submitting. Returns true if the current ?ref= code
+ * has been used MAX_REFERRAL_USES or more times.
+ */
+export function isReferralLimitReached(): boolean {
+  const url = new URL(window.location.href);
+  const ref = url.searchParams.get('ref') || url.searchParams.get('source');
+
+  const map = getUsageMap();
+  
+  // Check global device total
+  const deviceTotal = map['device_total'] ?? 0;
+  if (deviceTotal >= MAX_REFERRAL_USES) return true;
+
+  if (!ref) return false;
+
+  const count = map[ref] ?? 0;
+  return count >= MAX_REFERRAL_USES;
+}
+
+/**
+ * Call this on page load.
+ * We no longer redirect here so the user can see the form and we can show a popup on submit.
  */
 export function enforceReferralLimit(): boolean {
   const url = new URL(window.location.href);
-  const ref = url.searchParams.get('ref');
-
-  if (!ref) return false; // no ref param — nothing to guard
+  const ref = url.searchParams.get('ref') || url.searchParams.get('source');
 
   const map = getUsageMap();
-  const count = map[ref] ?? 0;
+  
+  const deviceTotal = map['device_total'] ?? 0;
+  if (deviceTotal >= MAX_REFERRAL_USES) return true;
 
+  if (!ref) return false; 
+
+  const count = map[ref] ?? 0;
   if (count >= MAX_REFERRAL_USES) {
-    // Strip the ref param and redirect
-    url.searchParams.delete('ref');
-    window.location.replace(url.toString());
-    return true; // redirect in progress
+    return true; // limit reached
   }
 
   return false;
@@ -65,11 +82,16 @@ export function enforceReferralLimit(): boolean {
  */
 export function recordReferralUse(): void {
   const url = new URL(window.location.href);
-  const ref = url.searchParams.get('ref');
-
-  if (!ref) return;
+  const ref = url.searchParams.get('ref') || url.searchParams.get('source');
 
   const map = getUsageMap();
-  map[ref] = (map[ref] ?? 0) + 1;
+  
+  // Always increment the global device total
+  map['device_total'] = (map['device_total'] ?? 0) + 1;
+
+  if (ref) {
+    map[ref] = (map[ref] ?? 0) + 1;
+  }
+  
   saveUsageMap(map);
 }

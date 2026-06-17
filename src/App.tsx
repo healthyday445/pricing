@@ -58,6 +58,8 @@ const App = () => {
           <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<PlanCheckout />} />
+          <Route path="/:planId/checkout" element={<PlanCheckout />} />
+          <Route path="/:planId/checkout/old" element={<PlanCheckout />} />
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
           <Route path="/21days" element={<TwentyOneDays />} />

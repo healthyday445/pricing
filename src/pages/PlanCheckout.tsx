@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import { ArrowLeft } from 'lucide-react';
@@ -39,9 +39,37 @@ const defaultPlan = {
     isBestValue: true,
 };
 
+const oldPlans: Record<string, any> = {
+    '1year': {
+        title: "1 Year Including Diet",
+        duration: "1 Year Including Diet",
+        originalPrice: "5999",
+        discountPrice: "1999",
+        discount: "Save 66%!",
+        isBestValue: true,
+    },
+    '6months': {
+        title: "6 Months Plan",
+        duration: "6 Months Plan",
+        originalPrice: "2999",
+        discountPrice: "1499",
+        discount: "Save 50%!",
+        isBestValue: false,
+    },
+    '3months': {
+        title: "3 Months Plan",
+        duration: "3 Months Plan",
+        originalPrice: "1499",
+        discountPrice: "999",
+        discount: "Save 33%!",
+        isBestValue: false,
+    }
+};
+
 const PlanCheckout = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { planId } = useParams();
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dialCode, setDialCode] = useState('+91');
     const [language, setLanguage] = useState('Telugu');
@@ -49,7 +77,15 @@ const PlanCheckout = () => {
     const [showModal, setShowModal] = useState(false);
     const [paymentId, setPaymentId] = useState('');
 
-    const plan = location.state?.plan || defaultPlan;
+    let plan = location.state?.plan;
+
+    if (!plan && location.pathname.includes('/checkout/old') && planId) {
+        if (planId === '1year') plan = oldPlans['1year'];
+        else if (planId === '6months') plan = oldPlans['6months'];
+        else if (planId === '3months') plan = oldPlans['3months'];
+    }
+
+    if (!plan) plan = defaultPlan;
 
     useEffect(() => {
         window.scrollTo(0, 0);
