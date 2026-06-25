@@ -3,7 +3,7 @@ import { ChildPopupProps } from './types';
 import whatsappIcon from '../../assets/WhatsApp.svg';
 import { pushDataLayer } from '../../utils/pushDataLayer';
 
-const WA_BUSINESS_NUMBER = '919052888968';
+const WA_BUSINESS_NUMBER = '918008153968';
 
 const IsReferralContent: React.FC<ChildPopupProps> = ({ status }) => {
     const handleClick = () => {
