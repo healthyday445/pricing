@@ -9,6 +9,7 @@ const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
 const Renew = lazy(() => import('./pages/Renew'));
 const ReferralContestRegistration = lazy(() => import('./pages/referral-contest-registration'));
+const ReferralTnc = lazy(() => import('./pages/ReferralTnc'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -75,6 +76,7 @@ const App = () => {
           <Route path="/21-day/telugu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
           <Route path="/21-day/telagu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
           <Route path="/500yogakits" element={<ReferralContestRegistration />} />
+          <Route path="/referral-tnc" element={<ReferralTnc />} />
           <Route path="/join" element={<JoinRedirect />} />
           <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
