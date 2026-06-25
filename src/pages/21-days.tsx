@@ -171,7 +171,12 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
 
                 // Track this referral usage in localStorage
                 recordReferralUse();
-                setPopupStatus(resolvedStatus);
+
+                if (data.is_referral === true && formData.language === 'English' && data.status === 'new_registration') {
+                    setPopupStatus('isReferral');
+                } else {
+                    setPopupStatus(resolvedStatus);
+                }
             } else {
                 pushDataLayer({ 'event': 'registration_api_error', 'page_name': '21_days', 'http_status': response.status });
                 console.error('Registration failed');
