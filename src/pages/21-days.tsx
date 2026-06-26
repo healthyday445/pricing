@@ -172,7 +172,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 // Track this referral usage in localStorage
                 recordReferralUse();
 
-                if (data.is_referral === true && formData.language === 'English' && data.status === 'new_registration') {
+                if (data.is_referral === true && data.status === 'new_registration') {
                     setPopupStatus('isReferral');
                 } else {
                     setPopupStatus(resolvedStatus);
