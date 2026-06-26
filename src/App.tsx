@@ -10,6 +10,7 @@ const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
 const Renew = lazy(() => import('./pages/Renew'));
 const ReferralContestRegistration = lazy(() => import('./pages/referral-contest-registration'));
 const ReferralTnc = lazy(() => import('./pages/ReferralTnc'));
+const USDPricing = lazy(() => import('./pages/USDPricing'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -55,6 +56,7 @@ const App = () => {
           <Route path="/telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/talagu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/pricing" element={<Home />} />
+          <Route path="/usd-pricing" element={<USDPricing />} />
           <Route path="/renew" element={<Renew />} />
           <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/thank-you" element={<ThankYou />} />

@@ -35,6 +35,8 @@ const defaultPlan = {
     duration: "6 Months Plan",
     originalPrice: "2999",
     discountPrice: "1899",
+    usdPrice: "39",
+    usdOriginalPrice: "62",
     discount: "Save 37%!",
     isBestValue: true,
 };
@@ -45,6 +47,8 @@ const oldPlans: Record<string, any> = {
         duration: "1 Year Including Diet",
         originalPrice: "5999",
         discountPrice: "1999",
+        usdPrice: "49",
+        usdOriginalPrice: "125",
         discount: "Save 66%!",
         isBestValue: true,
     },
@@ -53,6 +57,8 @@ const oldPlans: Record<string, any> = {
         duration: "6 Months Plan",
         originalPrice: "2999",
         discountPrice: "1499",
+        usdPrice: "39",
+        usdOriginalPrice: "62",
         discount: "Save 50%!",
         isBestValue: false,
     },
@@ -61,6 +67,8 @@ const oldPlans: Record<string, any> = {
         duration: "3 Months Plan",
         originalPrice: "1499",
         discountPrice: "999",
+        usdPrice: "29",
+        usdOriginalPrice: "31",
         discount: "Save 33%!",
         isBestValue: false,
     }
@@ -70,22 +78,40 @@ const PlanCheckout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { planId } = useParams();
+    const isUSDFlow = location.state?.isUSDFlow || false;
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [dialCode, setDialCode] = useState('+91');
+    const [dialCode, setDialCode] = useState(isUSDFlow ? '+1' : '+91');
     const [language, setLanguage] = useState('Telugu');
     const [phoneError, setPhoneError] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [paymentId, setPaymentId] = useState('');
 
-    let plan = location.state?.plan;
+    let plan = location.state?.plan ? { ...location.state.plan } : null;
 
     if (!plan && location.pathname.includes('/checkout/old') && planId) {
-        if (planId === '1year') plan = oldPlans['1year'];
-        else if (planId === '6months') plan = oldPlans['6months'];
-        else if (planId === '3months') plan = oldPlans['3months'];
+        if (planId === '1year') plan = { ...oldPlans['1year'] };
+        else if (planId === '6months') plan = { ...oldPlans['6months'] };
+        else if (planId === '3months') plan = { ...oldPlans['3months'] };
     }
 
-    if (!plan) plan = defaultPlan;
+    if (!plan) plan = { ...defaultPlan };
+
+    // Inject USD prices if missing
+    if (!plan.usdPrice) {
+        if (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year')) {
+            plan.usdPrice = "49";
+            plan.usdOriginalPrice = "125";
+        } else if (plan.title?.includes('6 Month') || plan.duration?.includes('6 Month')) {
+            plan.usdPrice = "39";
+            plan.usdOriginalPrice = "62";
+        } else if (plan.title?.includes('3 Month') || plan.duration?.includes('3 Month')) {
+            plan.usdPrice = "29";
+            plan.usdOriginalPrice = "31";
+        } else {
+            plan.usdPrice = "39";
+            plan.usdOriginalPrice = "62";
+        }
+    }
 
     useEffect(() => {
         window.scrollTo(0, 0);
@@ -122,10 +148,25 @@ const PlanCheckout = () => {
         const fullContact = `${dialCode}${phoneNumber}`;
         console.log('Razorpay prefill contact:', fullContact, '| dialCode:', dialCode, '| phoneNumber:', phoneNumber);
 
+        const isUSD = dialCode !== '+91';
+        const finalPrice = isUSD && plan.usdPrice ? plan.usdPrice : plan.discountPrice;
+        const currency = isUSD ? "USD" : "INR";
+
+        let planNameId = '';
+        if (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year')) {
+            planNameId = isUSD ? '12m_usd' : '1Y_6';
+        } else if (plan.title?.includes('6 Month') || plan.duration?.includes('6 Month')) {
+            planNameId = isUSD ? '6m_usd' : '6M_6';
+        } else if (plan.title?.includes('3 Month') || plan.duration?.includes('3 Month')) {
+            planNameId = isUSD ? '3m_usd' : '3M_6';
+        } else {
+            planNameId = plan.title;
+        }
+
         const options = {
             key: razorpayKey,
-            amount: Number(plan.discountPrice) * 100,
-            currency: "INR",
+            amount: Number(finalPrice) * 100,
+            currency: currency,
             name: "Healthyday",
             description: `${plan.title} Subscription`,
             image: "/logo.webp",
@@ -139,8 +180,8 @@ const PlanCheckout = () => {
                 contact: fullContact
             },
             notes: {
-                class_language: language,
-                plan: plan.title
+                language: language,
+                plan_name: planNameId
             },
             theme: {
                 color: "#004e8c"
@@ -242,8 +283,12 @@ const PlanCheckout = () => {
                                 <div className="p-6">
                                     <h3 className="text-[20px] font-bold text-[#0D468B] mb-2">{plan.title}</h3>
                                     <div className="flex items-center gap-2 mb-3">
-                                        <span className="text-[#919191] line-through text-[18px] font-medium decoration-2">₹{plan.originalPrice}/-</span>
-                                        <span className="text-[32px] font-bold text-[#0D468B]">₹{plan.discountPrice}/-</span>
+                                        <span className="text-[#919191] line-through text-[18px] font-medium decoration-2">
+                                            {dialCode !== '+91' && plan.usdOriginalPrice ? `$${plan.usdOriginalPrice}` : `₹${plan.originalPrice}/-`}
+                                        </span>
+                                        <span className="text-[32px] font-bold text-[#0D468B]">
+                                            {dialCode !== '+91' && plan.usdPrice ? `$${plan.usdPrice}` : `₹${plan.discountPrice}/-`}
+                                        </span>
                                     </div>
                                     <div className="inline-block bg-[#ff0000] text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase">
                                         {plan.discount}
@@ -267,7 +312,7 @@ const PlanCheckout = () => {
                                             }}
                                             placeholder="Enter Your Whatsapp Number"
                                             required
-                                            defaultCountry="in"
+                                            defaultCountry={isUSDFlow ? "us" : "in"}
                                         />
                                         {phoneError && (
                                             <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid mobile number.</span>

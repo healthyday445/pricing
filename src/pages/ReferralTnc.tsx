@@ -165,7 +165,15 @@ const ReferralTnc = () => {
                 <li>colour, size, model, brand</li>
                 <li>packaging, specifications, design, market value</li>
               </ul>
-              <p>based on availability. No cash alternative shall be provided.</p>
+              <p className="mb-4">based on availability. No cash alternative shall be provided.</p>
+              <p className="mb-2"><strong className="text-[#0d468b]">1 Valid Referral Reward:</strong> Participants who complete 1 valid referral shall receive a Healthyday Diet PDF on their registered WhatsApp number. The PDF may be delivered at any time on or before 30th June 2026.</p>
+              <p className="mb-2"><strong className="text-[#0d468b]">3 Valid Referrals Reward:</strong> Participants who complete 3 valid referrals shall receive a 1-Month Free Yoga Coupon. The 1-Month Free Yoga Coupon:</p>
+              <ul className="list-disc pl-10 space-y-2 mb-4">
+                <li>must be redeemed on or before 31st July 2026;</li>
+                <li>is applicable only towards eligible Healthyday paid subscriptions as specified here</li>
+                <li>cannot be redeemed for cash, transferred, exchanged or combined with any other promotional offer unless explicitly permitted by Healthyday</li>
+              </ul>
+              <p>Healthyday reserves the right to verify referral eligibility before issuing any reward or coupon.</p>
             </section>
 
             <section>
