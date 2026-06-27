@@ -13,12 +13,6 @@
   force = true
 
 [[redirects]]
-  from = "/api/internal/*"
-  to = "https://test-healthyday-backend-773381060399.asia-south1.run.app/api/internal/:splat"
-  status = 200
-  force = true
-
-[[redirects]]
   from = "/api/*"
   to = "https://healthyday-backend-v2-773381060399.asia-south1.run.app/api/:splat"
   status = 200
