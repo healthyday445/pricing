@@ -86,7 +86,7 @@ const PlanCheckout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { planId } = useParams();
-    const isUSDFlow = location.state?.isUSDFlow || false;
+    const isUSDFlow = location.state?.isUSDFlow !== undefined ? location.state.isUSDFlow : location.pathname.includes('_usd');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dialCode, setDialCode] = useState(isUSDFlow ? '+1' : '+91');
     const [language, setLanguage] = useState('Telugu');
@@ -96,10 +96,54 @@ const PlanCheckout = () => {
 
     let plan = location.state?.plan ? { ...location.state.plan } : null;
 
-    if (!plan && location.pathname.includes('/checkout/old') && planId) {
-        if (planId === '1year') plan = { ...oldPlans['1year'] };
-        else if (planId === '6months') plan = { ...oldPlans['6months'] };
-        else if (planId === '3months') plan = { ...oldPlans['3months'] };
+    if (!plan) {
+        if (location.pathname.includes('/checkout/old') && planId) {
+            if (planId === '1year') plan = { ...oldPlans['1year'] };
+            else if (planId === '6months') plan = { ...oldPlans['6months'] };
+            else if (planId === '3months') plan = { ...oldPlans['3months'] };
+        } else if (location.pathname.includes('12m')) {
+            const isRenew = location.pathname.includes('/renew');
+            plan = {
+                title: "1 Year Including Diet",
+                duration: "1 Year Including Diet",
+                originalPrice: "5999",
+                discountPrice: isRenew ? "1999" : "2399",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: isUSDFlow ? "Save 66%!" : (isRenew ? "Save 66%!" : "Save 60%!"),
+                isBestValue: true,
+                inrPlanName: isRenew ? "12m_renew_inr" : "12m_new_inr",
+                usdPlanName: isRenew ? "12m_renew_usd" : "12m_new_usd"
+            };
+        } else if (location.pathname.includes('6m')) {
+            const isRenew = location.pathname.includes('/renew');
+            plan = {
+                title: "6 Months Plan",
+                duration: "6 Months Plan",
+                originalPrice: "2999",
+                discountPrice: isRenew ? "1499" : "1899",
+                usdOriginalPrice: "79",
+                usdPrice: "39",
+                discount: isUSDFlow ? "Save 50%!" : (isRenew ? "Save 50%!" : "Save 37%!"),
+                isBestValue: false,
+                inrPlanName: isRenew ? "6m_renew_inr" : "6m_new_inr",
+                usdPlanName: isRenew ? "6m_renew_usd" : "6m_new_usd"
+            };
+        } else if (location.pathname.includes('3m')) {
+            const isRenew = location.pathname.includes('/renew');
+            plan = {
+                title: "3 Months Plan",
+                duration: "3 Months Plan",
+                originalPrice: "1499",
+                discountPrice: isRenew ? "999" : "1399",
+                usdOriginalPrice: "39",
+                usdPrice: "29",
+                discount: isUSDFlow ? "Save 33%!" : (isRenew ? "Save 33%!" : "Save 7%!"),
+                isBestValue: false,
+                inrPlanName: isRenew ? "3m_renew_inr" : "3m_new_inr",
+                usdPlanName: isRenew ? "3m_renew_usd" : "3m_new_usd"
+            };
+        }
     }
 
     if (!plan) plan = { ...defaultPlan };
