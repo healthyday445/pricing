@@ -31,9 +31,9 @@ This page displays prices natively in USD for new users.
 
 | Plan Title | Price Paid (USD) | Original Price (USD) | `plan_name` Sent |
 | :--- | :--- | :--- | :--- |
-| **1 Year Including Diet** | $49 | $125 | `"12m_usd"` |
-| **6 Months Plan** | $39 | $62 | `"6m_usd"` |
-| **3 Months Plan** | $29 | $31 | `"3m_usd"` |
+| **1 Year Including Diet** | $49 | $125 | `"12m_new_usd"` |
+| **6 Months Plan** | $39 | $62 | `"6m_new_usd"` |
+| **3 Months Plan** | $29 | $31 | `"3m_new_usd"` |
 
 ---
 

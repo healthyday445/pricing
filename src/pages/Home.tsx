@@ -39,7 +39,7 @@ const Home = () => {
             isBestValue: true,
             buttonText: "JOIN NOW",
             inrPlanName: "12m_new_inr",
-            usdPlanName: "12m_usd"
+            usdPlanName: "12m_new_usd"
         },
         {
             title: "6 Months Plan",
@@ -49,7 +49,7 @@ const Home = () => {
             isBestValue: false,
             buttonText: "JOIN NOW",
             inrPlanName: "6m_new_inr",
-            usdPlanName: "6m_usd"
+            usdPlanName: "6m_new_usd"
         },
         {
             title: "3 Months Plan",
@@ -59,7 +59,7 @@ const Home = () => {
             isBestValue: false,
             buttonText: "JOIN NOW",
             inrPlanName: "3m_new_inr",
-            usdPlanName: "3m_usd"
+            usdPlanName: "3m_new_usd"
         }
     ];
 

@@ -160,7 +160,7 @@ const PlanCheckout = () => {
 
         let planNameId = '';
         if (isUSD) {
-            planNameId = plan.usdPlanName || (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year') ? '12m_usd' : plan.title?.includes('6 Month') || plan.duration?.includes('6 Month') ? '6m_usd' : plan.title?.includes('3 Month') || plan.duration?.includes('3 Month') ? '3m_usd' : plan.title);
+            planNameId = plan.usdPlanName || (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year') ? '12m_new_usd' : plan.title?.includes('6 Month') || plan.duration?.includes('6 Month') ? '6m_new_usd' : plan.title?.includes('3 Month') || plan.duration?.includes('3 Month') ? '3m_new_usd' : plan.title);
         } else {
             planNameId = plan.inrPlanName || plan.planName || plan.title;
         }
