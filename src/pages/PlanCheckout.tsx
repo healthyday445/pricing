@@ -36,8 +36,8 @@ const defaultPlan = {
     originalPrice: "2999",
     discountPrice: "1899",
     usdPrice: "39",
-    usdOriginalPrice: "62",
-    discount: "Save 37%!",
+    usdOriginalPrice: "79",
+    discount: "Save 50%!",
     isBestValue: true,
 };
 
@@ -48,7 +48,7 @@ const oldPlans: Record<string, any> = {
         originalPrice: "5999",
         discountPrice: "1999",
         usdPrice: "49",
-        usdOriginalPrice: "125",
+        usdOriginalPrice: "149",
         discount: "Save 66%!",
         isBestValue: true,
         inrPlanName: "12m_renew_inr",
@@ -60,7 +60,7 @@ const oldPlans: Record<string, any> = {
         originalPrice: "2999",
         discountPrice: "1499",
         usdPrice: "39",
-        usdOriginalPrice: "62",
+        usdOriginalPrice: "79",
         discount: "Save 50%!",
         isBestValue: false,
         inrPlanName: "6m_renew_inr",
@@ -72,7 +72,7 @@ const oldPlans: Record<string, any> = {
         originalPrice: "1499",
         discountPrice: "999",
         usdPrice: "29",
-        usdOriginalPrice: "31",
+        usdOriginalPrice: "39",
         discount: "Save 33%!",
         isBestValue: false,
         inrPlanName: "3m_renew_inr",
@@ -106,16 +106,16 @@ const PlanCheckout = () => {
     if (!plan.usdPrice) {
         if (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year')) {
             plan.usdPrice = "49";
-            plan.usdOriginalPrice = "125";
+            plan.usdOriginalPrice = "149";
         } else if (plan.title?.includes('6 Month') || plan.duration?.includes('6 Month')) {
             plan.usdPrice = "39";
-            plan.usdOriginalPrice = "62";
+            plan.usdOriginalPrice = "79";
         } else if (plan.title?.includes('3 Month') || plan.duration?.includes('3 Month')) {
             plan.usdPrice = "29";
-            plan.usdOriginalPrice = "31";
+            plan.usdOriginalPrice = "39";
         } else {
             plan.usdPrice = "39";
-            plan.usdOriginalPrice = "62";
+            plan.usdOriginalPrice = "79";
         }
     }
 
