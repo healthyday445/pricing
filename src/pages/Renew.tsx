@@ -17,7 +17,7 @@ const plans = [
         isBestValue: true,
         buttonText: "RENEW NOW",
         inrPlanName: "12m_renew_inr",
-        usdPlanName: "12m_usd"
+        usdPlanName: "12m_renew_usd"
     },
     {
         title: "6 Months Plan",
@@ -27,7 +27,7 @@ const plans = [
         isBestValue: false,
         buttonText: "RENEW NOW",
         inrPlanName: "6m_renew_inr",
-        usdPlanName: "6m_usd"
+        usdPlanName: "6m_renew_usd"
     },
     {
         title: "3 Months Plan",
@@ -37,7 +37,7 @@ const plans = [
         isBestValue: false,
         buttonText: "RENEW NOW",
         inrPlanName: "3m_renew_inr",
-        usdPlanName: "3m_usd"
+        usdPlanName: "3m_renew_usd"
     }
 ];
 

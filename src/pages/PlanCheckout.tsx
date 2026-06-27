@@ -39,6 +39,8 @@ const defaultPlan = {
     usdOriginalPrice: "79",
     discount: "Save 50%!",
     isBestValue: true,
+    inrPlanName: "6m_new_inr",
+    usdPlanName: "6m_new_usd"
 };
 
 const oldPlans: Record<string, any> = {
@@ -52,7 +54,7 @@ const oldPlans: Record<string, any> = {
         discount: "Save 66%!",
         isBestValue: true,
         inrPlanName: "12m_renew_inr",
-        usdPlanName: "12m_usd"
+        usdPlanName: "12m_renew_usd"
     },
     '6months': {
         title: "6 Months Plan",
@@ -64,7 +66,7 @@ const oldPlans: Record<string, any> = {
         discount: "Save 50%!",
         isBestValue: false,
         inrPlanName: "6m_renew_inr",
-        usdPlanName: "6m_usd"
+        usdPlanName: "6m_renew_usd"
     },
     '3months': {
         title: "3 Months Plan",
@@ -76,7 +78,7 @@ const oldPlans: Record<string, any> = {
         discount: "Save 33%!",
         isBestValue: false,
         inrPlanName: "3m_renew_inr",
-        usdPlanName: "3m_usd"
+        usdPlanName: "3m_renew_usd"
     }
 };
 
