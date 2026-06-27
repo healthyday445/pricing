@@ -43,6 +43,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
 
   if (
     (ip && blacklistedIps.includes(ip)) ||
+    (bodyIp && blacklistedIps.includes(bodyIp)) ||
     (referrerMobile && blacklistedMobiles.includes(referrerMobile))
   ) {
     return {
