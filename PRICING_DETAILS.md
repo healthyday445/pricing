@@ -24,14 +24,27 @@ This page is for existing users and offers a discounted loyalty price. Users mus
 
 ---
 
+---
+
 ## 3. USD Pricing Page (`USDPricing.tsx`)
-This page displays prices in USD. (Note: Any plan checked out with an international, non-`+91` phone number will automatically use the USD pricing and `plan_name` below).
+This page displays prices natively in USD for new users.
 
 | Plan Title | Price Paid (USD) | Original Price (USD) | `plan_name` Sent |
 | :--- | :--- | :--- | :--- |
 | **1 Year Including Diet** | $49 | $125 | `"12m_usd"` |
 | **6 Months Plan** | $39 | $62 | `"6m_usd"` |
 | **3 Months Plan** | $29 | $31 | `"3m_usd"` |
+
+---
+
+## 4. USD Renewal Page (`USDRenew.tsx`)
+This page displays prices natively in USD for existing users renewing their subscription.
+
+| Plan Title | Price Paid (USD) | Original Price (USD) | `plan_name` Sent |
+| :--- | :--- | :--- | :--- |
+| **1 Year Including Diet** | $49 | $125 | `"12m_renew_usd"` |
+| **6 Months Plan** | $39 | $62 | `"6m_renew_usd"` |
+| **3 Months Plan** | $29 | $31 | `"3m_renew_usd"` |
 
 ---
 
