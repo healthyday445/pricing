@@ -15,7 +15,9 @@ const plans = [
         discountPrice: "1999",
         discount: "Save 66%!",
         isBestValue: true,
-        buttonText: "RENEW NOW"
+        buttonText: "RENEW NOW",
+        inrPlanName: "12m_renew_inr",
+        usdPlanName: "12m_usd"
     },
     {
         title: "6 Months Plan",
@@ -23,7 +25,9 @@ const plans = [
         discountPrice: "1499",
         discount: "Save 50%!",
         isBestValue: false,
-        buttonText: "RENEW NOW"
+        buttonText: "RENEW NOW",
+        inrPlanName: "6m_renew_inr",
+        usdPlanName: "6m_usd"
     },
     {
         title: "3 Months Plan",
@@ -31,7 +35,9 @@ const plans = [
         discountPrice: "999",
         discount: "Save 33%!",
         isBestValue: false,
-        buttonText: "RENEW NOW"
+        buttonText: "RENEW NOW",
+        inrPlanName: "3m_renew_inr",
+        usdPlanName: "3m_usd"
     }
 ];
 

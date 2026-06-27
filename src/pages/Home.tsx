@@ -37,7 +37,9 @@ const Home = () => {
             discountPrice: "2399",
             discount: "Save 60%!",
             isBestValue: true,
-            buttonText: "JOIN NOW"
+            buttonText: "JOIN NOW",
+            inrPlanName: "12m_new_inr",
+            usdPlanName: "12m_usd"
         },
         {
             title: "6 Months Plan",
@@ -45,7 +47,9 @@ const Home = () => {
             discountPrice: "1899",
             discount: "Save 37%!",
             isBestValue: false,
-            buttonText: "JOIN NOW"
+            buttonText: "JOIN NOW",
+            inrPlanName: "6m_new_inr",
+            usdPlanName: "6m_usd"
         },
         {
             title: "3 Months Plan",
@@ -53,7 +57,9 @@ const Home = () => {
             discountPrice: "1399",
             discount: "Save 7%!",
             isBestValue: false,
-            buttonText: "JOIN NOW"
+            buttonText: "JOIN NOW",
+            inrPlanName: "3m_new_inr",
+            usdPlanName: "3m_usd"
         }
     ];
 

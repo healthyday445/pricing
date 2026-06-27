@@ -51,6 +51,8 @@ const oldPlans: Record<string, any> = {
         usdOriginalPrice: "125",
         discount: "Save 66%!",
         isBestValue: true,
+        inrPlanName: "12m_renew_inr",
+        usdPlanName: "12m_usd"
     },
     '6months': {
         title: "6 Months Plan",
@@ -61,6 +63,8 @@ const oldPlans: Record<string, any> = {
         usdOriginalPrice: "62",
         discount: "Save 50%!",
         isBestValue: false,
+        inrPlanName: "6m_renew_inr",
+        usdPlanName: "6m_usd"
     },
     '3months': {
         title: "3 Months Plan",
@@ -71,6 +75,8 @@ const oldPlans: Record<string, any> = {
         usdOriginalPrice: "31",
         discount: "Save 33%!",
         isBestValue: false,
+        inrPlanName: "3m_renew_inr",
+        usdPlanName: "3m_usd"
     }
 };
 
@@ -153,14 +159,10 @@ const PlanCheckout = () => {
         const currency = isUSD ? "USD" : "INR";
 
         let planNameId = '';
-        if (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year')) {
-            planNameId = isUSD ? '12m_usd' : '1Y_6';
-        } else if (plan.title?.includes('6 Month') || plan.duration?.includes('6 Month')) {
-            planNameId = isUSD ? '6m_usd' : '6M_6';
-        } else if (plan.title?.includes('3 Month') || plan.duration?.includes('3 Month')) {
-            planNameId = isUSD ? '3m_usd' : '3M_6';
+        if (isUSD) {
+            planNameId = plan.usdPlanName || (plan.title?.includes('1 Year') || plan.title?.includes('12 Month') || plan.duration?.includes('1 Year') ? '12m_usd' : plan.title?.includes('6 Month') || plan.duration?.includes('6 Month') ? '6m_usd' : plan.title?.includes('3 Month') || plan.duration?.includes('3 Month') ? '3m_usd' : plan.title);
         } else {
-            planNameId = plan.title;
+            planNameId = plan.inrPlanName || plan.planName || plan.title;
         }
 
         const options = {
