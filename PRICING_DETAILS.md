@@ -48,6 +48,28 @@ This page displays prices natively in USD for existing users renewing their subs
 
 ---
 
+## 5. Upgrade Page (`Upgrade.tsx`)
+This page is for existing users upgrading their subscription. Users must have an Indian phone number.
+
+| Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent |
+| :--- | :--- | :--- | :--- |
+| **3 to 6 months upgrade** | ₹500/- | ₹1000/- | `"3_to_6_months_upgrade"` |
+| **6 to 12 months upgrade** | ₹500/- | ₹1000/- | `"6_to_12_months_upgrade"` |
+| **3 to 12 months upgrade** | ₹1000/- | ₹2000/- | `"3_to_12_months_upgrade"` |
+
+---
+
+## 6. USD Upgrade Page (`USDUpgrade.tsx`)
+This page displays prices natively in USD for existing international users upgrading their subscription.
+
+| Plan Title | Price Paid (USD) | Original Price (USD) | `plan_name` Sent |
+| :--- | :--- | :--- | :--- |
+| **3 to 6 months upgrade** | $10 | $20 | `"3_to_6_months_upgrade_usd"` |
+| **6 to 12 months upgrade** | $10 | $20 | `"6_to_12_months_upgrade_usd"` |
+| **3 to 12 months upgrade** | $20 | $40 | `"3_to_12_months_upgrade_usd"` |
+
+---
+
 ## How it works technically:
 - Each page defines its plans in an array (e.g., `plans` array) and passes the selected `plan` object to `PlanCheckout.tsx` via the router state.
 - Each `plan` object now explicitly contains an `inrPlanName` and a `usdPlanName`.

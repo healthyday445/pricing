@@ -12,6 +12,8 @@ const ReferralContestRegistration = lazy(() => import('./pages/referral-contest-
 const ReferralTnc = lazy(() => import('./pages/ReferralTnc'));
 const USDPricing = lazy(() => import('./pages/USDPricing'));
 const USDRenew = lazy(() => import('./pages/USDRenew'));
+const Upgrade = lazy(() => import('./pages/Upgrade'));
+const USDUpgrade = lazy(() => import('./pages/USDUpgrade'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -61,6 +63,8 @@ const App = () => {
           <Route path="/usd-renew" element={<USDRenew />} />
           <Route path="/renew" element={<Renew />} />
           <Route path="/renew/:planType" element={<Renew />} />
+          <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/usd_upgrade" element={<USDUpgrade />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/checkout" element={<PlanCheckout />} />
           <Route path="/:planId/checkout" element={<PlanCheckout />} />
