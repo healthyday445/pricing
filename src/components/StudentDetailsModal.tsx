@@ -17,8 +17,8 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
 
     const [formData, setFormData] = useState({
         name: '',
-        city: '',
-        state: isUSD ? 'International' : ''
+        city: isUSD ? 'International' : '',
+        state: ''
     });
 
     const [selectedStateCode, setSelectedStateCode] = useState('');
@@ -57,8 +57,8 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
     const handleCountryChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setFormData({
             ...formData,
-            city: e.target.value,
-            state: 'International'
+            city: 'International',
+            state: e.target.value
         });
     };
 
@@ -76,7 +76,7 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
         }
 
         if (isUSD) {
-            if (!formData.city) {
+            if (!formData.state) {
                 setError("Country is required");
                 setLoading(false);
                 return;
@@ -164,8 +164,8 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
                         {isUSD ? (
                             <div className="relative">
                                 <select
-                                    name="city"
-                                    value={formData.city}
+                                    name="state"
+                                    value={formData.state}
                                     onChange={handleCountryChange}
                                     className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 bg-white focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-sm appearance-none"
                                     required
