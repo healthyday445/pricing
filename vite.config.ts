@@ -17,6 +17,11 @@ export default defineConfig(({ mode }) => ({
         rewrite: () => '/.netlify/functions/register',
         changeOrigin: true,
       },
+      '/api/internal': {
+        target: 'https://test-healthyday-backend-773381060399.asia-south1.run.app',
+        changeOrigin: true,
+        secure: false,
+      },
       '/api': {
         target: 'https://healthyday-backend-v2-773381060399.asia-south1.run.app',
         changeOrigin: true,
