@@ -133,7 +133,7 @@ const PlanCheckout = () => {
         }
     }, []);
 
-    const handleCheckout = (e: React.FormEvent) => {
+    const handleCheckout = async (e: React.FormEvent) => {
         e.preventDefault();
         if (!validatePhone(phoneNumber, dialCode)) {
             setPhoneError(true);
@@ -167,32 +167,57 @@ const PlanCheckout = () => {
             planNameId = plan.inrPlanName || plan.planName || plan.title;
         }
 
-        const options = {
-            key: razorpayKey,
-            amount: Number(finalPrice) * 100,
-            currency: currency,
-            name: "Healthyday",
-            description: `${plan.title} Subscription`,
-            image: "/logo.webp",
-            handler: function (response: any) {
-                setPaymentId(response.razorpay_payment_id);
-                setShowModal(true);
-            },
-            prefill: {
-                name: "",
-                email: "",
-                contact: fullContact
-            },
-            notes: {
-                language: language,
-                plan_name: planNameId
-            },
-            theme: {
-                color: "#004e8c"
-            }
-        };
-
         try {
+            const amountInPaisa = Number(finalPrice) * 100;
+
+            // 1. Create Order from Backend to enable auto-capture
+            const orderResponse = await fetch('/.netlify/functions/create-order', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    amount: amountInPaisa,
+                    currency: currency,
+                    notes: {
+                        language: language,
+                        plan_name: planNameId
+                    }
+                })
+            });
+            const orderData = await orderResponse.json();
+
+            if (!orderResponse.ok) {
+                alert(`Error creating Razorpay order: ${orderData.error || 'Unknown error'}. Check console for details.`);
+                console.error("Create Order Error Details:", orderData);
+                return;
+            }
+
+            // 2. Open Razorpay Checkout with the generated order_id
+            const options = {
+                key: razorpayKey,
+                amount: amountInPaisa,
+                currency: currency,
+                order_id: orderData.id, // Passed from backend order creation
+                name: "Healthyday",
+                description: `${plan.title} Subscription`,
+                image: "/logo.webp",
+                handler: function (response: any) {
+                    setPaymentId(response.razorpay_payment_id);
+                    setShowModal(true);
+                },
+                prefill: {
+                    name: "",
+                    email: "",
+                    contact: fullContact
+                },
+                notes: {
+                    language: language,
+                    plan_name: planNameId
+                },
+                theme: {
+                    color: "#004e8c"
+                }
+            };
+
             const rzp1 = new window.Razorpay(options);
             rzp1.open();
         } catch (error) {
