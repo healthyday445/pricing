@@ -12,6 +12,11 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     proxy: {
+      '/api/register': {
+        target: 'http://localhost:9999',
+        rewrite: () => '/.netlify/functions/register',
+        changeOrigin: true,
+      },
       '/api': {
         target: 'https://healthyday-backend-v2-773381060399.asia-south1.run.app',
         changeOrigin: true,
