@@ -39,7 +39,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const blacklistedIps = parseList(process.env.BLACKLISTED_IPS);
   const blacklistedMobiles = parseMobileList(process.env.BLACKLISTED_MOBILES);
 
-  console.log("[blacklist] ip:", JSON.stringify(ip), "bodyIp:", JSON.stringify(bodyIp), "blacklistedIps:", blacklistedIps);
+  console.log("[blacklist] ip:", JSON.stringify(ip), "bodyIp:", JSON.stringify(bodyIp), "blacklistedIps:", blacklistedIps, "referrerMobile:", JSON.stringify(referrerMobile), "blacklistedMobiles:", blacklistedMobiles);
 
   if (
     (ip && blacklistedIps.includes(ip)) ||
