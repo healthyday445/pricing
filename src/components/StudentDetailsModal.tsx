@@ -126,8 +126,8 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
     };
 
     return (
-        <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4">
-            <div className="bg-white rounded-t-3xl rounded-b-3xl w-full max-w-sm overflow-hidden relative shadow-2xl animate-in fade-in zoom-in duration-300 font-sans">
+        <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 h-[100dvh]">
+            <div className="bg-white rounded-t-3xl rounded-b-3xl w-full max-w-sm overflow-y-auto max-h-[90dvh] relative shadow-2xl animate-in fade-in zoom-in duration-300 font-sans">
 
                 {/* Header */}
                 <div className="bg-[#004e8c] pt-8 pb-6 px-4 text-center relative">
@@ -156,7 +156,7 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 placeholder:text-slate-400 focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-sm"
+                            className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 placeholder:text-slate-400 focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-[16px]"
                             placeholder="Name"
                             required
                         />
@@ -167,7 +167,7 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
                                     name="state"
                                     value={formData.state}
                                     onChange={handleCountryChange}
-                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 bg-white focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-sm appearance-none"
+                                    className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 bg-white focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-[16px] appearance-none"
                                     required
                                 >
                                     <option value="" disabled>Select Country</option>
@@ -186,7 +186,7 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
                                         name="state"
                                         value={selectedStateCode}
                                         onChange={handleStateChange}
-                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 bg-white focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-sm appearance-none"
+                                        className="w-full px-4 py-3 rounded-lg border border-slate-300 text-slate-700 bg-white focus:border-[#ffb129] focus:ring-1 focus:ring-[#ffb129] outline-none transition-all text-[16px] appearance-none"
                                         required
                                     >
                                         <option value="" disabled>Select State</option>

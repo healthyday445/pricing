@@ -25,7 +25,12 @@ const USDRenew = () => {
     }, [location]);
 
     const handleNavigationToCheckout = (plan: any) => {
-        navigate('/checkout', {
+        let path = '/checkout';
+        if (plan.title.includes('1 Year')) path = '/renew/12m_usd';
+        else if (plan.title.includes('6 Months')) path = '/renew/6m_usd';
+        else if (plan.title.includes('3 Months')) path = '/renew/3m_usd';
+
+        navigate(path, {
             state: { plan, isUSDFlow: true }
         });
     };

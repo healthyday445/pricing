@@ -56,7 +56,12 @@ const Renew = () => {
             else if (planParam.includes('3month')) selectedPlan = plans[2];
 
             if (selectedPlan) {
-                navigate('/checkout', { state: { plan: selectedPlan }, replace: true });
+                let path = '/checkout';
+                if (selectedPlan.title.includes('1 Year')) path = '/renew/12m';
+                else if (selectedPlan.title.includes('6 Months')) path = '/renew/6m';
+                else if (selectedPlan.title.includes('3 Months')) path = '/renew/3m';
+
+                navigate(path, { state: { plan: selectedPlan }, replace: true });
             }
         }
     }, [planType, navigate]);
@@ -73,7 +78,12 @@ const Renew = () => {
     }, [location]);
 
     const handleNavigationToCheckout = (plan: any) => {
-        navigate('/checkout', {
+        let path = '/checkout';
+        if (plan.title.includes('1 Year')) path = '/renew/12m';
+        else if (plan.title.includes('6 Months')) path = '/renew/6m';
+        else if (plan.title.includes('3 Months')) path = '/renew/3m';
+
+        navigate(path, {
             state: { plan }
         });
     };

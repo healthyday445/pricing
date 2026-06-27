@@ -319,6 +319,11 @@ const PlanCheckout = () => {
                                         {phoneError && (
                                             <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid mobile number.</span>
                                         )}
+                                        {!isUSDFlow && dialCode !== '+91' && !phoneError && (
+                                            <span className="text-[#0D468B] text-[13px] font-semibold mt-1.5 block">
+                                                ⚠ Pricing changed to international
+                                            </span>
+                                        )}
                                     </div>
 
                                     <div className="mb-8 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">

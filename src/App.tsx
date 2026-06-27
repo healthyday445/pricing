@@ -65,9 +65,25 @@ const App = () => {
           <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/upgrade" element={<Upgrade />} />
           <Route path="/usd_upgrade" element={<USDUpgrade />} />
-          <Route path="/thank-you" element={<ThankYou />} />
+
+          {/* Checkout Routes */}
           <Route path="/checkout" element={<PlanCheckout />} />
           <Route path="/:planId/checkout" element={<PlanCheckout />} />
+          
+          <Route path="/12m" element={<PlanCheckout />} />
+          <Route path="/6m" element={<PlanCheckout />} />
+          <Route path="/3m" element={<PlanCheckout />} />
+          <Route path="/12m_usd" element={<PlanCheckout />} />
+          <Route path="/6m_usd" element={<PlanCheckout />} />
+          <Route path="/3m_usd" element={<PlanCheckout />} />
+          <Route path="/renew/12m" element={<PlanCheckout />} />
+          <Route path="/renew/6m" element={<PlanCheckout />} />
+          <Route path="/renew/3m" element={<PlanCheckout />} />
+          <Route path="/renew/12m_usd" element={<PlanCheckout />} />
+          <Route path="/renew/6m_usd" element={<PlanCheckout />} />
+          <Route path="/renew/3m_usd" element={<PlanCheckout />} />
+
+          <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/:planId/checkout/old" element={<PlanCheckout />} />
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
