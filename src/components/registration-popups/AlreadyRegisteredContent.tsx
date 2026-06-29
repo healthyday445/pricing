@@ -1,6 +1,5 @@
 import React from 'react';
 import { ChildPopupProps } from './types';
-import ReferAndWin500 from '../ReferAndWin500';
 import { pushDataLayer } from '../../utils/pushDataLayer';
 import whatsappIcon from '../../assets/WhatsApp.svg';
 import { getProgramStartLabel } from '../../utils/programDates';
@@ -20,10 +19,6 @@ const SunIcon = () => (
 );
 
 const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => {
-    const leaderboardUrl = mobileNumber
-        ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
-        : 'https://class.healthyday.co.in/leaderboard';
-
     return (
         <div className="w-full max-w-[412px] rounded-2xl overflow-hidden shadow-2xl">
 
@@ -66,11 +61,17 @@ const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, sta
                     </span>
                 </div>
 
-                {/* Refer & Win card */}
-                <ReferAndWin500 onClick={() => {
-                    pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'refer_and_win', 'popup_status': status });
-                    window.open(leaderboardUrl, '_blank');
-                }} />
+                {/* Refer & Win Yoga Kit button */}
+                <button
+                    onClick={() => {
+                        pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'refer_and_win', 'popup_status': status });
+                        const w = `I am Inviting you to join me in\n*14-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *${getProgramStartLabel()}*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\nhttps://yoga.healthyday.co.in/?ref=${mobileNumber}`;
+                        window.open(`https://wa.me/?text=${encodeURIComponent(w)}`, '_blank');
+                    }}
+                    style={{ width: '100%', height: '40px', borderRadius: '30px', background: '#FEAB27', border: 'none', cursor: 'pointer', fontFamily: 'Outfit', fontSize: '16px', fontWeight: 500, color: '#202020', textTransform: 'uppercase', letterSpacing: '0.5px', boxShadow: '0px 4px 2px rgba(0,0,0,0.25)' }}
+                >
+                    Refer &amp; Win Yoga Kit
+                </button>
 
             </div>
         </div>
