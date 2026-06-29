@@ -206,7 +206,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                         )}
                         <img
                             src={iydHero}
-                            alt="21 Days FREE Yoga"
+                            alt="14 Days FREE Yoga"
                             width={1080}
                             height={1350}
                             fetchPriority="high"

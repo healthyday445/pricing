@@ -24,7 +24,7 @@ const OldUserContent: React.FC<ChildPopupProps> = ({ language, mobileNumber, sta
             image: alreadyRegisteredSvg,
             header: {
                 te: 'మీరు already ప్రస్తుతం జరుగుతున్న free batch లో register అయ్యారు.',
-                en: 'You are already registered in our ongoing 21 Days FREE Batch.',
+                en: 'You are already registered in our ongoing 14 Days FREE Batch.',
             },
             body: {
                 te: <p>మీకు WhatsApp లో వచ్చిన link తో Join అవ్వండి</p>,

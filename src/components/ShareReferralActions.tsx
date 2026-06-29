@@ -1,5 +1,6 @@
 import React from "react";
 import whatsappIcon from "../assets/image 1.webp";
+import { getProgramStartLabel } from "../utils/programDates";
 
 export const ShareReferralActions = ({
   shareLink,
@@ -22,7 +23,8 @@ export const ShareReferralActions = ({
 
   const handleWhatsAppShare = () => {
     onWhatsAppShare?.();
-    const waMessage = `I am Inviting you to join me in\n*21-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *21st JUNE*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\n${shareLink}`;
+    const startLabel = getProgramStartLabel();
+    const waMessage = `I am Inviting you to join me in\n*14-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *${startLabel}*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\n${shareLink}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(waMessage)}`, "_blank");
   };
 

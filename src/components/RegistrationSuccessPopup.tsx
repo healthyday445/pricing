@@ -1,6 +1,7 @@
 import React from 'react';
 import successPopupSvg from '../assets/success_popup.svg';
 import alreadyRegisteredSvg from '../assets/Frame 53 (5).webp';
+import { getProgramStartLabel } from '../utils/programDates';
 
 type ApiStatus =
     | 'success'
@@ -77,7 +78,7 @@ function getStatusContent(status: string): StatusContent {
                 body: {
                     te: (
                         <p>
-                            ✨ 21 Days Yoga Challenge లో మీరు{' '}
+                            ✨ 14 Days Yoga Challenge లో మీరు{' '}
                             <span className="font-bold inline-flex items-center gap-1">
                                 <img draggable="false" role="img" className="w-5 h-5" alt="🗓️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f5d3.svg" />
                                 Monday
@@ -86,7 +87,7 @@ function getStatusContent(status: string): StatusContent {
                         </p>
                     ),
                     en: (
-                        <p>✨ Your 21 Days FREE Yoga Starting From 21st June</p>
+                        <p>✨ Your 14 Days FREE Yoga Starting From {getProgramStartLabel()}</p>
                     ),
                 },
                 showTimings: true,
@@ -98,12 +99,12 @@ function getStatusContent(status: string): StatusContent {
                 image: alreadyRegisteredSvg,
                 header: {
                     te: 'మీరు already మా next free batch లో register అయ్యారు!',
-                    en: 'You are already registered in our upcoming 21 Days FREE Batch!',
+                    en: 'You are already registered in our upcoming 14 Days FREE Batch!',
                 },
                 body: {
                     te: (
                         <p>
-                            ✨ 21 Days Yoga Challenge లో మీరు{' '}
+                            ✨ 14 Days Yoga Challenge లో మీరు{' '}
                             <span className="font-bold inline-flex items-center gap-1">
                                 <img draggable="false" role="img" className="w-5 h-5" alt="🗓️" src="https://s.w.org/images/core/emoji/17.0.2/svg/1f5d3.svg" />
                                 Monday
@@ -112,7 +113,7 @@ function getStatusContent(status: string): StatusContent {
                         </p>
                     ),
                     en: (
-                        <p>✨ Your 21 Days FREE Yoga Starting From 21st June</p>
+                        <p>✨ Your 14 Days FREE Yoga Starting From {getProgramStartLabel()}</p>
                     ),
                 },
                 showTimings: true,
@@ -124,7 +125,7 @@ function getStatusContent(status: string): StatusContent {
                 image: alreadyRegisteredSvg,
                 header: {
                     te: 'మీరు already ప్రస్తుతం జరుగుతున్న free batch లో register అయ్యారు.',
-                    en: 'You are already registered in our ongoing 21 Days FREE Batch.',
+                    en: 'You are already registered in our ongoing 14 Days FREE Batch.',
                 },
                 body: {
                     te: (

@@ -3,6 +3,7 @@ import { ChildPopupProps } from './types';
 import ReferAndWin500 from '../ReferAndWin500';
 import { pushDataLayer } from '../../utils/pushDataLayer';
 import whatsappIcon from '../../assets/WhatsApp.svg';
+import { getProgramStartLabel } from '../../utils/programDates';
 
 const MoonIcon = () => (
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -42,12 +43,12 @@ const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, sta
                 {/* Program name + start date */}
                 <div className="text-center flex flex-col items-center gap-2">
                     <p className="font-extrabold text-[1.475rem] leading-[25px]" style={{ fontFamily: 'Outfit', wordBreak: 'break-word' }}>
-                        <span style={{ color: '#0a386f', fontWeight: 900 }}>21-Days</span>
+                        <span style={{ color: '#0a386f', fontWeight: 900 }}>14-Days</span>
                         {' '}
                         <span style={{ color: '#feab27', fontWeight: 900 }}>Online Yoga</span>
                     </p>
                     <span style={{ background: '#c1ddff', borderRadius: '5px', padding: '4px 24px', display: 'inline-block', fontFamily: 'Outfit', fontWeight: 700, color: '#0a386f', textAlign: 'center' }}>
-                        <span style={{ fontSize: '20px' }}>Starts on 21</span><sup style={{ fontSize: '10.32px' }}>st</sup><span style={{ fontSize: '20px' }}> JUNE</span>
+                        <span style={{ fontSize: '20px' }}>Starts on {getProgramStartLabel()}</span>
                     </span>
                 </div>
 

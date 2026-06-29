@@ -17,7 +17,7 @@ const USDUpgrade = lazy(() => import('./pages/USDUpgrade'));
 
 const JoinRedirect = () => {
   useEffect(() => {
-    window.location.replace('https://healthyday.co.in/21days');
+    window.location.replace('https://healthyday.co.in/');
   }, []);
   return null;
 };

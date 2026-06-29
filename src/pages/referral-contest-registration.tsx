@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
 import PhoneInputCustom from '../components/PhoneInputCustom';
+import { getProgramStartLabel } from '../utils/programDates';
 import { enforceReferralLimit, recordReferralUse, isReferralLimitReached } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
@@ -133,7 +134,7 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
 
                 // Open WhatsApp with share template
                 const mobileRef = (formData.dialCode + formData.phone).replace('+', '');
-                const waMessage = `I am Inviting you to join me in\n*21-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *21st JUNE*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\nhttps://yoga.healthyday.co.in/21days?ref=${mobileRef}`;
+                const waMessage = `I am Inviting you to join me in\n*14-Days FREE YOGA* 🧘‍♀️😊\n🗓️ Starts *${getProgramStartLabel()}*\n\n🧘 Daily Yoga\n🥗 Simple Diet\n🌿 Lifestyle Habits\n\nWith *JAGAN* 🧘🏻‍♂️\n🌍Internationally Certified Yoga Teacher\n👥 6,00,000+ Students\n\n*Register for FREE Now* 👇🏻👇🏻\nhttps://yoga.healthyday.co.in/?ref=${mobileRef}`;
                 window.open(`https://wa.me/?text=${encodeURIComponent(waMessage)}`, '_blank');
             } else {
                 console.error('Registration failed');
