@@ -3,6 +3,31 @@ import type { Handler, HandlerEvent } from "@netlify/functions";
 const UPSTREAM_URL =
   "https://healthyday-backend-v2-773381060399.asia-south1.run.app/api/register";
 
+const RATE_LIMIT_MAX = 5;
+const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
+
+const rateLimitStore = new Map<string, { count: number; windowStart: number }>();
+
+function checkRateLimit(ip: string): { allowed: true } | { allowed: false; retryAfter: number } {
+  const now = Date.now();
+  for (const [key, val] of rateLimitStore) {
+    if (now - val.windowStart > RATE_LIMIT_WINDOW_MS) rateLimitStore.delete(key);
+  }
+  const entry = rateLimitStore.get(ip);
+  if (!entry || now - entry.windowStart > RATE_LIMIT_WINDOW_MS) {
+    rateLimitStore.set(ip, { count: 1, windowStart: now });
+    return { allowed: true };
+  }
+  if (entry.count >= RATE_LIMIT_MAX) {
+    return {
+      allowed: false,
+      retryAfter: Math.ceil((entry.windowStart + RATE_LIMIT_WINDOW_MS - now) / 1000),
+    };
+  }
+  entry.count++;
+  return { allowed: true };
+}
+
 const normalizeMobile = (s: string) => s.trim().replace(/^\+/, "");
 
 const parseList = (envVar: string | undefined): string[] =>
@@ -51,6 +76,20 @@ export const handler: Handler = async (event: HandlerEvent) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: "Access denied" }),
     };
+  }
+
+  if (ip) {
+    const rl = checkRateLimit(ip);
+    if (!rl.allowed) {
+      return {
+        statusCode: 429,
+        headers: {
+          "Content-Type": "application/json",
+          "Retry-After": String(rl.retryAfter),
+        },
+        body: JSON.stringify({ message: "Too many requests. Please try again later." }),
+      };
+    }
   }
 
   const upstreamHeaders: Record<string, string> = {
