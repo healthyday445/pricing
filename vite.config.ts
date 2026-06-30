@@ -23,7 +23,7 @@ export default defineConfig(({ mode }) => ({
       },
 
       '/api': {
-        target: 'https://test-healthyday-backend-773381060399.asia-south1.run.app',
+        target: 'https://healthyday-backend-v2-773381060399.asia-south1.run.app',
         changeOrigin: true,
         secure: false,
       }

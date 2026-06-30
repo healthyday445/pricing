@@ -138,4 +138,4 @@ npm run dev
 ```
 Open your browser and visit `http://localhost:8080`.
 
-> **💡 Note on APIs**: Notice that we use `/api/register`. Because of the `vite.config.ts` setup, any request made to `/api/*` on your local machine is automatically forwarded (proxied) to the live Healthyday backend server (`https://test-healthyday-backend-773381060399.asia-south1.run.app`). You do not have to worry about CORS issues!
+> **💡 Note on APIs**: Notice that we use `/api/register`. Because of the `vite.config.ts` setup, any request made to `/api/*` on your local machine is automatically forwarded (proxied) to the live Healthyday backend server (`https://healthyday-backend-v2-773381060399.asia-south1.run.app`). You do not have to worry about CORS issues!

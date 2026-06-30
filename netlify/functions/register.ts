@@ -1,7 +1,7 @@
 import type { Handler, HandlerEvent } from "@netlify/functions";
 
 const UPSTREAM_URL =
-  "https://test-healthyday-backend-773381060399.asia-south1.run.app/api/register";
+  "https://healthyday-backend-v2-773381060399.asia-south1.run.app/api/register";
 
 const RATE_LIMIT_MAX = 5;
 const RATE_LIMIT_WINDOW_MS = 60 * 60 * 1000; // 1 hour
