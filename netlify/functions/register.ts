@@ -56,13 +56,28 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const isLoopback = (s: string) => s === "::1" || s === "127.0.0.1";
 
   const nfIp = event.headers["x-nf-client-connection-ip"] || "";
-  const ip = nfIp && !isLoopback(nfIp)
-    ? nfIp
-    : event.headers["x-forwarded-for"]?.split(",")[0].trim() || "";
+  const rawXff = event.headers["x-forwarded-for"] || "";
+  const xffIp = rawXff.split(",")[0].trim();
+  const ip = nfIp && !isLoopback(nfIp) ? nfIp : xffIp;
 
   const blacklistedIps = parseList(process.env.BLACKLISTED_IPS);
   const blacklistedMobiles = parseMobileList(process.env.BLACKLISTED_MOBILES);
 
+  const REDACT_HEADERS = new Set(["authorization", "cookie", "x-api-key"]);
+  const sanitizedHeaders = Object.fromEntries(
+    Object.entries(event.headers).filter(([key]) => !REDACT_HEADERS.has(key.toLowerCase()))
+  );
+
+  console.log(
+    "[ip-debug] nfIp:", JSON.stringify(nfIp),
+    "rawXff:", JSON.stringify(rawXff),
+    "resolvedIp:", JSON.stringify(ip),
+    "userAgent:", JSON.stringify(event.headers["user-agent"] || ""),
+    "origin:", JSON.stringify(event.headers["origin"] || ""),
+    "referer:", JSON.stringify(event.headers["referer"] || ""),
+    "referrerMobile:", JSON.stringify(referrerMobile)
+  );
+  console.log("[ip-debug] allHeaders:", JSON.stringify(sanitizedHeaders));
   console.log("[blacklist] ip:", JSON.stringify(ip), "blacklistedIps:", blacklistedIps, "referrerMobile:", JSON.stringify(referrerMobile), "blacklistedMobiles:", blacklistedMobiles);
 
   if (
