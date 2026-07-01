@@ -48,3 +48,7 @@
 [[edge_functions]]
   path = "/upgrade"
   function = "geo-redirect"
+
+[[edge_functions]]
+  path = "/*"
+  function = "meta-tags"
