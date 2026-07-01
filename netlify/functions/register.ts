@@ -45,11 +45,10 @@ export const handler: Handler = async (event: HandlerEvent) => {
   }
 
   let referrerMobile = "";
-  let bodyIp = "";
+  let parsedBody: Record<string, unknown> = {};
   try {
-    const body = JSON.parse(event.body || "{}");
-    referrerMobile = normalizeMobile(body.source || "");
-    bodyIp = (body.ip_address || "").trim();
+    parsedBody = JSON.parse(event.body || "{}");
+    referrerMobile = normalizeMobile((parsedBody.source as string) || "");
   } catch {
     // malformed body — proceed without checks
   }
@@ -59,16 +58,15 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const nfIp = event.headers["x-nf-client-connection-ip"] || "";
   const ip = nfIp && !isLoopback(nfIp)
     ? nfIp
-    : bodyIp || event.headers["x-forwarded-for"]?.split(",")[0].trim() || "";
+    : event.headers["x-forwarded-for"]?.split(",")[0].trim() || "";
 
   const blacklistedIps = parseList(process.env.BLACKLISTED_IPS);
   const blacklistedMobiles = parseMobileList(process.env.BLACKLISTED_MOBILES);
 
-  console.log("[blacklist] ip:", JSON.stringify(ip), "bodyIp:", JSON.stringify(bodyIp), "blacklistedIps:", blacklistedIps, "referrerMobile:", JSON.stringify(referrerMobile), "blacklistedMobiles:", blacklistedMobiles);
+  console.log("[blacklist] ip:", JSON.stringify(ip), "blacklistedIps:", blacklistedIps, "referrerMobile:", JSON.stringify(referrerMobile), "blacklistedMobiles:", blacklistedMobiles);
 
   if (
     (ip && blacklistedIps.includes(ip)) ||
-    (bodyIp && blacklistedIps.includes(bodyIp)) ||
     (referrerMobile && blacklistedMobiles.includes(referrerMobile))
   ) {
     return {
@@ -102,10 +100,12 @@ export const handler: Handler = async (event: HandlerEvent) => {
     upstreamHeaders["x-api-key"] = event.headers["x-api-key"];
   }
 
+  const outboundBody = JSON.stringify({ ...parsedBody, ip_address: ip });
+
   const upstream = await fetch(UPSTREAM_URL, {
     method: "POST",
     headers: upstreamHeaders,
-    body: event.body,
+    body: outboundBody,
   });
 
   const responseText = await upstream.text();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import TwentyOneDaysFooter from '../components/TwentyOneDaysFooter';
 import TwentyOneDaysTestimonials from '../components/TwentyOneDaysTestimonials';
 import RegistrationPopup from '../components/RegistrationPopup';
@@ -6,10 +6,8 @@ import RegistrationPopup from '../components/RegistrationPopup';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
 import iydHero from '../assets/IYD-reg-page-hero.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
-import { enforceReferralLimit, recordReferralUse, isReferralLimitReached } from '../utils/referralGuard';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
-import { getIpAddress } from '../utils/getIpAddress';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -26,11 +24,6 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     const [popupStatus, setPopupStatus] = useState<string | null>(null);
     const [heroLoaded, setHeroLoaded] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // Referral fraud guard: if this ?ref= has been used 5+ times, strip it and redirect
-    useEffect(() => {
-        enforceReferralLimit();
-    }, []);
 
     const pushDataLayer = (data: Record<string, unknown>) => {
         const win = window as Window & { dataLayer?: Record<string, unknown>[] };
@@ -84,12 +77,6 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             return;
         }
 
-        if (isReferralLimitReached()) {
-            pushDataLayer({ 'event': 'registration_device_limit', 'page_name': '21_days' });
-            setPopupStatus('device_limit_reached');
-            return;
-        }
-
         setIsSubmitting(true);
         try {
             const searchParams = new URLSearchParams(window.location.search);
@@ -109,8 +96,6 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 id_value = fbclid;
             }
 
-            const ip_address = await getIpAddress();
-
             const payload = {
                 name: formData.name,
                 mobile: formData.dialCode + formData.phone,
@@ -120,8 +105,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                 id_value,
                 gclid,
                 fbclid,
-                ad_name: safeSessionStorageGet('ad_name_persistent'),
-                ip_address
+                ad_name: safeSessionStorageGet('ad_name_persistent')
             };
 
             const response = await fetch('/api/register', {
@@ -172,9 +156,6 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     pushDataLayer({ 'event': 'registration_duplicate', 'page_name': '21_days', 'status': resolvedStatus });
                 }
                 // --- End GTM Data Layer Push ---
-
-                // Track this referral usage in localStorage
-                recordReferralUse();
 
                 if (data.is_referral === true && data.status === 'new_registration') {
                     setPopupStatus('isReferral');
