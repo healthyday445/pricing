@@ -58,7 +58,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
   const nfIp = event.headers["x-nf-client-connection-ip"] || "";
   const rawXff = event.headers["x-forwarded-for"] || "";
   const xffIp = rawXff.split(",")[0].trim();
-  const ip = nfIp && !isLoopback(nfIp) ? nfIp : xffIp;
+  const ip = xffIp && !isLoopback(xffIp) ? xffIp : (nfIp && !isLoopback(nfIp) ? nfIp : "");
 
   const blacklistedIps = parseList(process.env.BLACKLISTED_IPS);
   const blacklistedMobiles = parseMobileList(process.env.BLACKLISTED_MOBILES);
@@ -78,6 +78,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
     "referrerMobile:", JSON.stringify(referrerMobile)
   );
   console.log("[ip-debug] allHeaders:", JSON.stringify(sanitizedHeaders));
+  console.log("[ip-debug] body:", event.body);
   console.log("[blacklist] ip:", JSON.stringify(ip), "blacklistedIps:", blacklistedIps, "referrerMobile:", JSON.stringify(referrerMobile), "blacklistedMobiles:", blacklistedMobiles);
 
   if (
