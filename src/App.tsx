@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useParams, Navigate, useLocation } from 'react-router-dom';
 
 const Home = lazy(() => import('./pages/Home'));
 const ThankYou = lazy(() => import('./pages/ThankYou'));
@@ -40,6 +40,65 @@ const OflRedirect = () => {
   return null;
 };
 
+const TitleUpdater = () => {
+  const location = useLocation();
+
+  useEffect(() => {
+    const pathname = location.pathname.toLowerCase();
+    const isPricingOrCheckout =
+      pathname.startsWith('/pricing') ||
+      pathname.startsWith('/usd-pricing') ||
+      pathname.startsWith('/renew') ||
+      pathname.startsWith('/usd-renew') ||
+      pathname.startsWith('/upgrade') ||
+      pathname.startsWith('/usd_upgrade') ||
+      pathname.includes('checkout') ||
+      pathname.startsWith('/12m') ||
+      pathname.startsWith('/6m') ||
+      pathname.startsWith('/3m') ||
+      pathname.startsWith('/thank-you');
+
+    const isUsd =
+      pathname.includes('usd') ||
+      Boolean(
+        location.state &&
+          typeof location.state === 'object' &&
+          'isUSDFlow' in location.state &&
+          (location.state as any).isUSDFlow
+      );
+
+    const newTitle = isPricingOrCheckout ? 'Yoga Plans-Healthyday' : 'Free Programmes-Healthyday';
+
+    let newImage = 'https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/8886171_Referral img for forwarding 3.jpg';
+    if (isPricingOrCheckout) {
+      if (isUsd) {
+        newImage = 'https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/5397638_IntlEnglish%20Free%20Batch%20%20Day%207%20Vertical.png';
+      } else {
+        newImage = 'https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/9753192_English%20Free%20Batch%20%20Day%207%20Vertical.png';
+      }
+    }
+
+    document.title = newTitle;
+
+    const descMeta = document.querySelector('meta[name="description"]');
+    if (descMeta) descMeta.setAttribute('content', newTitle);
+
+    const ogTitleMeta = document.querySelector('meta[property="og:title"]');
+    if (ogTitleMeta) ogTitleMeta.setAttribute('content', newTitle);
+
+    const ogDescMeta = document.querySelector('meta[property="og:description"]');
+    if (ogDescMeta) ogDescMeta.setAttribute('content', newTitle);
+
+    const ogImageMeta = document.querySelector('meta[property="og:image"]');
+    if (ogImageMeta) ogImageMeta.setAttribute('content', newImage);
+
+    const twitterImageMeta = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImageMeta) twitterImageMeta.setAttribute('content', newImage);
+  }, [location.pathname, location.state]);
+
+  return null;
+};
+
 const PageLoader = () => (
   <div style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#fff' }}>
     <img src="/logo.webp" alt="Healthyday" style={{ height: 36, opacity: 0.7 }} />
@@ -49,6 +108,7 @@ const PageLoader = () => (
 const App = () => {
   return (
     <Router>
+      <TitleUpdater />
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route path="/" element={<FreeProgrammes />} />
