@@ -1,5 +1,13 @@
 export default async (request, context) => {
   const url = new URL(request.url);
+  const userAgent = (request.headers.get("user-agent") || "").toLowerCase();
+
+  // Do not redirect social media crawlers, link preview bots, or search engines so they scrape the correct URL tags
+  const isBot = /bot|crawler|spider|crawling|whatsapp|facebookexternalhit|facebookcatalog|twitter|telegram|linkedin|slack|discord|google|bing|apple|duckduckgo|baiduspider|yandex/i.test(userAgent);
+  if (isBot) {
+    return context.next();
+  }
+
   // Get the country code, defaulting to IN if not found just in case
   const countryCode = context.geo?.country?.code || "IN";
 
