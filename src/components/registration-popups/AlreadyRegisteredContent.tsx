@@ -70,7 +70,7 @@ const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, sta
                     }}
                     style={{ width: '100%', height: '40px', borderRadius: '30px', background: '#FEAB27', border: 'none', cursor: 'pointer', fontFamily: 'Outfit', fontSize: '16px', fontWeight: 500, color: '#202020', textTransform: 'uppercase', letterSpacing: '0.5px', boxShadow: '0px 4px 2px rgba(0,0,0,0.25)' }}
                 >
-                    Refer &amp; Win Yoga Kit
+                    Refer &amp; Win
                 </button>
 
             </div>

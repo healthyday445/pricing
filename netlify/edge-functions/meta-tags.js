@@ -21,16 +21,15 @@ export default async (request, context) => {
     pathname.startsWith('/3m') ||
     pathname.startsWith('/thank-you');
 
-  if (!isPricingOrCheckout) {
-    return response;
-  }
-
   const isUsd = pathname.includes('usd') || pathname.includes('_usd');
 
-  const newTitle = "Yoga Plans-Healthyday";
-  const newImage = isUsd
-    ? "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/5397638_IntlEnglish%20Free%20Batch%20%20Day%207%20Vertical.png"
-    : "https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/9753192_English%20Free%20Batch%20%20Day%207%20Vertical.png";
+  const newTitle = isPricingOrCheckout ? "Yoga Plans-Healthyday" : "Free Programmes-Healthyday";
+  let newImage = `${url.origin}/thumbnails/free-programme.jpg`;
+  if (isPricingOrCheckout) {
+    newImage = isUsd
+      ? `${url.origin}/thumbnails/usd-pricing.jpg`
+      : `${url.origin}/thumbnails/inr-pricing.jpg`;
+  }
 
   let html = await response.text();
 

@@ -127,7 +127,7 @@ const OldUserContent: React.FC<ChildPopupProps> = ({ language, mobileNumber, sta
                     className="w-auto px-6 h-[55px] bg-[#f9a825] border-[2px] border-transparent hover:bg-white hover:border-[#f9a825] transition-all transform active:scale-95 rounded-full flex items-center justify-center cursor-pointer shadow-lg mt-2 group no-underline"
                 >
                     <span className="font-semibold text-[16px] text-[#202020] uppercase tracking-wide group-hover:text-[#202020] whitespace-nowrap">
-                        REFER & WIN A YOGA KIT
+                        REFER & WIN
                     </span>
                 </a>
             )}
