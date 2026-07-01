@@ -69,7 +69,7 @@ const TitleUpdater = () => {
 
     const newTitle = isPricingOrCheckout ? 'Yoga Plans-Healthyday' : 'Free Programmes-Healthyday';
 
-    let newImage = 'https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/8886171_Referral%20img%20for%20forwarding%203.jpg';
+    let newImage = 'https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/684fc31502e580488de82553/3687790_Referral%20img%20for%20forwarding.png';
     if (isPricingOrCheckout) {
       if (isUsd) {
         newImage = 'https://d3jt6ku4g6z5l8.cloudfront.net/IMAGE/6795ce3db71ab6291dfa64b7/5397638_IntlEnglish%20Free%20Batch%20%20Day%207%20Vertical.png';
