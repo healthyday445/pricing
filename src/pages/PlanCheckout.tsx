@@ -270,6 +270,9 @@ const PlanCheckout = () => {
         }
     };
 
+    const is12MonthPlan = plan.title?.includes('Year') || plan.title?.includes('12') || plan.duration?.includes('Year') || plan.duration?.includes('12');
+    const is6MonthPlan = !is12MonthPlan && (plan.title?.includes('6') || plan.duration?.includes('6'));
+
     return (
         <div className="min-h-screen bg-white font-sans text-slate-800 overflow-x-hidden flex flex-col">
             <SharedHeader />
@@ -313,26 +316,32 @@ const PlanCheckout = () => {
                                 <li className="flex items-start gap-3">
                                     <SolidCheckCircle />
                                     <span className="text-[#202020] text-[15px]">
-                                        {plan.title.includes('Year') ? '12 Months' : plan.title.replace(" Plan", "")} curated yoga streams (Recorded)
+                                        {plan.title.includes('Year') || plan.title.includes('12') ? '12 Months' : plan.title.replace(" Plan", "")} curated yoga streams (Recorded)
                                     </span>
                                 </li>
-                                <li className="flex items-start gap-3">
-                                    <SolidCheckCircle />
-                                    <span className="text-[#202020] text-[15px]">Face Yoga</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <SolidCheckCircle />
-                                    <span className="text-[#202020] text-[15px]">Breathing Mastery</span>
-                                </li>
-                                <li className="flex items-start gap-3">
-                                    <SolidCheckCircle />
-                                    <span className="text-[#202020] text-[15px]">Diet-Sleep-Yoga Master Class</span>
-                                </li>
-                                {plan.title !== '3 Months Plan' && (
-                                    <li className="flex items-start gap-3">
-                                        <SolidCheckCircle />
-                                        <span className="text-[#202020] text-[15px]">Monthly Surya Namaskar Challenge</span>
-                                    </li>
+                                {is12MonthPlan && (
+                                    <>
+                                        <li className="flex items-start gap-3">
+                                            <SolidCheckCircle />
+                                            <span className="text-[#202020] text-[15px]">Daily DIET Routine</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <SolidCheckCircle />
+                                            <span className="text-[#202020] text-[15px]">Face Yoga</span>
+                                        </li>
+                                    </>
+                                )}
+                                {(is12MonthPlan || is6MonthPlan) && (
+                                    <>
+                                        <li className="flex items-start gap-3">
+                                            <SolidCheckCircle />
+                                            <span className="text-[#202020] text-[15px]">Daily Breathwork</span>
+                                        </li>
+                                        <li className="flex items-start gap-3">
+                                            <SolidCheckCircle />
+                                            <span className="text-[#202020] text-[15px]">108 Surya Namaskar Challenge</span>
+                                        </li>
+                                    </>
                                 )}
                                 <li className="flex items-start gap-3">
                                     <SolidCheckCircle />
@@ -340,7 +349,7 @@ const PlanCheckout = () => {
                                 </li>
                                 <li className="flex items-start gap-3">
                                     <SolidCheckCircle />
-                                    <span className="text-[#202020] text-[15px]">Attendance and Community Membership</span>
+                                    <span className="text-[#202020] text-[15px]">Attendance Tracking & Community Membership</span>
                                 </li>
                             </ul>
                         </div>

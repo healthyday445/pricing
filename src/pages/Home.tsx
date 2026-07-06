@@ -70,12 +70,12 @@ const Home = () => {
 
     const features = [
         { name: "Daily YOGA", plan1: true, plan2: true, plan3: true },
-        { name: "24-Hour Recording", plan1: true, plan2: true, plan3: true },
-        { name: "Reminders & Tracking", plan1: true, plan2: true, plan3: true },
+        { name: "Daily DIET Routine", plan1: true, plan2: false, plan3: false },
+        { name: "Face Yoga", plan1: true, plan2: false, plan3: false },
+        { name: "Daily Breathwork", plan1: true, plan2: true, plan3: false },
         { name: "108 Surya Namaskar", plan1: true, plan2: true, plan3: false },
-        { name: "Breath Mastery", plan1: true, plan2: true, plan3: false },
-        { name: "Face YOGA", plan1: true, plan2: false, plan3: false },
-        { name: "Masterclasses", plan1: true, plan2: false, plan3: false },
+        { name: "WhatsApp Reminders", plan1: true, plan2: true, plan3: true },
+        { name: "Attendance Tracking", plan1: true, plan2: true, plan3: true },
     ];
 
     return (
@@ -147,7 +147,7 @@ const Home = () => {
                         ></div>
                         <div className="flex mb-4 px-2 md:px-4 text-center items-end py-4 relative z-[1]">
                             <div className="w-[30%] text-left font-bold text-[#919191] text-[11px] md:text-[16px]">Features</div>
-                            <div onClick={() => setActivePlan(0)} className={`w-[calc(70%/3)] cursor-pointer transform transition-all duration-300 font-semibold ${activePlan === 0 ? 'text-[13px] md:text-[26px] leading-[20px] md:leading-[24px] text-[#0D468B]' : 'text-[12px] md:text-[22px] leading-[20px] md:leading-[24px] text-[#202020]'}`}>1 Year</div>
+                            <div onClick={() => setActivePlan(0)} className={`w-[calc(70%/3)] cursor-pointer transform transition-all duration-300 font-semibold ${activePlan === 0 ? 'text-[13px] md:text-[26px] leading-[20px] md:leading-[24px] text-[#0D468B]' : 'text-[12px] md:text-[22px] leading-[20px] md:leading-[24px] text-[#202020]'}`}>12 Months</div>
                             <div onClick={() => setActivePlan(1)} className={`w-[calc(70%/3)] cursor-pointer transform transition-all duration-300 font-semibold ${activePlan === 1 ? 'text-[13px] md:text-[26px] leading-[20px] md:leading-[24px] text-[#0D468B]' : 'text-[12px] md:text-[22px] leading-[20px] md:leading-[24px] text-[#202020]'}`}>6 Months</div>
                             <div onClick={() => setActivePlan(2)} className={`w-[calc(70%/3)] cursor-pointer transform transition-all duration-300 font-semibold ${activePlan === 2 ? 'text-[13px] md:text-[26px] leading-[20px] md:leading-[24px] text-[#0D468B]' : 'text-[12px] md:text-[22px] leading-[20px] md:leading-[24px] text-[#202020]'}`}>3 Months</div>
                         </div>

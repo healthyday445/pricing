@@ -80,12 +80,12 @@ const Upgrade = () => {
 
     const features = [
         { name: "Daily YOGA", plan1: true, plan2: true, plan3: true },
-        { name: "24-Hour Recording", plan1: true, plan2: true, plan3: true },
-        { name: "Reminders & Tracking", plan1: true, plan2: true, plan3: true },
-        { name: "108 Surya Namaskar", plan1: true, plan2: true, plan3: false },
-        { name: "Breath Mastery", plan1: true, plan2: true, plan3: false },
-        { name: "Face YOGA", plan1: true, plan2: false, plan3: false },
-        { name: "Masterclasses", plan1: true, plan2: false, plan3: false },
+        { name: "Daily DIET Routine", plan1: false, plan2: true, plan3: true },
+        { name: "Face Yoga", plan1: false, plan2: true, plan3: true },
+        { name: "Daily Breathwork", plan1: true, plan2: true, plan3: true },
+        { name: "108 Surya Namaskar", plan1: true, plan2: true, plan3: true },
+        { name: "WhatsApp Reminders", plan1: true, plan2: true, plan3: true },
+        { name: "Attendance Tracking", plan1: true, plan2: true, plan3: true },
     ];
 
     return (

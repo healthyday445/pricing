@@ -3,46 +3,46 @@ import { Check, X } from "lucide-react";
 const FeaturesTable = () => {
   const features = [
     {
-      name: "Daily YOGA Classes",
+      name: "Daily YOGA",
       year: true,
       sixMonths: true,
       threeMonths: true,
     },
     {
-      name: "24 Hours Recordings",
-      year: true,
-      sixMonths: true,
-      threeMonths: true,
-    },
-    {
-      name: "Daily Reminder & Tracking",
-      year: true,
-      sixMonths: true,
-      threeMonths: true,
-    },
-    {
-      name: "Monthly 108 Surya Namaskar",
-      year: true,
-      sixMonths: true,
-      threeMonths: false,
-    },
-    {
-      name: "Breath Mastery",
-      year: true,
-      sixMonths: true,
-      threeMonths: false,
-    },
-    {
-      name: "Face YOGA",
+      name: "Daily DIET Routine",
       year: true,
       sixMonths: false,
       threeMonths: false,
     },
     {
-      name: "Monthly Masterclass",
+      name: "Face Yoga",
       year: true,
       sixMonths: false,
       threeMonths: false,
+    },
+    {
+      name: "Daily Breathwork",
+      year: true,
+      sixMonths: true,
+      threeMonths: false,
+    },
+    {
+      name: "108 Surya Namaskar",
+      year: true,
+      sixMonths: true,
+      threeMonths: false,
+    },
+    {
+      name: "WhatsApp Reminders",
+      year: true,
+      sixMonths: true,
+      threeMonths: true,
+    },
+    {
+      name: "Attendance Tracking",
+      year: true,
+      sixMonths: true,
+      threeMonths: true,
     },
   ];
 
@@ -53,6 +53,14 @@ const FeaturesTable = () => {
 
         <div className="overflow-x-auto">
           <table className="w-full">
+            <thead>
+              <tr className="border-b border-gray-200 text-healthyday-navy font-bold">
+                <th className="text-left py-4 px-4 text-gray-400 font-bold uppercase text-xs">FEATURES</th>
+                <th className="text-center py-4 px-4 font-bold text-sm">12 MONTHS</th>
+                <th className="text-center py-4 px-4 font-bold text-sm">6 MONTHS</th>
+                <th className="text-center py-4 px-4 font-bold text-sm">3 MONTHS</th>
+              </tr>
+            </thead>
             <tbody>
               {features.map((feature, index) => (
                 <tr
