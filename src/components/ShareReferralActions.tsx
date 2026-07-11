@@ -31,7 +31,7 @@ export const ShareReferralActions = ({
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "12px", width: "100%" }}>
       {/* Share this link Label */}
-      <span style={{ color: "#FFF", fontFamily: "Outfit", fontSize: "12px", fontStyle: "normal", fontWeight: 700, lineHeight: "normal", marginTop: "4px" }}>
+      <span className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[13px]" style={{ color: "#FFF", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 700, lineHeight: "normal", marginTop: "4px" }}>
         Share this link
       </span>
 
@@ -48,7 +48,7 @@ export const ShareReferralActions = ({
         padding: "0 12px", 
         boxSizing: "border-box" 
       }}>
-        <span style={{ color: "#8E8E8E", fontFamily: "Outfit", fontSize: "15px", fontStyle: "normal", fontWeight: 400, lineHeight: "normal", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+        <span className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[16px]" style={{ color: "#8E8E8E", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 400, lineHeight: "normal", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
           {shareLink}
         </span>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" style={{ cursor: "pointer", flexShrink: 0, marginLeft: "8px" }} onClick={handleCopyLink}>
@@ -59,19 +59,20 @@ export const ShareReferralActions = ({
       {/* Buttons Block */}
       <div style={{ display: "flex", gap: "6px", width: "100%", marginTop: "2px" }}>
         {/* Copy Link Button */}
-        <button 
-          onClick={handleCopyLink} 
-          style={{ 
-            flex: 1, 
-            height: "40px", 
-            borderRadius: "10px", 
-            background: "#FEAB27", 
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            gap: "6px", 
-            border: "none", 
-            cursor: "pointer" 
+        <button
+          onClick={handleCopyLink}
+          style={{
+            flex: 1,
+            minWidth: 0,
+            height: "40px",
+            borderRadius: "10px",
+            background: "#FEAB27",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
+            border: "none",
+            cursor: "pointer"
           }}
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -84,27 +85,29 @@ export const ShareReferralActions = ({
               </clipPath>
             </defs>
           </svg>
-          <span style={{ color: "#FFF", textAlign: "center", fontFamily: "Outfit", fontSize: "14px", fontStyle: "normal", fontWeight: 500, lineHeight: "normal" }}>Copy Link</span>
+          <span className="text-[12px] sm:text-[13px] md:text-[14px] lg:text-[15px]" style={{ color: "#FFF", textAlign: "center", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 500, lineHeight: "normal", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>Copy Link</span>
         </button>
 
         {/* Share on WhatsApp Button */}
-        <button 
-          onClick={handleWhatsAppShare} 
-          style={{ 
-            flex: 1.25, 
-            height: "40px", 
-            borderRadius: "10px", 
-            background: "#57D063", 
-            display: "flex", 
-            alignItems: "center", 
-            justifyContent: "center", 
-            gap: "6px", 
-            border: "none", 
-            cursor: "pointer" 
+        <button
+          onClick={handleWhatsAppShare}
+          style={{
+            flex: 1.25,
+            minWidth: 0,
+            height: "40px",
+            borderRadius: "10px",
+            background: "#57D063",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            gap: "6px",
+            border: "none",
+            cursor: "pointer"
           }}
         >
-          <img src={whatsappIcon} style={{ display: "block", width: "15px", height: "15px", aspectRatio: "1/1" }} alt="WhatsApp" />
-          <span style={{ color: "#FFF", fontFamily: "Outfit", fontSize: "14px", fontStyle: "normal", fontWeight: 500, lineHeight: "normal" }}>Share on Whatsapp</span>
+          <img src={whatsappIcon} style={{ display: "block", width: "15px", height: "15px", aspectRatio: "1/1", flexShrink: 0 }} alt="WhatsApp" />
+          <span className="hidden min-[375px]:inline text-[12px] sm:text-[13px] md:text-[14px] lg:text-[15px]" style={{ color: "#FFF", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 500, lineHeight: "normal", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>Share on Whatsapp</span>
+          <span className="inline min-[375px]:hidden text-[12px]" style={{ color: "#FFF", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 500, lineHeight: "normal", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", minWidth: 0 }}>Share</span>
         </button>
       </div>
 
@@ -121,8 +124,8 @@ export const ShareReferralActions = ({
           }}
           onClick={() => window.open(referralsUrl, '_blank')}
         >
-          <span style={{ color: "#FFF", textAlign: "center", fontFamily: "Outfit", fontSize: "16px", fontStyle: "normal", fontWeight: 500, lineHeight: "normal" }}>View More</span>
-          <span style={{ color: "#FFF", fontFamily: "Outfit", fontSize: "18px", fontStyle: "normal", fontWeight: 500, lineHeight: "normal", marginTop: "-2px" }}>→</span>
+          <span className="text-[14px] sm:text-[15px] md:text-[16px] lg:text-[18px]" style={{ color: "#FFF", textAlign: "center", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 500, lineHeight: "normal" }}>View More</span>
+          <span className="text-[16px] sm:text-[17px] md:text-[18px] lg:text-[20px]" style={{ color: "#FFF", fontFamily: "Outfit", fontStyle: "normal", fontWeight: 500, lineHeight: "normal", marginTop: "-2px" }}>→</span>
         </div>
       )}
     </div>

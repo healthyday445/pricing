@@ -37,10 +37,10 @@ const ReferWinCard: React.FC<ReferWinCardProps> = ({ shareLink, referralsUrl, sh
   >
     {showTitle && (
       <div>
-        <h3 style={{ color: "#FFF", fontFamily: "Outfit", fontSize: "21px", fontWeight: 700, lineHeight: "normal", margin: "0 0 0" }}>
+        <h3 className="text-[18px] sm:text-[19px] md:text-[21px] lg:text-[24px]" style={{ color: "#FFF", fontFamily: "Outfit", fontWeight: 700, lineHeight: "normal", margin: "0 0 0" }}>
           Refer &amp; Win
         </h3>
-        <p style={{ color: "#FFFCFC", fontFamily: "Outfit", fontSize: "12px", fontWeight: 400, lineHeight: "normal", margin: "0 0 0" }}>
+        <p className="text-[11px] sm:text-[11px] md:text-[12px] lg:text-[13px]" style={{ color: "#FFFCFC", fontFamily: "Outfit", fontWeight: 400, lineHeight: "normal", margin: "0 0 0" }}>
           Invite your friends &amp; family and get exciting gifts!
         </p>
       </div>
