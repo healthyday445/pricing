@@ -3,7 +3,7 @@ import {
     Check,
     X,
 } from 'lucide-react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import SharedTestimonials from '../components/SharedTestimonials';
@@ -12,6 +12,29 @@ const USDUpgrade = () => {
     const [activePlan, setActivePlan] = useState(0);
     const navigate = useNavigate();
     const location = useLocation();
+    const { planType } = useParams();
+
+    useEffect(() => {
+        if (planType) {
+            const planParam = planType.toLowerCase();
+            let selectedPlan = null;
+            let path = '/upgrade/3to6m_usd';
+            if (planParam.includes('3to6') || planParam.includes('3-to-6') || planParam.includes('3_to_6')) {
+                selectedPlan = plans[0];
+                path = '/upgrade/3to6m_usd';
+            } else if (planParam.includes('6to12') || planParam.includes('6-to-12') || planParam.includes('6_to_12')) {
+                selectedPlan = plans[1];
+                path = '/upgrade/6to12m_usd';
+            } else if (planParam.includes('3to12') || planParam.includes('3-to-12') || planParam.includes('3_to_12')) {
+                selectedPlan = plans[2];
+                path = '/upgrade/3to12m_usd';
+            }
+
+            if (selectedPlan) {
+                navigate(path, { state: { plan: selectedPlan, isUSDFlow: true }, replace: true });
+            }
+        }
+    }, [planType, navigate]);
 
     useEffect(() => {
         if (location.hash) {
@@ -25,7 +48,12 @@ const USDUpgrade = () => {
     }, [location]);
 
     const handleNavigationToCheckout = (plan: any) => {
-        navigate('/checkout', {
+        let path = '/upgrade/3to6m_usd';
+        if (plan.title.includes('3 to 6')) path = '/upgrade/3to6m_usd';
+        else if (plan.title.includes('6 to 12')) path = '/upgrade/6to12m_usd';
+        else if (plan.title.includes('3 to 12')) path = '/upgrade/3to12m_usd';
+
+        navigate(path, {
             state: { plan, isUSDFlow: true }
         });
     };

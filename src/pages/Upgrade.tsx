@@ -51,15 +51,25 @@ const Upgrade = () => {
         if (planType) {
             const planParam = planType.toLowerCase();
             let selectedPlan = null;
-            if (planParam.includes('1year')) selectedPlan = plans[0];
-            else if (planParam.includes('6month')) selectedPlan = plans[1];
-            else if (planParam.includes('3month')) selectedPlan = plans[2];
+            let path = '/upgrade/3to6m';
+            if (planParam.includes('3to6') || planParam.includes('3-to-6') || planParam.includes('3_to_6')) {
+                selectedPlan = plans[0];
+                path = '/upgrade/3to6m';
+            } else if (planParam.includes('6to12') || planParam.includes('6-to-12') || planParam.includes('6_to_12')) {
+                selectedPlan = plans[1];
+                path = '/upgrade/6to12m';
+            } else if (planParam.includes('3to12') || planParam.includes('3-to-12') || planParam.includes('3_to_12')) {
+                selectedPlan = plans[2];
+                path = '/upgrade/3to12m';
+            }
 
             if (selectedPlan) {
-                navigate('/checkout', { state: { plan: selectedPlan }, replace: true });
+                const isUSDFlow = location.pathname.includes('usd') || planParam.includes('usd');
+                if (isUSDFlow) path += '_usd';
+                navigate(path, { state: { plan: selectedPlan, isUSDFlow }, replace: true });
             }
         }
-    }, [planType, navigate]);
+    }, [planType, location.pathname, navigate]);
 
     useEffect(() => {
         if (location.hash) {
@@ -73,7 +83,12 @@ const Upgrade = () => {
     }, [location]);
 
     const handleNavigationToCheckout = (plan: any) => {
-        navigate('/checkout', {
+        let path = '/upgrade/3to6m';
+        if (plan.title.includes('3 to 6')) path = '/upgrade/3to6m';
+        else if (plan.title.includes('6 to 12')) path = '/upgrade/6to12m';
+        else if (plan.title.includes('3 to 12')) path = '/upgrade/3to12m';
+
+        navigate(path, {
             state: { plan }
         });
     };

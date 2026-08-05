@@ -86,7 +86,7 @@ const PlanCheckout = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { planId } = useParams();
-    const isUSDFlow = location.state?.isUSDFlow !== undefined ? location.state.isUSDFlow : location.pathname.includes('_usd');
+    const isUSDFlow = location.state?.isUSDFlow !== undefined ? location.state.isUSDFlow : (location.pathname.includes('_usd') || location.pathname.includes('usd'));
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dialCode, setDialCode] = useState(isUSDFlow ? '+1' : '+91');
     const [language, setLanguage] = useState('Telugu');
@@ -101,6 +101,45 @@ const PlanCheckout = () => {
             if (planId === '1year') plan = { ...oldPlans['1year'] };
             else if (planId === '6months') plan = { ...oldPlans['6months'] };
             else if (planId === '3months') plan = { ...oldPlans['3months'] };
+        } else if (location.pathname.includes('3to6m') || location.pathname.includes('3_to_6') || location.pathname.includes('3to6')) {
+            plan = {
+                title: "3 to 6 months upgrade",
+                duration: "3 to 6 months upgrade",
+                originalPrice: "1000",
+                discountPrice: "500",
+                usdOriginalPrice: "20",
+                usdPrice: "10",
+                discount: "Upgrade Offer!",
+                isBestValue: false,
+                inrPlanName: "3_to_6_months_upgrade",
+                usdPlanName: "3_to_6_months_upgrade_usd"
+            };
+        } else if (location.pathname.includes('6to12m') || location.pathname.includes('6_to_12') || location.pathname.includes('6to12')) {
+            plan = {
+                title: "6 to 12 months upgrade",
+                duration: "6 to 12 months upgrade",
+                originalPrice: "1000",
+                discountPrice: "500",
+                usdOriginalPrice: "20",
+                usdPrice: "10",
+                discount: "Upgrade Offer!",
+                isBestValue: true,
+                inrPlanName: "6_to_12_months_upgrade",
+                usdPlanName: "6_to_12_months_upgrade_usd"
+            };
+        } else if (location.pathname.includes('3to12m') || location.pathname.includes('3_to_12') || location.pathname.includes('3to12')) {
+            plan = {
+                title: "3 to 12 months upgrade",
+                duration: "3 to 12 months upgrade",
+                originalPrice: "2000",
+                discountPrice: "1000",
+                usdOriginalPrice: "40",
+                usdPrice: "20",
+                discount: "Upgrade Offer!",
+                isBestValue: false,
+                inrPlanName: "3_to_12_months_upgrade",
+                usdPlanName: "3_to_12_months_upgrade_usd"
+            };
         } else if (location.pathname.includes('12m')) {
             const isRenew = location.pathname.includes('/renew');
             plan = {

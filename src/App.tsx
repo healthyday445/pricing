@@ -56,6 +56,9 @@ const TitleUpdater = () => {
       pathname.startsWith('/12m') ||
       pathname.startsWith('/6m') ||
       pathname.startsWith('/3m') ||
+      pathname.startsWith('/3to6m') ||
+      pathname.startsWith('/6to12m') ||
+      pathname.startsWith('/3to12m') ||
       pathname.startsWith('/thank-you');
 
     const isUsd =
@@ -124,7 +127,9 @@ const App = () => {
           <Route path="/renew" element={<Renew />} />
           <Route path="/renew/:planType" element={<Renew />} />
           <Route path="/upgrade" element={<Upgrade />} />
+          <Route path="/upgrade/:planType" element={<Upgrade />} />
           <Route path="/usd_upgrade" element={<USDUpgrade />} />
+          <Route path="/usd_upgrade/:planType" element={<USDUpgrade />} />
 
           {/* Checkout Routes */}
           <Route path="/checkout" element={<PlanCheckout />} />
@@ -142,6 +147,18 @@ const App = () => {
           <Route path="/renew/12m_usd" element={<PlanCheckout />} />
           <Route path="/renew/6m_usd" element={<PlanCheckout />} />
           <Route path="/renew/3m_usd" element={<PlanCheckout />} />
+          <Route path="/upgrade/3to6m" element={<PlanCheckout />} />
+          <Route path="/upgrade/6to12m" element={<PlanCheckout />} />
+          <Route path="/upgrade/3to12m" element={<PlanCheckout />} />
+          <Route path="/upgrade/3to6m_usd" element={<PlanCheckout />} />
+          <Route path="/upgrade/6to12m_usd" element={<PlanCheckout />} />
+          <Route path="/upgrade/3to12m_usd" element={<PlanCheckout />} />
+          <Route path="/3to6m" element={<PlanCheckout />} />
+          <Route path="/6to12m" element={<PlanCheckout />} />
+          <Route path="/3to12m" element={<PlanCheckout />} />
+          <Route path="/3to6m_usd" element={<PlanCheckout />} />
+          <Route path="/6to12m_usd" element={<PlanCheckout />} />
+          <Route path="/3to12m_usd" element={<PlanCheckout />} />
 
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/:planId/checkout/old" element={<PlanCheckout />} />
