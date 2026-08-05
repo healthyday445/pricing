@@ -65,9 +65,9 @@ const TitleUpdater = () => {
       pathname.includes('usd') ||
       Boolean(
         location.state &&
-          typeof location.state === 'object' &&
-          'isUSDFlow' in location.state &&
-          (location.state as any).isUSDFlow
+        typeof location.state === 'object' &&
+        'isUSDFlow' in location.state &&
+        (location.state as any).isUSDFlow
       );
 
     const newTitle = isPricingOrCheckout ? 'Yoga Plans-Healthyday' : 'Free Programmes-Healthyday';
@@ -134,7 +134,7 @@ const App = () => {
           {/* Checkout Routes */}
           <Route path="/checkout" element={<PlanCheckout />} />
           <Route path="/:planId/checkout" element={<PlanCheckout />} />
-          
+
           <Route path="/12m" element={<PlanCheckout />} />
           <Route path="/6m" element={<PlanCheckout />} />
           <Route path="/3m" element={<PlanCheckout />} />

@@ -68,7 +68,7 @@ const USDUpgrade = () => {
             discount: "Upgrade Offer!",
             isBestValue: false,
             buttonText: "UPGRADE NOW",
-            inrPlanName: "3_to_6_months_upgrade",
+            inrPlanName: "3_to_6_months_upgrade_inr",
             usdPlanName: "3_to_6_months_upgrade_usd"
         },
         {
@@ -80,7 +80,7 @@ const USDUpgrade = () => {
             discount: "Upgrade Offer!",
             isBestValue: true,
             buttonText: "UPGRADE NOW",
-            inrPlanName: "6_to_12_months_upgrade",
+            inrPlanName: "6_to_12_months_upgrade_inr",
             usdPlanName: "6_to_12_months_upgrade_usd"
         },
         {
@@ -92,7 +92,7 @@ const USDUpgrade = () => {
             discount: "Upgrade Offer!",
             isBestValue: false,
             buttonText: "UPGRADE NOW",
-            inrPlanName: "3_to_12_months_upgrade",
+            inrPlanName: "3_to_12_months_upgrade_inr",
             usdPlanName: "3_to_12_months_upgrade_usd"
         }
     ];

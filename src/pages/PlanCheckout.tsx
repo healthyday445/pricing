@@ -111,7 +111,7 @@ const PlanCheckout = () => {
                 usdPrice: "10",
                 discount: "Upgrade Offer!",
                 isBestValue: false,
-                inrPlanName: "3_to_6_months_upgrade",
+                inrPlanName: "3_to_6_months_upgrade_inr",
                 usdPlanName: "3_to_6_months_upgrade_usd"
             };
         } else if (location.pathname.includes('6to12m') || location.pathname.includes('6_to_12') || location.pathname.includes('6to12')) {
@@ -124,7 +124,7 @@ const PlanCheckout = () => {
                 usdPrice: "10",
                 discount: "Upgrade Offer!",
                 isBestValue: true,
-                inrPlanName: "6_to_12_months_upgrade",
+                inrPlanName: "6_to_12_months_upgrade_inr",
                 usdPlanName: "6_to_12_months_upgrade_usd"
             };
         } else if (location.pathname.includes('3to12m') || location.pathname.includes('3_to_12') || location.pathname.includes('3to12')) {
@@ -137,7 +137,7 @@ const PlanCheckout = () => {
                 usdPrice: "20",
                 discount: "Upgrade Offer!",
                 isBestValue: false,
-                inrPlanName: "3_to_12_months_upgrade",
+                inrPlanName: "3_to_12_months_upgrade_inr",
                 usdPlanName: "3_to_12_months_upgrade_usd"
             };
         } else if (location.pathname.includes('12m')) {
