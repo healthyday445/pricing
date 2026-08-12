@@ -269,40 +269,13 @@ const PlanCheckout = () => {
         if (plan.isRenewalOnly || plan.discountPrice === "1599" || plan.inrPlanName === "ind26_offer_renew") {
             setIsVerifying(true);
             try {
-                const cleanDigits = phoneNumber.replace(/\D/g, '');
-                let formattedMobile = `${dialCode}${cleanDigits}`;
+                const fullContact = `${dialCode}${phoneNumber}`;
+                const formattedMobile = fullContact.startsWith('+') ? fullContact : `+${fullContact}`;
 
-                if (dialCode === '+91' && cleanDigits.startsWith('91') && cleanDigits.length === 12) {
-                    formattedMobile = `+${cleanDigits}`;
-                } else if (!formattedMobile.startsWith('+')) {
-                    formattedMobile = `+${formattedMobile}`;
-                }
+                const response = await fetch(`/.netlify/functions/student?mobile=${encodeURIComponent(formattedMobile)}`);
+                const studentData = await response.json().catch(() => ({}));
 
-                let response = await fetch(`/.netlify/functions/student?mobile=${encodeURIComponent(formattedMobile)}`);
-                let studentData = await response.json().catch(() => ({}));
-
-                // Fallback lookup for 10-digit / 12-digit format variations if not found
-                if (!response.ok || studentData.status !== 'paid') {
-                    let fallbackMobile = '';
-                    if (dialCode === '+91' && !cleanDigits.startsWith('91')) {
-                        fallbackMobile = `+9191${cleanDigits}`;
-                    } else if (dialCode === '+91' && cleanDigits.startsWith('91') && cleanDigits.length === 10) {
-                        fallbackMobile = `+${cleanDigits}`;
-                    }
-
-                    if (fallbackMobile && fallbackMobile !== formattedMobile) {
-                        const fallbackRes = await fetch(`/.netlify/functions/student?mobile=${encodeURIComponent(fallbackMobile)}`);
-                        if (fallbackRes.ok) {
-                            const fallbackData = await fallbackRes.json().catch(() => ({}));
-                            if (fallbackData.status === 'paid') {
-                                response = fallbackRes;
-                                studentData = fallbackData;
-                            }
-                        }
-                    }
-                }
-
-                if (!response.ok || studentData.status !== 'paid') {
+                if (!response.ok || studentData.status !== 'pastdue') {
                     setPhoneErrorText("This offer is only valid for renewal students");
                     setIsVerifying(false);
                     return;
