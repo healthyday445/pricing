@@ -278,7 +278,7 @@ const PlanCheckout = () => {
                 });
                 const studentData = await response.json().catch(() => ({}));
 
-                if (!response.ok || studentData.status !== 'pastdue') {
+                if (!response.ok || (studentData.status !== 'pastdue' && studentData.status !== 'paid')) {
                     setPhoneErrorText("This offer is only valid for renewal students");
                     setIsVerifying(false);
                     return;
