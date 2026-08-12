@@ -273,7 +273,7 @@ const PlanCheckout = () => {
                 const formattedMobile = fullContact.startsWith('+') ? fullContact : `+${fullContact}`;
 
                 const internalApiKey = import.meta.env.VITE_INTERNAL_API_KEY;
-                const response = await fetch(`/.netlify/functions/student?mobile=${encodeURIComponent(formattedMobile)}`, {
+                const response = await fetch(`/api/internal/student?mobile=${encodeURIComponent(formattedMobile)}`, {
                     headers: internalApiKey ? { 'x-api-key': internalApiKey } : {}
                 });
                 const studentData = await response.json().catch(() => ({}));
