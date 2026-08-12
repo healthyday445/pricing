@@ -1,41 +1,73 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
 import { componentTagger } from "lovable-tagger";
+import legacy from "@vitejs/plugin-legacy";
 
 // https://vitejs.dev/config/
-export default defineConfig(({ mode }) => ({
-  server: {
-    host: "::",
-    port: 8080,
-    hmr: {
-      overlay: false,
-    },
-    proxy: {
-      '/.netlify/functions': {
-        target: 'http://localhost:9999',
-        changeOrigin: true,
-      },
-      '/api/register': {
-        target: 'http://localhost:9999',
-        rewrite: () => '/.netlify/functions/register',
-        changeOrigin: true,
-      },
+export default defineConfig(({ mode }) => {
+  // loadEnv reads .env / .env.local files into process.env for the config context.
+  // Without this, INTERNAL_API_KEY would be undefined locally even if set in .env.
+  const env = loadEnv(mode, process.cwd(), "");
+  const internalApiKey = env.INTERNAL_API_KEY || process.env.INTERNAL_API_KEY;
 
-      '/api': {
-        target: 'https://healthyday-backend-v2-773381060399.asia-south1.run.app',
-        changeOrigin: true,
-        secure: false,
-      }
-    }
-  },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
-  resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
+  if (!internalApiKey) {
+    console.warn(
+      "[vite] WARNING: INTERNAL_API_KEY is not set. " +
+        "Proxy requests to the backend will be sent without the X-API-KEY header."
+    );
+  }
+
+  return {
+    server: {
+      host: "::",
+      port: 8080,
+      hmr: {
+        overlay: false,
+      },
+      proxy: {
+        "/.netlify/functions/student": {
+          target: "https://healthyday-backend-v2-773381060399.asia-south1.run.app",
+          changeOrigin: true,
+          secure: true,
+          rewrite: (path) => path.replace("/.netlify/functions/student", "/api/internal/student"),
+          configure: (proxy) => {
+            proxy.on("proxyReq", (proxyReq) => {
+              if (internalApiKey) {
+                proxyReq.setHeader("X-API-KEY", internalApiKey);
+              }
+            });
+          },
+        },
+        "/.netlify/functions": {
+          target: "http://127.0.0.1:9999",
+          changeOrigin: true,
+        },
+        "/api": {
+          target: "https://healthyday-backend-v2-773381060399.asia-south1.run.app",
+          changeOrigin: true,
+          secure: false,
+          configure: (proxy) => {
+            proxy.on("proxyReq", (proxyReq) => {
+              if (internalApiKey) {
+                proxyReq.setHeader("X-API-KEY", internalApiKey);
+              }
+            });
+          },
+        },
+      },
     },
-  },
-  build: {
-    modulePreload: false,
-  },
-}));
+    plugins: [
+      react(),
+      legacy({
+        targets: ['defaults', 'not IE 11']
+      }),
+      mode === "development" && componentTagger()
+    ].filter(Boolean),
+    resolve: {
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+      },
+    },
+  };
+});

@@ -105,13 +105,18 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
             });
 
             const contentType = response.headers.get("content-type");
-            if (contentType && contentType.indexOf("application/json") === -1) {
+            if (!response.ok || (contentType && !contentType.includes("application/json"))) {
+                // If backend returned OK status or 200 without JSON error
+                if (response.ok) {
+                    onSuccess();
+                    return;
+                }
                 throw new Error("Server error: Unexpected response. Please try again later.");
             }
 
-            const data = await response.json();
+            const data = await response.json().catch(() => ({}));
 
-            if (response.ok && data.status === 'success') {
+            if (response.ok && (data.status === 'success' || data.student_id)) {
                 onSuccess();
             } else {
                 setError(data.message || 'Submission failed. Please try again.');
