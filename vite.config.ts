@@ -19,6 +19,9 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
+    define: {
+      'import.meta.env.VITE_INTERNAL_API_KEY': JSON.stringify(internalApiKey),
+    },
     server: {
       host: "::",
       port: 8080,

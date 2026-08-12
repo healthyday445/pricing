@@ -90,12 +90,12 @@ const StudentDetailsModal: React.FC<StudentDetailsModalProps> = ({ isOpen, payme
         }
 
         try {
-            // Use relative URL to leverage Vite proxy in development (avoids CORS)
+            const internalApiKey = import.meta.env.VITE_INTERNAL_API_KEY;
             const response = await fetch('/api/internal/update-student-details', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    'x-api-key': 'HDB@020205'
+                    ...(internalApiKey ? { 'x-api-key': internalApiKey } : {})
                 },
                 body: JSON.stringify({
                     ...formData,

@@ -272,7 +272,10 @@ const PlanCheckout = () => {
                 const fullContact = `${dialCode}${phoneNumber}`;
                 const formattedMobile = fullContact.startsWith('+') ? fullContact : `+${fullContact}`;
 
-                const response = await fetch(`/.netlify/functions/student?mobile=${encodeURIComponent(formattedMobile)}`);
+                const internalApiKey = import.meta.env.VITE_INTERNAL_API_KEY;
+                const response = await fetch(`/.netlify/functions/student?mobile=${encodeURIComponent(formattedMobile)}`, {
+                    headers: internalApiKey ? { 'x-api-key': internalApiKey } : {}
+                });
                 const studentData = await response.json().catch(() => ({}));
 
                 if (!response.ok || studentData.status !== 'pastdue') {
