@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Loader2 } from 'lucide-react';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { validatePhone } from '../utils/phoneValidation';
 import StudentDetailsModal from '../components/StudentDetailsModal';
@@ -89,8 +89,11 @@ const PlanCheckout = () => {
     const isUSDFlow = location.state?.isUSDFlow !== undefined ? location.state.isUSDFlow : (location.pathname.includes('_usd') || location.pathname.includes('usd'));
     const [phoneNumber, setPhoneNumber] = useState('');
     const [dialCode, setDialCode] = useState(isUSDFlow ? '+1' : '+91');
-    const [language, setLanguage] = useState('Telugu');
+    const [language, setLanguage] = useState('');
+    const [languageError, setLanguageError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
+    const [phoneErrorText, setPhoneErrorText] = useState<string | null>(null);
+    const [isVerifying, setIsVerifying] = useState(false);
     const [showModal, setShowModal] = useState(false);
     const [paymentId, setPaymentId] = useState('');
 
@@ -168,6 +171,36 @@ const PlanCheckout = () => {
                 inrPlanName: isRenew ? "6m_renew_inr" : "6m_new_inr",
                 usdPlanName: isRenew ? "6m_renew_usd" : "6m_new_usd"
             };
+        } else if (location.pathname.includes('1599') || location.pathname.includes('ind26_offer_renew') || planId === '1599' || planId === 'ind26_offer_renew') {
+            plan = {
+                id: "ind26_offer_renew",
+                title: "1 Year Including Diet",
+                duration: "1 Year Including Diet",
+                originalPrice: "5999",
+                discountPrice: "1599",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: "Save 73%!",
+                isBestValue: true,
+                inrPlanName: "ind26_offer_renew",
+                usdPlanName: "ind26_offer_renew",
+                isRenewalOnly: true
+            };
+        } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
+            plan = {
+                id: "ind26_offer_new",
+                title: "1 Year Including Diet",
+                duration: "1 Year Including Diet",
+                originalPrice: "5999",
+                discountPrice: "1899",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: "Save 68%!",
+                isBestValue: false,
+                inrPlanName: "ind26_offer_new",
+                usdPlanName: "ind26_offer_new",
+                isRenewalOnly: false
+            };
         } else if (location.pathname.includes('3m')) {
             const isRenew = location.pathname.includes('/renew');
             plan = {
@@ -220,9 +253,44 @@ const PlanCheckout = () => {
         e.preventDefault();
         if (!validatePhone(phoneNumber, dialCode)) {
             setPhoneError(true);
+            setPhoneErrorText(null);
             return;
         }
         setPhoneError(false);
+        setPhoneErrorText(null);
+
+        if (!language) {
+            setLanguageError(true);
+            return;
+        }
+        setLanguageError(false);
+
+        // Verification check for renewal-only plans
+        if (plan.isRenewalOnly || plan.discountPrice === "1599" || plan.inrPlanName === "ind26_offer_renew") {
+            setIsVerifying(true);
+            try {
+                const fullContact = `${dialCode}${phoneNumber}`;
+                const formattedMobile = fullContact.startsWith('+') ? fullContact : `+${fullContact}`;
+
+                const internalApiKey = import.meta.env.VITE_INTERNAL_API_KEY;
+                const response = await fetch(`/api/internal/student?mobile=${encodeURIComponent(formattedMobile)}`, {
+                    headers: internalApiKey ? { 'x-api-key': internalApiKey } : {}
+                });
+                const studentData = await response.json().catch(() => ({}));
+
+                if (!response.ok || studentData.status !== 'pastdue') {
+                    setPhoneErrorText("This offer is only valid for renewal students");
+                    setIsVerifying(false);
+                    return;
+                }
+            } catch (err) {
+                console.error("Renewal verification failed:", err);
+                setPhoneErrorText("Failed to verify student status. Please try again.");
+                setIsVerifying(false);
+                return;
+            }
+            setIsVerifying(false);
+        }
 
         const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
 
@@ -253,33 +321,38 @@ const PlanCheckout = () => {
         try {
             const amountInPaisa = Number(finalPrice) * 100;
 
-            // 1. Create Order from Backend to enable auto-capture
-            const orderResponse = await fetch('/.netlify/functions/create-order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    amount: amountInPaisa,
-                    currency: currency,
-                    notes: {
-                        language: language,
-                        plan_name: planNameId
-                    }
-                })
-            });
-            const orderData = await orderResponse.json();
+            let orderId: string | undefined = undefined;
+            try {
+                const orderResponse = await fetch('/.netlify/functions/create-order', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        amount: amountInPaisa,
+                        currency: currency,
+                        notes: {
+                            language: language,
+                            plan_name: planNameId
+                        }
+                    })
+                });
 
-            if (!orderResponse.ok) {
-                alert(`Error creating Razorpay order: ${orderData.error || 'Unknown error'}. Check console for details.`);
-                console.error("Create Order Error Details:", orderData);
-                return;
+                if (orderResponse.ok) {
+                    const orderData = await orderResponse.json().catch(() => ({}));
+                    if (orderData && orderData.id) {
+                        orderId = orderData.id;
+                    }
+                } else {
+                    console.warn("create-order response not OK, proceeding with direct client checkout");
+                }
+            } catch (err) {
+                console.warn("Could not reach create-order endpoint, proceeding with direct client checkout:", err);
             }
 
-            // 2. Open Razorpay Checkout with the generated order_id
-            const options = {
+            // 2. Open Razorpay Checkout
+            const options: any = {
                 key: razorpayKey,
                 amount: amountInPaisa,
                 currency: currency,
-                order_id: orderData.id, // Passed from backend order creation
                 name: "Healthyday",
                 description: `${plan.title} Subscription`,
                 image: "/logo.webp",
@@ -300,6 +373,10 @@ const PlanCheckout = () => {
                     color: "#004e8c"
                 }
             };
+
+            if (orderId) {
+                options.order_id = orderId;
+            }
 
             const rzp1 = new window.Razorpay(options);
             rzp1.open();
@@ -430,6 +507,7 @@ const PlanCheckout = () => {
                                                 setPhoneNumber(phone);
                                                 setDialCode(code);
                                                 setPhoneError(false);
+                                                setPhoneErrorText(null);
                                             }}
                                             placeholder="Enter Your Whatsapp Number"
                                             required
@@ -438,6 +516,11 @@ const PlanCheckout = () => {
                                         {phoneError && (
                                             <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid mobile number.</span>
                                         )}
+                                        {phoneErrorText && (
+                                            <span className="text-red-500 text-[12px] font-bold mt-1.5 block animate-shake">
+                                                ⚠ {phoneErrorText}
+                                            </span>
+                                        )}
                                         {!isUSDFlow && dialCode !== '+91' && !phoneError && (
                                             <span className="text-[#0D468B] text-[13px] font-semibold mt-1.5 block">
                                                 ⚠ Pricing changed to international
@@ -445,41 +528,54 @@ const PlanCheckout = () => {
                                         )}
                                     </div>
 
-                                    <div className="mb-8 flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
-                                        <label className="text-[14px] text-[#4a4a4a] whitespace-nowrap">
-                                            Select Class Language:
-                                        </label>
-                                        <div className="flex items-center gap-5">
-                                            <label className="flex items-center gap-2 cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="language"
-                                                    value="Telugu"
-                                                    checked={language === 'Telugu'}
-                                                    onChange={(e) => setLanguage(e.target.value)}
-                                                    className="w-[15px] h-[15px] text-[#0D468B] accent-[#0D468B] cursor-pointer"
-                                                />
-                                                <span className="text-[#4a4a4a] text-[14px]">తెలుగు</span>
+                                    <div className="mb-8 flex flex-col gap-1.5">
+                                        <div className="flex flex-col md:flex-row md:items-center gap-3 md:gap-4">
+                                            <label className={`text-[14px] whitespace-nowrap ${languageError ? 'text-red-500 font-semibold' : 'text-[#4a4a4a]'}`}>
+                                                Select Class Language <span className="text-[#ff0000]">*</span>:
                                             </label>
-                                            <label className="flex items-center gap-2 cursor-pointer">
-                                                <input
-                                                    type="radio"
-                                                    name="language"
-                                                    value="English"
-                                                    checked={language === 'English'}
-                                                    onChange={(e) => setLanguage(e.target.value)}
-                                                    className="w-[15px] h-[15px] text-[#0D468B] accent-[#0D468B] cursor-pointer"
-                                                />
-                                                <span className="text-[#4a4a4a] text-[14px]">English</span>
-                                            </label>
+                                            <div className="flex items-center gap-5">
+                                                <label className="flex items-center gap-2 cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        name="language"
+                                                        value="Telugu"
+                                                        checked={language === 'Telugu'}
+                                                        onChange={(e) => { setLanguage(e.target.value); setLanguageError(false); }}
+                                                        className="w-[15px] h-[15px] text-[#0D468B] accent-[#0D468B] cursor-pointer"
+                                                    />
+                                                    <span className="text-[#4a4a4a] text-[14px]">తెలుగు</span>
+                                                </label>
+                                                <label className="flex items-center gap-2 cursor-pointer">
+                                                    <input
+                                                        type="radio"
+                                                        name="language"
+                                                        value="English"
+                                                        checked={language === 'English'}
+                                                        onChange={(e) => { setLanguage(e.target.value); setLanguageError(false); }}
+                                                        className="w-[15px] h-[15px] text-[#0D468B] accent-[#0D468B] cursor-pointer"
+                                                    />
+                                                    <span className="text-[#4a4a4a] text-[14px]">English</span>
+                                                </label>
+                                            </div>
                                         </div>
+                                        {languageError && (
+                                            <span className="text-red-500 text-[12px] font-medium block">⚠ Please select a class language to continue.</span>
+                                        )}
                                     </div>
 
                                     <button
                                         type="submit"
-                                        className="w-full bg-gradient-to-b from-[#ffb93d] to-[#f49c0c] hover:from-[#eebb4d] hover:to-[#e18e0a] text-[#202020] font-bold py-3 rounded-[50px] transition-all duration-300 uppercase text-[15px] shadow-sm tracking-wide"
+                                        disabled={isVerifying}
+                                        className="w-full bg-gradient-to-b from-[#ffb93d] to-[#f49c0c] hover:from-[#eebb4d] hover:to-[#e18e0a] text-[#202020] font-bold py-3 rounded-[50px] transition-all duration-300 uppercase text-[15px] shadow-sm tracking-wide disabled:opacity-60 flex items-center justify-center gap-2"
                                     >
-                                        Checkout
+                                        {isVerifying ? (
+                                            <>
+                                                <Loader2 className="w-5 h-5 animate-spin" />
+                                                <span>Verifying...</span>
+                                            </>
+                                        ) : (
+                                            <span>Checkout</span>
+                                        )}
                                     </button>
                                 </form>
                             </div>
