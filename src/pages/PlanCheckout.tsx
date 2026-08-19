@@ -183,7 +183,7 @@ const PlanCheckout = () => {
                 discount: "Save 73%!",
                 isBestValue: true,
                 inrPlanName: "ind26_offer_renew",
-                usdPlanName: "ind26_offer_renew",
+                usdPlanName: "12m_renew_usd",
                 isRenewalOnly: true
             };
         } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
@@ -198,7 +198,7 @@ const PlanCheckout = () => {
                 discount: "Save 68%!",
                 isBestValue: false,
                 inrPlanName: "ind26_offer_new",
-                usdPlanName: "ind26_offer_new",
+                usdPlanName: "12m_new_usd",
                 isRenewalOnly: false
             };
         } else if (location.pathname.includes('3m')) {
