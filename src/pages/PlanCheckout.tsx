@@ -307,7 +307,10 @@ const PlanCheckout = () => {
             setIsVerifying(false);
         }
 
-        const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+        const isDYJ = location.pathname.includes('_plan') || location.pathname === '/plans' || Boolean(location.state?.isDYJFlow);
+        const razorpayKey = isDYJ
+            ? (import.meta.env.VITE_RAZORPAY_KEY_ID_DYJ || import.meta.env.VITE_RAZORPAY_KEY_ID)
+            : import.meta.env.VITE_RAZORPAY_KEY_ID;
 
         if (!razorpayKey) {
             alert("Razorpay Key is missing! Please check your environment variables.");
@@ -344,6 +347,7 @@ const PlanCheckout = () => {
                     body: JSON.stringify({
                         amount: amountInPaisa,
                         currency: currency,
+                        isDYJ: isDYJ,
                         notes: {
                             language: language,
                             plan_name: planNameId

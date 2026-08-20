@@ -6,15 +6,20 @@ export const handler: Handler = async (event: HandlerEvent) => {
   }
 
   try {
-    const { amount, currency, receipt, notes } = JSON.parse(event.body || "{}");
+    const { amount, currency, receipt, notes, isDYJ } = JSON.parse(event.body || "{}");
 
     if (!amount) {
       return { statusCode: 400, body: JSON.stringify({ error: "Amount is required" }) };
     }
 
     // Attempt to load Razorpay keys
-    const keyId = (process.env.VITE_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || "").trim();
-    const keySecret = (process.env.RAZORPAY_KEY_SECRET || "").trim();
+    const keyId = isDYJ
+      ? (process.env.VITE_RAZORPAY_KEY_ID_DYJ || process.env.RAZORPAY_KEY_ID_DYJ || process.env.VITE_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || "").trim()
+      : (process.env.VITE_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || "").trim();
+
+    const keySecret = isDYJ
+      ? (process.env.RAZORPAY_KEY_SECRET_DYJ || process.env.RAZORPAY_KEY_SECRET || "").trim()
+      : (process.env.RAZORPAY_KEY_SECRET || "").trim();
 
     const debugEnv = { hasKeyId: !!keyId, hasKeySecret: !!keySecret, envKeys: Object.keys(process.env).filter(k => k.includes('RAZORPAY')) };
     console.log("DEBUG ENV:", debugEnv);
