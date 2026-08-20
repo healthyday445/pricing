@@ -36,7 +36,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
       amount: amount, // amount in paisa (e.g. 50000 for 500 INR)
       currency: currency || "INR",
       receipt: receipt || `receipt_${Date.now()}`,
-      payment_capture: true, // Automatically capture payments
+      payment_capture: 1, // Automatically capture payments (Razorpay requires integer 1, not boolean)
       notes: notes || {}
     };
 
