@@ -166,13 +166,13 @@ const App = () => {
           <Route path="/3to6m_usd" element={<PlanCheckout />} />
           <Route path="/6to12m_usd" element={<PlanCheckout />} />
           <Route path="/3to12m_usd" element={<PlanCheckout />} />
-          <Route path="/ind26_offer_new" element={<PlanCheckout />} />
-          <Route path="/ind26_offer_renew" element={<PlanCheckout />} />
-          <Route path="/ind26_offer_new/checkout" element={<PlanCheckout />} />
-          <Route path="/ind26_offer_renew/checkout" element={<PlanCheckout />} />
+          <Route path="/ind26_offer_new" element={<Navigate to="/pricing" replace />} />
+          <Route path="/ind26_offer_renew" element={<Navigate to="/pricing" replace />} />
+          <Route path="/ind26_offer_new/checkout" element={<Navigate to="/pricing" replace />} />
+          <Route path="/ind26_offer_renew/checkout" element={<Navigate to="/pricing" replace />} />
           <Route path="/consistency_offer_1y" element={<PlanCheckout />} />
-          <Route path="/1899" element={<PlanCheckout />} />
-          <Route path="/1599" element={<PlanCheckout />} />
+          <Route path="/1899" element={<Navigate to="/pricing" replace />} />
+          <Route path="/1599" element={<Navigate to="/pricing" replace />} />
 
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/:planId/checkout/old" element={<PlanCheckout />} />
