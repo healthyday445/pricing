@@ -186,6 +186,21 @@ const PlanCheckout = () => {
                 usdPlanName: "12m_renew_usd",
                 isRenewalOnly: true
             };
+        } else if (location.pathname.includes('consistency_offer_1y') || planId === 'consistency_offer_1y') {
+            plan = {
+                id: "consistency_offer_1y",
+                title: "1 Year Including Diet",
+                duration: "1 Year Including Diet",
+                originalPrice: "5999",
+                discountPrice: "2199",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: "Save 63%!",
+                isBestValue: true,
+                inrPlanName: "consistency_offer_1y",
+                usdPlanName: "12m_new_usd",
+                isRenewalOnly: false
+            };
         } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
             plan = {
                 id: "ind26_offer_new",

@@ -70,9 +70,19 @@ This page displays prices natively in USD for existing international users upgra
 
 ---
 
+## 7. Consistency Offer 1 Year Page (`/consistency_offer_1y`)
+This page is a special offer page for the 1 Year Plan at ₹2199/-.
+
+| Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent (INR) | `plan_name` Sent (USD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1 Year Including Diet** | ₹2199/- | ₹5999/- | `"consistency_offer_1y"` | `"12m_new_usd"` ($49) |
+
+---
+
 ## How it works technically:
 - Each page defines its plans in an array (e.g., `plans` array) and passes the selected `plan` object to `PlanCheckout.tsx` via the router state.
 - Each `plan` object now explicitly contains an `inrPlanName` and a `usdPlanName`.
 - When the user selects a Country Dial Code in the checkout, `PlanCheckout.tsx` dynamically determines whether the user is an international buyer or an Indian buyer:
-  - If they are Indian (`+91`), it extracts the `inrPlanName` (e.g., `12m_new_inr` or `12m_renew_inr`) to pass to the Razorpay webhook.
-  - If they are International (anything other than `+91`), it automatically switches to the `usdPlanName` (e.g., `12m_usd`) and changes the currency to USD.
+  - If they are Indian (`+91`), it extracts the `inrPlanName` (e.g., `consistency_offer_1y`, `12m_new_inr` or `12m_renew_inr`) to pass to the Razorpay webhook.
+  - If they are International (anything other than `+91`), it automatically switches to the `usdPlanName` (e.g., `12m_new_usd`) and changes the currency to USD.
+
