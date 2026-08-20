@@ -60,7 +60,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify({ ...data, key_id: keyId })
     };
   } catch (error) {
     console.error("Internal Error creating Razorpay order:", error);
