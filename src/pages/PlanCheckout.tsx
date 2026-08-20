@@ -349,6 +349,7 @@ const PlanCheckout = () => {
                         amount: amountInPaisa,
                         currency: currency,
                         isDYJ: isDYJ,
+                        clientKeyId: razorpayKey,
                         notes: {
                             language: language,
                             plan_name: planNameId
