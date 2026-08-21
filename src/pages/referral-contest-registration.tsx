@@ -4,6 +4,7 @@ import PhoneInputCustom from '../components/PhoneInputCustom';
 import { getProgramStartLabel } from '../utils/programDates';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
+import { hashPhoneNumber, hashName } from '../utils/hashUserData';
 import RegistrationPopup from '../components/RegistrationPopup';
 import heroImg from '../assets/Referral Poster for registration page.webp';
 interface FreeProgrammesProps {
@@ -98,11 +99,16 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
 
                 const successEvent = formData.language === 'Telugu' ? 'referral_page_telugu_success' : 'referral_page_english_success';
 
+                const [hashedPhone, hashedName] = await Promise.all([
+                    hashPhoneNumber(formattedPhone),
+                    hashName(formData.name)
+                ]);
+
                 pushDataLayer({
                     'event': successEvent,
                     'user_data': {
-                        'phone_number': formattedPhone,
-                        'first_name': formData.name,
+                        'phone_number': hashedPhone,
+                        'first_name': hashedName,
                         'page_language': formData.language === 'English' ? 'English' : 'Telugu'
                     },
                     'attribution_data': {

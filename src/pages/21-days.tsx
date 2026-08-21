@@ -8,6 +8,7 @@ import iydHero from '../assets/IYD-reg-page-hero.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
+import { hashPhoneNumber, hashName } from '../utils/hashUserData';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
 }
@@ -134,10 +135,15 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     currentPopupId = isFreeAgain ? 1331 : isNewReg ? 1589 : 1589;
                 }
 
+                const [hashedPhone, hashedName] = await Promise.all([
+                    hashPhoneNumber(formattedPhone),
+                    hashName(formData.name)
+                ]);
+
                 pushDataLayer({
                     'user_data': {
-                        'phone_number': formattedPhone,
-                        'first_name': formData.name,
+                        'phone_number': hashedPhone,
+                        'first_name': hashedName,
                         'page_language': formData.language === 'English' ? 'English' : 'Telugu'
                     },
                     'attribution_data': {
