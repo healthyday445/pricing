@@ -47,6 +47,7 @@ const TitleUpdater = () => {
     const pathname = location.pathname.toLowerCase();
     const isPricingOrCheckout =
       pathname.startsWith('/pricing') ||
+      pathname.startsWith('/plans') ||
       pathname.startsWith('/usd-pricing') ||
       pathname.startsWith('/renew') ||
       pathname.startsWith('/usd-renew') ||
@@ -124,6 +125,7 @@ const App = () => {
           <Route path="/telugu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/talagu" element={<FreeProgrammes defaultLanguage="Telugu" />} />
           <Route path="/pricing" element={<Home />} />
+          <Route path="/plans" element={<Home />} />
           <Route path="/usd-pricing" element={<USDPricing />} />
           <Route path="/usd-renew" element={<USDRenew />} />
           <Route path="/renew" element={<Renew />} />
@@ -140,6 +142,9 @@ const App = () => {
           <Route path="/12m" element={<PlanCheckout />} />
           <Route path="/6m" element={<PlanCheckout />} />
           <Route path="/3m" element={<PlanCheckout />} />
+          <Route path="/12m_plan" element={<PlanCheckout />} />
+          <Route path="/6m_plan" element={<PlanCheckout />} />
+          <Route path="/3m_plan" element={<PlanCheckout />} />
           <Route path="/12m_usd" element={<PlanCheckout />} />
           <Route path="/6m_usd" element={<PlanCheckout />} />
           <Route path="/3m_usd" element={<PlanCheckout />} />

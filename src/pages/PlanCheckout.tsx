@@ -307,7 +307,10 @@ const PlanCheckout = () => {
             setIsVerifying(false);
         }
 
-        const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
+        const isDYJ = location.pathname.includes('_plan') || location.pathname === '/plans' || Boolean(location.state?.isDYJFlow);
+        const razorpayKey = isDYJ
+            ? (import.meta.env.VITE_RAZORPAY_KEY_ID_DYJ || import.meta.env.VITE_RAZORPAY_KEY_ID)
+            : import.meta.env.VITE_RAZORPAY_KEY_ID;
 
         if (!razorpayKey) {
             alert("Razorpay Key is missing! Please check your environment variables.");
@@ -337,6 +340,7 @@ const PlanCheckout = () => {
             const amountInPaisa = Number(finalPrice) * 100;
 
             let orderId: string | undefined = undefined;
+            let activeRazorpayKey = razorpayKey;
             try {
                 const orderResponse = await fetch('/.netlify/functions/create-order', {
                     method: 'POST',
@@ -344,6 +348,8 @@ const PlanCheckout = () => {
                     body: JSON.stringify({
                         amount: amountInPaisa,
                         currency: currency,
+                        isDYJ: isDYJ,
+                        clientKeyId: razorpayKey,
                         notes: {
                             language: language,
                             plan_name: planNameId
@@ -355,6 +361,9 @@ const PlanCheckout = () => {
                     const orderData = await orderResponse.json().catch(() => ({}));
                     if (orderData && orderData.id) {
                         orderId = orderData.id;
+                        if (orderData.key_id) {
+                            activeRazorpayKey = orderData.key_id;
+                        }
                     }
                 } else {
                     console.warn("create-order response not OK, proceeding with direct client checkout");
@@ -365,7 +374,7 @@ const PlanCheckout = () => {
 
             // 2. Open Razorpay Checkout
             const options: any = {
-                key: razorpayKey,
+                key: activeRazorpayKey,
                 amount: amountInPaisa,
                 currency: currency,
                 name: "Healthyday",

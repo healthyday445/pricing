@@ -6,15 +6,22 @@ export const handler: Handler = async (event: HandlerEvent) => {
   }
 
   try {
-    const { amount, currency, receipt, notes } = JSON.parse(event.body || "{}");
+    const { amount, currency, receipt, notes, isDYJ, clientKeyId } = JSON.parse(event.body || "{}");
 
     if (!amount) {
       return { statusCode: 400, body: JSON.stringify({ error: "Amount is required" }) };
     }
 
     // Attempt to load Razorpay keys
-    const keyId = (process.env.VITE_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || "").trim();
-    const keySecret = (process.env.RAZORPAY_KEY_SECRET || "").trim();
+    const rawKeyId = isDYJ
+      ? (process.env.VITE_RAZORPAY_KEY_ID_DYJ || process.env.RAZORPAY_KEY_ID_DYJ || process.env.VITE_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || clientKeyId || "")
+      : (process.env.VITE_RAZORPAY_KEY_ID || process.env.RAZORPAY_KEY_ID || clientKeyId || "");
+    const keyId = rawKeyId.trim();
+
+    const keySecret = (isDYJ
+      ? (process.env.RAZORPAY_KEY_SECRET_DYJ || process.env.RAZORPAY_KEY_SECRET || "")
+      : (process.env.RAZORPAY_KEY_SECRET || "")
+    ).trim();
 
     const debugEnv = { hasKeyId: !!keyId, hasKeySecret: !!keySecret, envKeys: Object.keys(process.env).filter(k => k.includes('RAZORPAY')) };
     console.log("DEBUG ENV:", debugEnv);
@@ -29,7 +36,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
       amount: amount, // amount in paisa (e.g. 50000 for 500 INR)
       currency: currency || "INR",
       receipt: receipt || `receipt_${Date.now()}`,
-      payment_capture: 1, // Automatically capture payments
+      payment_capture: 1, // Automatically capture payments (Razorpay requires integer 1, not boolean)
       notes: notes || {}
     };
 
@@ -55,7 +62,7 @@ export const handler: Handler = async (event: HandlerEvent) => {
     return {
       statusCode: 200,
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify({ ...data, key_id: keyId })
     };
   } catch (error) {
     console.error("Internal Error creating Razorpay order:", error);

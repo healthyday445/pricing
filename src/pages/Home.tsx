@@ -25,10 +25,11 @@ const Home = () => {
     }, [location]);
 
     const handleNavigationToCheckout = (plan: any) => {
+        const isPlansPath = location.pathname.startsWith('/plans');
         let path = '/checkout';
-        if (plan.title.includes('1 Year')) path = '/12m';
-        else if (plan.title.includes('6 Months')) path = '/6m';
-        else if (plan.title.includes('3 Months')) path = '/3m';
+        if (plan.title.includes('1 Year')) path = isPlansPath ? '/12m_plan' : '/12m';
+        else if (plan.title.includes('6 Months')) path = isPlansPath ? '/6m_plan' : '/6m';
+        else if (plan.title.includes('3 Months')) path = isPlansPath ? '/3m_plan' : '/3m';
 
         navigate(path, {
             state: { plan }
