@@ -14,13 +14,19 @@ export default async (request, context) => {
   // If outside India, redirect to the USD equivalent pages
   if (countryCode !== "IN") {
     if (url.pathname === "/pricing" || url.pathname === "/") {
-      return Response.redirect(new URL("/usd-pricing", request.url), 302);
+      const redirectUrl = new URL("/usd-pricing", request.url);
+      redirectUrl.search = url.search;
+      return Response.redirect(redirectUrl, 302);
     }
     if (url.pathname === "/renew" || url.pathname.startsWith("/renew/")) {
-      return Response.redirect(new URL("/usd-renew", request.url), 302);
+      const redirectUrl = new URL("/usd-renew", request.url);
+      redirectUrl.search = url.search;
+      return Response.redirect(redirectUrl, 302);
     }
     if (url.pathname === "/upgrade") {
-      return Response.redirect(new URL("/usd_upgrade", request.url), 302);
+      const redirectUrl = new URL("/usd_upgrade", request.url);
+      redirectUrl.search = url.search;
+      return Response.redirect(redirectUrl, 302);
     }
   }
 
