@@ -144,7 +144,7 @@ const PlanCheckout = () => {
                 usdPlanName: "3_to_12_months_upgrade_usd"
             };
         } else if (location.pathname.includes('12m')) {
-            const isRenew = location.pathname.includes('/renew');
+            const isRenew = location.pathname.includes('/renew') || location.pathname.includes('old_plans');
             plan = {
                 title: "1 Year Including Diet",
                 duration: "1 Year Including Diet",
@@ -158,7 +158,7 @@ const PlanCheckout = () => {
                 usdPlanName: isRenew ? "12m_renew_usd" : "12m_new_usd"
             };
         } else if (location.pathname.includes('6m')) {
-            const isRenew = location.pathname.includes('/renew');
+            const isRenew = location.pathname.includes('/renew') || location.pathname.includes('old_plans');
             plan = {
                 title: "6 Months Plan",
                 duration: "6 Months Plan",
@@ -186,7 +186,7 @@ const PlanCheckout = () => {
                 usdPlanName: "12m_renew_usd",
                 isRenewalOnly: true
             };
-        } else if (location.pathname.includes('consistency_offer_1y') || planId === 'consistency_offer_1y') {
+        } else if (location.pathname.includes('consistency_offer') || planId === 'consistency_offer_1y' || planId === 'consistency_offer') {
             plan = {
                 id: "consistency_offer_1y",
                 title: "1 Year Including Diet",
@@ -217,7 +217,7 @@ const PlanCheckout = () => {
                 isRenewalOnly: false
             };
         } else if (location.pathname.includes('3m')) {
-            const isRenew = location.pathname.includes('/renew');
+            const isRenew = location.pathname.includes('/renew') || location.pathname.includes('old_plans');
             plan = {
                 title: "3 Months Plan",
                 duration: "3 Months Plan",
@@ -307,7 +307,8 @@ const PlanCheckout = () => {
             setIsVerifying(false);
         }
 
-        const isDYJ = location.pathname.includes('_plan') || location.pathname === '/plans' || Boolean(location.state?.isDYJFlow);
+        const isUSD = dialCode !== '+91';
+        const isDYJ = !isUSD && (location.pathname.includes('_plan') || location.pathname === '/plans' || location.pathname.includes('old_plans') || (location.pathname.includes('consistency_offer') && !location.pathname.includes('consistency_offer_1y')) || Boolean(location.state?.isDYJFlow));
         const razorpayKey = isDYJ
             ? (import.meta.env.VITE_RAZORPAY_KEY_ID_DYJ || import.meta.env.VITE_RAZORPAY_KEY_ID)
             : import.meta.env.VITE_RAZORPAY_KEY_ID;
@@ -324,8 +325,6 @@ const PlanCheckout = () => {
 
         const fullContact = `${dialCode}${phoneNumber}`;
         console.log('Razorpay prefill contact:', fullContact, '| dialCode:', dialCode, '| phoneNumber:', phoneNumber);
-
-        const isUSD = dialCode !== '+91';
         const finalPrice = isUSD && plan.usdPrice ? plan.usdPrice : plan.discountPrice;
         const currency = isUSD ? "USD" : "INR";
 
