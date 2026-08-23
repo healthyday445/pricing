@@ -7,7 +7,7 @@ const PricingCards = () => {
   const navigate = useNavigate();
   const plans = [
     {
-      duration: "1 Year (Including Diet)*",
+      duration: "1 Year Plan (Including Diet)*",
       price: "2399",
       originalPrice: "5999",
       discount: "Save 60%!",

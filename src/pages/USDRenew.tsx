@@ -37,7 +37,7 @@ const USDRenew = () => {
 
     const plans = [
         {
-            title: "1 Year (Including Diet)",
+            title: "1 Year Plan (Including Diet)",
             originalPrice: "5999",
             discountPrice: "1999",
             usdOriginalPrice: "149",
