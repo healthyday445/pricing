@@ -45,8 +45,8 @@ const defaultPlan = {
 
 const oldPlans: Record<string, any> = {
     '1year': {
-        title: "1 Year Including Diet",
-        duration: "1 Year Including Diet",
+        title: "1 Year (Including Diet)",
+        duration: "1 Year (Including Diet)",
         originalPrice: "5999",
         discountPrice: "1999",
         usdPrice: "49",
@@ -146,8 +146,8 @@ const PlanCheckout = () => {
         } else if (location.pathname.includes('12m')) {
             const isRenew = location.pathname.includes('/renew') || location.pathname.includes('old_plans');
             plan = {
-                title: "1 Year Including Diet",
-                duration: "1 Year Including Diet",
+                title: "1 Year (Including Diet)",
+                duration: "1 Year (Including Diet)",
                 originalPrice: "5999",
                 discountPrice: isRenew ? "1999" : "2399",
                 usdOriginalPrice: "149",
@@ -174,8 +174,8 @@ const PlanCheckout = () => {
         } else if (location.pathname.includes('1599') || location.pathname.includes('ind26_offer_renew') || planId === '1599' || planId === 'ind26_offer_renew') {
             plan = {
                 id: "ind26_offer_renew",
-                title: "1 Year Including Diet",
-                duration: "1 Year Including Diet",
+                title: "1 Year (Including Diet)",
+                duration: "1 Year (Including Diet)",
                 originalPrice: "5999",
                 discountPrice: "1599",
                 usdOriginalPrice: "149",
@@ -189,8 +189,8 @@ const PlanCheckout = () => {
         } else if (location.pathname.includes('consistency_offer') || planId === 'consistency_offer_1y' || planId === 'consistency_offer') {
             plan = {
                 id: "consistency_offer_1y",
-                title: "1 Year Including Diet",
-                duration: "1 Year Including Diet",
+                title: "1 Year (Including Diet)",
+                duration: "1 Year (Including Diet)",
                 originalPrice: "5999",
                 discountPrice: "2199",
                 usdOriginalPrice: "149",
@@ -204,8 +204,8 @@ const PlanCheckout = () => {
         } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
             plan = {
                 id: "ind26_offer_new",
-                title: "1 Year Including Diet",
-                duration: "1 Year Including Diet",
+                title: "1 Year (Including Diet)",
+                duration: "1 Year (Including Diet)",
                 originalPrice: "5999",
                 discountPrice: "1899",
                 usdOriginalPrice: "149",

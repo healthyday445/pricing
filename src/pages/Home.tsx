@@ -38,7 +38,7 @@ const Home = () => {
 
     const plans = [
         {
-            title: "1 Year Including Diet",
+            title: "1 Year (Including Diet)",
             originalPrice: "5999",
             discountPrice: "2399",
             discount: "Save 60%!",

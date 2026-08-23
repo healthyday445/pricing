@@ -7,7 +7,7 @@ This is the standard pricing for new users checking out with an Indian phone num
 
 | Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent |
 | :--- | :--- | :--- | :--- |
-| **1 Year Including Diet** | ₹2399/- | ₹5999/- | `"12m_new_inr"` |
+| **1 Year (Including Diet)** | ₹2399/- | ₹5999/- | `"12m_new_inr"` |
 | **6 Months Plan** | ₹1899/- | ₹2999/- | `"6m_new_inr"` |
 | **3 Months Plan** | ₹1399/- | ₹1499/- | `"3m_new_inr"` |
 
@@ -18,7 +18,7 @@ This page is for existing users and offers a discounted loyalty price. Users mus
 
 | Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent |
 | :--- | :--- | :--- | :--- |
-| **1 Year Including Diet** | ₹1999/- | ₹5999/- | `"12m_renew_inr"` |
+| **1 Year (Including Diet)** | ₹1999/- | ₹5999/- | `"12m_renew_inr"` |
 | **6 Months Plan** | ₹1499/- | ₹2999/- | `"6m_renew_inr"` |
 | **3 Months Plan** | ₹999/- | ₹1499/- | `"3m_renew_inr"` |
 
@@ -31,7 +31,7 @@ This page displays prices natively in USD for new users.
 
 | Plan Title | Price Paid (USD) | Original Price (USD) | `plan_name` Sent |
 | :--- | :--- | :--- | :--- |
-| **1 Year Including Diet** | $49 | $125 | `"12m_new_usd"` |
+| **1 Year (Including Diet)** | $49 | $125 | `"12m_new_usd"` |
 | **6 Months Plan** | $39 | $62 | `"6m_new_usd"` |
 | **3 Months Plan** | $29 | $31 | `"3m_new_usd"` |
 
@@ -42,7 +42,7 @@ This page displays prices natively in USD for existing users renewing their subs
 
 | Plan Title | Price Paid (USD) | Original Price (USD) | `plan_name` Sent |
 | :--- | :--- | :--- | :--- |
-| **1 Year Including Diet** | $49 | $125 | `"12m_renew_usd"` |
+| **1 Year (Including Diet)** | $49 | $125 | `"12m_renew_usd"` |
 | **6 Months Plan** | $39 | $62 | `"6m_renew_usd"` |
 | **3 Months Plan** | $29 | $31 | `"3m_renew_usd"` |
 
@@ -75,7 +75,7 @@ This page is a special offer page for the 1 Year Plan at ₹2199/-.
 
 | Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent (INR) | `plan_name` Sent (USD) |
 | :--- | :--- | :--- | :--- | :--- |
-| **1 Year Including Diet** | ₹2199/- | ₹5999/- | `"consistency_offer_1y"` | `"12m_new_usd"` ($49) |
+| **1 Year (Including Diet)** | ₹2199/- | ₹5999/- | `"consistency_offer_1y"` | `"12m_new_usd"` ($49) |
 
 ---
 
