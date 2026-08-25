@@ -79,6 +79,15 @@ This page is a special offer page for the 1 Year Plan at ₹2199/-.
 
 ---
 
+## 8. Rakhi Offer 1 Year Page (`/rakhi_offer` or `/rakhi-offer`)
+This page is a special Rakhi offer for the 1 Year Plan at ₹2399/- which includes **Diet + Wiselife Yoga Mat**.
+
+| Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent (INR) | `plan_name` Sent (USD) |
+| :--- | :--- | :--- | :--- | :--- |
+| **1 Year Plan (Including Diet + Wiselife Yoga Mat)** | ₹2399/- | ₹5999/- | `"rakhi_offer_1y"` | `"12m_new_usd"` ($49) |
+
+---
+
 ## How it works technically:
 - Each page defines its plans in an array (e.g., `plans` array) and passes the selected `plan` object to `PlanCheckout.tsx` via the router state.
 - Each `plan` object now explicitly contains an `inrPlanName` and a `usdPlanName`.

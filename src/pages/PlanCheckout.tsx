@@ -201,6 +201,22 @@ const PlanCheckout = () => {
                 usdPlanName: "12m_new_usd",
                 isRenewalOnly: false
             };
+        } else if (location.pathname.includes('rakhi_offer') || planId === 'rakhi_offer') {
+            plan = {
+                id: "rakhi_offer_1y",
+                title: "1 Year Plan (Including Diet + Wiselife Yoga Mat)",
+                duration: "1 Year Plan (Including Diet + Wiselife Yoga Mat)",
+                originalPrice: "5999",
+                discountPrice: "2399",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: "Rakhi Special Offer!",
+                isBestValue: true,
+                inrPlanName: "rakhi_offer_1y",
+                usdPlanName: "12m_new_usd",
+                isRenewalOnly: false,
+                hasYogaMat: true
+            };
         } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
             plan = {
                 id: "ind26_offer_new",
@@ -462,7 +478,15 @@ const PlanCheckout = () => {
                                     <>
                                         <li className="flex items-start gap-3">
                                             <SolidCheckCircle />
-                                            <span className="text-[#202020] text-[15px]">Daily DIET Routine</span>
+                                            <span className="text-[#202020] text-[15px] flex items-center gap-2 flex-wrap">
+                                                <span>Daily DIET Routine {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) ? '+ Wiselife Yoga Mat' : ''}</span>
+                                                {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
+                                                    <span className="inline-flex items-center gap-1.5 bg-[#FFF8E7] text-[#0D468B] text-xs font-bold px-2.5 py-1 rounded-full border border-[#FEAB27]">
+                                                        <img src="/wiselife-yoga-mat.png" alt="Wiselife Yoga Mat" className="w-7 h-7 object-cover rounded-md shadow-xs" />
+                                                        <span>Wiselife Yoga Mat Included</span>
+                                                    </span>
+                                                )}
+                                            </span>
                                         </li>
                                         <li className="flex items-start gap-3">
                                             <SolidCheckCircle />
@@ -502,7 +526,12 @@ const PlanCheckout = () => {
                                     <span className="font-bold text-[15px]">Best Value</span>
                                 </div>
                                 <div className="p-6">
-                                    <h3 className="text-[20px] font-bold text-[#0D468B] mb-2">{plan.title}</h3>
+                                    <h3 className="text-[20px] font-bold text-[#0D468B] mb-2 flex items-center gap-2 flex-wrap">
+                                        <span>{plan.title}</span>
+                                        {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
+                                            <img src="/wiselife-yoga-mat.png" alt="Wiselife Yoga Mat Icon" className="w-9 h-9 object-cover rounded-lg border border-amber-200 shadow-xs inline-block" />
+                                        )}
+                                    </h3>
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-[#919191] line-through text-[18px] font-medium decoration-2">
                                             {dialCode !== '+91' && plan.usdOriginalPrice ? `$${plan.usdOriginalPrice}` : `₹${plan.originalPrice}/-`}

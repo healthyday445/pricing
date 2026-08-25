@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none" width="64" height="64">
+  <defs>
+    <linearGradient id="matGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0D468B" />
+      <stop offset="100%" stop-color="#1C7EB3" />
+    </linearGradient>
+    <linearGradient id="rollGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#FEAB27" />
+      <stop offset="100%" stop-color="#F49C0C" />
+    </linearGradient>
+  </defs>
+  <!-- Rolled Yoga Mat Body -->
+  <rect x="8" y="24" width="48" height="26" rx="13" fill="url(#matGrad)" />
+  <ellipse cx="18" cy="37" rx="7" ry="11" fill="#0A366F" />
+  <ellipse cx="18" cy="37" rx="4" ry="7" fill="#1C7EB3" />
+  <ellipse cx="18" cy="37" rx="2" ry="3.5" fill="#FEAB27" />
+  
+  <!-- Carrying Straps -->
+  <rect x="26" y="22" width="4" height="30" rx="2" fill="url(#rollGrad)" />
+  <rect x="42" y="22" width="4" height="30" rx="2" fill="url(#rollGrad)" />
+  
+  <!-- Strap Handle -->
+  <path d="M 28 22 C 28 12, 44 12, 44 22" stroke="url(#rollGrad)" stroke-width="3" stroke-linecap="round" fill="none" />
+  
+  <!-- Wiselife Star / Brand Emblem -->
+  <circle cx="48" cy="37" r="4" fill="#FEAB27" />
+  <path d="M 48 34.5 L 49 36.5 L 51 37 L 49 37.5 L 48 39.5 L 47 37.5 L 45 37 L 47 36.5 Z" fill="#0D468B" />
+</svg>

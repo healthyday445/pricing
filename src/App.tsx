@@ -55,6 +55,7 @@ const TitleUpdater = () => {
       pathname.startsWith('/usd_upgrade') ||
       pathname.startsWith('/ind26_offer') ||
       pathname.startsWith('/consistency_offer') ||
+      pathname.startsWith('/rakhi') ||
       pathname.startsWith('/old_plans') ||
       pathname.includes('checkout') ||
       pathname.startsWith('/12m') ||
@@ -173,6 +174,7 @@ const App = () => {
           <Route path="/ind26_offer_renew/checkout" element={<Navigate to="/pricing" replace />} />
           <Route path="/consistency_offer_1y" element={<PlanCheckout />} />
           <Route path="/consistency_offer" element={<PlanCheckout />} />
+          <Route path="/rakhi_offer" element={<PlanCheckout />} />
           <Route path="/old_plans" element={<Renew />} />
           <Route path="/old_plans/12m" element={<PlanCheckout />} />
           <Route path="/old_plans/6m" element={<PlanCheckout />} />

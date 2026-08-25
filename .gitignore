@@ -29,3 +29,6 @@ dist-ssr
 /.claude
 # Local Netlify folder
 .netlify
+
+# Temporary Vite build files
+*.timestamp*.mjs
