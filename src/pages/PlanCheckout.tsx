@@ -480,10 +480,10 @@ const PlanCheckout = () => {
                                         <li className="flex items-start gap-3">
                                             <SolidCheckCircle />
                                             <span className="text-[#202020] text-[15px] flex items-center gap-2 flex-wrap">
-                                                <span>Daily DIET Routine</span>
+                                                <span>Daily DIET Routine {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) ? '+ Wiselife Yoga Mat' : ''}</span>
                                                 {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
-                                                    <span className="inline-flex items-center gap-2 bg-[#FFF8E7] text-[#0D468B] text-xs font-bold px-3 py-1.5 rounded-full border border-[#FEAB27]">
-                                                        <img src="/wiselife-real-mat.png" alt="Wiselife Yoga Mat" className="h-6 md:h-7 object-contain" />
+                                                    <span className="inline-flex items-center gap-1.5 bg-[#FFF8E7] text-[#0D468B] text-xs font-bold px-2.5 py-1 rounded-full border border-[#FEAB27]">
+                                                        <img src="/wiselife-yoga-mat.png" alt="Wiselife Yoga Mat" className="w-7 h-7 object-cover rounded-md shadow-xs" />
                                                         <span>Wiselife Yoga Mat Included</span>
                                                     </span>
                                                 )}
@@ -529,12 +529,7 @@ const PlanCheckout = () => {
                                     </span>
                                 </div>
                                 <div className="p-6">
-                                    <h3 className="text-[20px] font-bold text-[#0D468B] mb-2 flex items-center gap-2 flex-wrap">
-                                        <span>{plan.title}</span>
-                                        {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
-                                            <img src="/wiselife-real-mat.png" alt="Wiselife Yoga Mat Icon" className="h-8 md:h-9 object-contain inline-block ml-1" />
-                                        )}
-                                    </h3>
+                                    <h3 className="text-[20px] font-bold text-[#0D468B] mb-2">{plan.title}</h3>
                                     <div className="flex items-center gap-2 mb-3">
                                         <span className="text-[#919191] line-through text-[18px] font-medium decoration-2">
                                             {dialCode !== '+91' && plan.usdOriginalPrice ? `$${plan.usdOriginalPrice}` : `₹${plan.originalPrice}/-`}
