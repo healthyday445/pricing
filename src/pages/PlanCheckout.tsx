@@ -483,7 +483,7 @@ const PlanCheckout = () => {
                                                 <span>Daily DIET Routine {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) ? '+ Wiselife Yoga Mat' : ''}</span>
                                                 {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
                                                     <span className="inline-flex items-center gap-1.5 bg-[#FFF8E7] text-[#0D468B] text-xs font-bold px-2.5 py-1 rounded-full border border-[#FEAB27]">
-                                                        <img src="/wiselife-yoga-mat.png" alt="Wiselife Yoga Mat" className="w-7 h-7 object-cover rounded-md shadow-xs" />
+                                                        <img src="/wiselife-real-mat.png" alt="Wiselife Yoga Mat" className="h-6 object-contain" />
                                                         <span>Wiselife Yoga Mat Included</span>
                                                     </span>
                                                 )}
@@ -522,17 +522,22 @@ const PlanCheckout = () => {
                         <div className="order-1 lg:order-2 lg:pl-4">
                             {/* Plan Card */}
                             <div className="bg-white rounded-[14px] border border-[#0D468B] overflow-hidden mb-6 shadow-sm flex flex-col">
-                                <div className="bg-[#0D468B] text-white py-2.5 px-4 flex items-center gap-2">
-                                    <BestValueRibbon />
-                                    <span className="font-bold text-[15px]">
-                                        {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer')) ? 'Rakshabandhan Special Offer' : 'Best Value'}
-                                    </span>
+                                <div className="bg-[#0D468B] text-white py-2.5 px-4 flex items-center justify-between gap-2">
+                                    <div className="flex items-center gap-2">
+                                        <BestValueRibbon />
+                                        <span className="font-bold text-[15px]">
+                                            {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer')) ? 'Rakshabandhan Special Offer' : 'Best Value'}
+                                        </span>
+                                    </div>
+                                    {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer')) && (
+                                        <img src="/wiselife-real-mat.png" alt="Wiselife Yoga Mat" className="h-7 md:h-8 object-contain" />
+                                    )}
                                 </div>
                                 <div className="p-6">
                                     <h3 className="text-[20px] font-bold text-[#0D468B] mb-2 flex items-center gap-2 flex-wrap">
                                         <span>{plan.title}</span>
                                         {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
-                                            <img src="/wiselife-yoga-mat.png" alt="Wiselife Yoga Mat Icon" className="w-9 h-9 object-cover rounded-lg border border-amber-200 shadow-xs inline-block" />
+                                            <img src="/wiselife-real-mat.png" alt="Wiselife Yoga Mat Icon" className="h-8 object-contain inline-block ml-1" />
                                         )}
                                     </h3>
                                     <div className="flex items-center gap-2 mb-3">
