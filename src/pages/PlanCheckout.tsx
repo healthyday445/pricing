@@ -480,7 +480,7 @@ const PlanCheckout = () => {
                                         <li className="flex items-start gap-3">
                                             <SolidCheckCircle />
                                             <span className="text-[#202020] text-[15px] flex items-center gap-2 flex-wrap">
-                                                <span>Daily DIET Routine {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) ? '+ Wiselife Yoga Mat' : ''}</span>
+                                                <span>Daily DIET Routine {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) ? '+' : ''}</span>
                                                 {(plan.hasYogaMat || plan.title?.includes('Wiselife') || location.pathname.includes('rakhi_offer')) && (
                                                     <span className="inline-flex items-center gap-1.5 bg-[#FFF8E7] text-[#0D468B] text-xs font-bold px-2.5 py-1 rounded-full border border-[#FEAB27]">
                                                         <img src="/wiselife-yoga-mat.png" alt="Wiselife Yoga Mat" className="w-7 h-7 object-cover rounded-md shadow-xs" />
