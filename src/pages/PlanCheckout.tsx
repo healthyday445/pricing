@@ -210,12 +210,13 @@ const PlanCheckout = () => {
                 discountPrice: "2399",
                 usdOriginalPrice: "149",
                 usdPrice: "49",
-                discount: "Rakhi Special Offer!",
+                discount: "Get a WISELIFE YOGA MAT for FREE",
                 isBestValue: true,
                 inrPlanName: "rakhi_offer_1y",
                 usdPlanName: "12m_new_usd",
                 isRenewalOnly: false,
-                hasYogaMat: true
+                hasYogaMat: true,
+                isRakhiOffer: true
             };
         } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
             plan = {
@@ -523,7 +524,9 @@ const PlanCheckout = () => {
                             <div className="bg-white rounded-[14px] border border-[#0D468B] overflow-hidden mb-6 shadow-sm flex flex-col">
                                 <div className="bg-[#0D468B] text-white py-2.5 px-4 flex items-center gap-2">
                                     <BestValueRibbon />
-                                    <span className="font-bold text-[15px]">Best Value</span>
+                                    <span className="font-bold text-[15px]">
+                                        {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer')) ? 'Rakshabandhan Special Offer' : 'Best Value'}
+                                    </span>
                                 </div>
                                 <div className="p-6">
                                     <h3 className="text-[20px] font-bold text-[#0D468B] mb-2 flex items-center gap-2 flex-wrap">
