@@ -84,7 +84,7 @@ This page is a special Rakhi offer for the 1 Year Plan at ₹2399/- which includ
 
 | Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent (INR) | `plan_name` Sent (USD) |
 | :--- | :--- | :--- | :--- | :--- |
-| **1 Year Plan (Including Diet + Wiselife Yoga Mat)** | ₹2399/- | ₹5999/- | `"rakhi_offer_1y"` | `"12m_new_usd"` ($49) |
+| **1 Year Plan (Including Diet + Wiselife Yoga Mat)** | ₹2399/- | ₹5999/- | `"12m_new_inr"` | `"12m_new_usd"` ($49) |
 
 ---
 
