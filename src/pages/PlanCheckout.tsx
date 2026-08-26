@@ -212,7 +212,7 @@ const PlanCheckout = () => {
                 usdPrice: "49",
                 discount: "Get a WISELIFE YOGA MAT for FREE",
                 isBestValue: true,
-                inrPlanName: "12m_new_inr",
+                inrPlanName: "rakhi_2026_1y",
                 usdPlanName: "12m_new_usd",
                 isRenewalOnly: false,
                 hasYogaMat: true,
