@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { Facebook, Instagram, Youtube, ChevronUp } from 'lucide-react';
+import { Facebook, Instagram, Youtube, ChevronUp, ExternalLink, Sparkles } from 'lucide-react';
 import logo from '../assets/healthyday-logo.webp';
 import image from '../assets/Frame 129.webp';
 
@@ -8,6 +8,10 @@ const ThankYou = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const language = location.state?.language || 'English';
+    const isRakhiOffer = Boolean(
+        location.state?.isRakhiOffer ||
+        new URLSearchParams(location.search).get('offer') === 'rakhi'
+    );
 
     const scrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -34,7 +38,49 @@ const ThankYou = () => {
                 `,
                 backgroundSize: '40px 40px'
             }}>
-                <h1 className="text-3xl md:text-4xl font-bold mb-4 text-black">Thank you for trusting us for your<br />healthy life</h1>
+                {isRakhiOffer ? (
+                    <>
+                        <div className="inline-flex items-center gap-2 bg-[#FFF8E7] text-[#0D468B] text-xs md:text-sm font-bold px-4 py-1.5 rounded-full border border-[#FEAB27] mb-6 shadow-xs">
+                            <Sparkles className="w-4 h-4 text-[#FEAB27]" />
+                            <span>Rakshabandhan Special Offer</span>
+                        </div>
+
+                        <h1 className="text-2xl md:text-4xl font-bold mb-4 text-[#0D468B] max-w-2xl leading-tight">
+                            {language === 'Telugu' ? (
+                                <>అభినందనలు! మీరు ఇప్పుడు<br />Healthyday 12 Months Plan లో భాగమయ్యారు</>
+                            ) : (
+                                <>Congratulations! You are now part of<br />Healthyday 12 Months Plan</>
+                            )}
+                        </h1>
+
+                        {/* Wiselife Yoga Mat Delivery Details Card */}
+                        <div className="w-full max-w-xl bg-gradient-to-b from-[#FFFDF9] to-[#FFF8EC] border-2 border-[#FEAB27] rounded-3xl p-6 md:p-8 mb-8 shadow-lg text-center flex flex-col items-center">
+                            <div className="w-20 h-20 md:w-24 md:h-24 bg-white rounded-2xl p-2 shadow-md mb-4 flex items-center justify-center border border-amber-100">
+                                <img src="/wiselife-yoga-mat.webp" alt="Wiselife Yoga Mat" className="w-full h-full object-contain" />
+                            </div>
+
+                            <p className="text-gray-800 text-base md:text-lg font-semibold mb-5 max-w-md leading-relaxed">
+                                {language === 'Telugu' ? (
+                                    <>మీరు <strong>Wiselife Yoga Mat</strong> కి కూడా అర్హులు. మీ చిరునామాకి డెలివరీ చేయడానికి, దయచేసి కింద ఉన్న లింక్‌లో వివరాలు నింపండి:</>
+                                ) : (
+                                    <>You are also eligible for <strong>Wiselife Yoga Mat</strong>. To deliver it to your address, please fill the details in below link:</>
+                                )}
+                            </p>
+
+                            <a
+                                href="https://forms.gle/wdkT2wHBwtkue96j6"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="w-full sm:w-auto bg-gradient-to-r from-[#ffb129] to-[#f59e0b] hover:from-[#f59e0b] hover:to-[#d97706] text-black font-bold px-8 py-3.5 rounded-full text-sm md:text-base shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2 uppercase tracking-wide"
+                            >
+                                <span>Fill Address Details Form</span>
+                                <ExternalLink className="w-4 h-4" />
+                            </a>
+                        </div>
+                    </>
+                ) : (
+                    <h1 className="text-3xl md:text-4xl font-bold mb-4 text-black">Thank you for trusting us for your<br />healthy life</h1>
+                )}
 
                 {language === 'Telugu' ? (
                     <>

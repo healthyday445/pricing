@@ -665,7 +665,13 @@ const PlanCheckout = () => {
                 onClose={() => setShowModal(false)}
                 onSuccess={() => {
                     setShowModal(false);
-                    navigate('/thank-you', { state: { language } });
+                    const isRakhiOffer = Boolean(plan.isRakhiOffer || location.pathname.includes('rakhi_offer'));
+                    navigate(`/thank-you${isRakhiOffer ? '?offer=rakhi' : ''}`, {
+                        state: {
+                            language,
+                            isRakhiOffer
+                        }
+                    });
                 }}
             />
         </div>
