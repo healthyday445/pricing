@@ -14,6 +14,7 @@ const USDPricing = lazy(() => import('./pages/USDPricing'));
 const USDRenew = lazy(() => import('./pages/USDRenew'));
 const Upgrade = lazy(() => import('./pages/Upgrade'));
 const USDUpgrade = lazy(() => import('./pages/USDUpgrade'));
+const RakhiOfferExpired = lazy(() => import('./pages/RakhiOfferExpired'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -174,7 +175,7 @@ const App = () => {
           <Route path="/ind26_offer_renew/checkout" element={<Navigate to="/pricing" replace />} />
           <Route path="/consistency_offer_1y" element={<PlanCheckout />} />
           <Route path="/consistency_offer" element={<PlanCheckout />} />
-          <Route path="/rakhi_offer" element={<PlanCheckout />} />
+          <Route path="/rakhi_offer" element={<RakhiOfferExpired />} />
           <Route path="/old_plans" element={<Renew />} />
           <Route path="/old_plans/12m" element={<PlanCheckout />} />
           <Route path="/old_plans/6m" element={<PlanCheckout />} />
