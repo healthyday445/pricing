@@ -22,7 +22,7 @@ const RakhiOfferExpired: React.FC = () => {
 
             <RakhiOfferExpiredModal
                 redirectUrl="https://yoga.healthyday.co.in/pricing"
-                autoRedirectSeconds={7}
+                autoRedirectSeconds={10}
             />
         </div>
     );

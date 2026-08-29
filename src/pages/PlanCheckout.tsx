@@ -679,7 +679,7 @@ const PlanCheckout = () => {
             {(plan?.isRakhiOffer || location.pathname.includes('rakhi_offer') || planId === 'rakhi_offer') && (
                 <RakhiOfferExpiredModal
                     redirectUrl="https://yoga.healthyday.co.in/pricing"
-                    autoRedirectSeconds={7}
+                    autoRedirectSeconds={10}
                 />
             )}
         </div>

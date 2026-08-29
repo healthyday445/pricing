@@ -8,7 +8,7 @@ interface RakhiOfferExpiredModalProps {
 
 const RakhiOfferExpiredModal: React.FC<RakhiOfferExpiredModalProps> = ({
     redirectUrl = 'https://yoga.healthyday.co.in/pricing',
-    autoRedirectSeconds = 7
+    autoRedirectSeconds = 10
 }) => {
     const [timeLeft, setTimeLeft] = useState(autoRedirectSeconds);
 
@@ -35,17 +35,13 @@ const RakhiOfferExpiredModal: React.FC<RakhiOfferExpiredModalProps> = ({
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/65 backdrop-blur-md animate-fadeIn">
             <div className="bg-white rounded-3xl shadow-2xl border border-slate-100 max-w-md w-full overflow-hidden text-center p-8 transform transition-all duration-300 scale-100 animate-scaleUp">
                 {/* Expired Icon Badge */}
-                <div className="mx-auto mb-6 w-20 h-20 rounded-full bg-amber-50 border-4 border-amber-100 flex items-center justify-center shadow-inner relative">
+                <div className="mx-auto mb-6 w-20 h-20 rounded-full bg-amber-50 border-4 border-amber-100 flex items-center justify-center shadow-inner">
                     <AlertCircle className="w-10 h-10 text-amber-600" strokeWidth={2.2} />
-                    <span className="absolute -top-1 -right-1 flex h-4 w-4">
-                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-4 w-4 bg-amber-500"></span>
-                    </span>
                 </div>
 
                 {/* Main Heading */}
                 <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-3 tracking-tight leading-snug">
-                    This Offer has been expired,
+                    This offer has been expired!
                 </h2>
 
                 {/* Subtitle */}
