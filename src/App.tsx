@@ -169,10 +169,10 @@ const App = () => {
           <Route path="/3to6m_usd" element={<PlanCheckout />} />
           <Route path="/6to12m_usd" element={<PlanCheckout />} />
           <Route path="/3to12m_usd" element={<PlanCheckout />} />
-          <Route path="/ind26_offer_new" element={<Navigate to="/pricing" replace />} />
-          <Route path="/ind26_offer_renew" element={<Navigate to="/pricing" replace />} />
-          <Route path="/ind26_offer_new/checkout" element={<Navigate to="/pricing" replace />} />
-          <Route path="/ind26_offer_renew/checkout" element={<Navigate to="/pricing" replace />} />
+          <Route path="/ind26_offer_new" element={<Navigate to="/plans" replace />} />
+          <Route path="/ind26_offer_renew" element={<Navigate to="/plans" replace />} />
+          <Route path="/ind26_offer_new/checkout" element={<Navigate to="/plans" replace />} />
+          <Route path="/ind26_offer_renew/checkout" element={<Navigate to="/plans" replace />} />
           <Route path="/consistency_offer_1y" element={<PlanCheckout />} />
           <Route path="/consistency_offer" element={<PlanCheckout />} />
           <Route path="/rakhi_offer" element={<RakhiOfferExpired />} />
@@ -180,8 +180,8 @@ const App = () => {
           <Route path="/old_plans/12m" element={<PlanCheckout />} />
           <Route path="/old_plans/6m" element={<PlanCheckout />} />
           <Route path="/old_plans/3m" element={<PlanCheckout />} />
-          <Route path="/1899" element={<Navigate to="/pricing" replace />} />
-          <Route path="/1599" element={<Navigate to="/pricing" replace />} />
+          <Route path="/1899" element={<Navigate to="/plans" replace />} />
+          <Route path="/1599" element={<Navigate to="/plans" replace />} />
 
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/:planId/checkout/old" element={<PlanCheckout />} />

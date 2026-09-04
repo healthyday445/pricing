@@ -7,7 +7,7 @@ interface RakhiOfferExpiredModalProps {
 }
 
 const RakhiOfferExpiredModal: React.FC<RakhiOfferExpiredModalProps> = ({
-    redirectUrl = 'https://yoga.healthyday.co.in/pricing',
+    redirectUrl = 'https://yoga.healthyday.co.in/plans',
     autoRedirectSeconds = 10
 }) => {
     const [timeLeft, setTimeLeft] = useState(autoRedirectSeconds);

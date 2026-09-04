@@ -21,7 +21,7 @@ const RakhiOfferExpired: React.FC = () => {
             <SharedFooter />
 
             <RakhiOfferExpiredModal
-                redirectUrl="https://yoga.healthyday.co.in/pricing"
+                redirectUrl="https://yoga.healthyday.co.in/plans"
                 autoRedirectSeconds={10}
             />
         </div>
