@@ -7,8 +7,8 @@ import { pushDataLayer } from '../../utils/pushDataLayer';
 // Triggered when the user enters their own referral number in the form.
 const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber, status }) => {
     const referralsUrl = mobileNumber
-        ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
-        : 'https://class.healthyday.co.in/leaderboard';
+        ? `https://class.healthyday.co.in/${mobileNumber}/referrals`
+        : 'https://class.healthyday.co.in/referrals';
 
     const shareLink = mobileNumber
         ? `${window.location.origin}${window.location.pathname}?ref=${mobileNumber}`

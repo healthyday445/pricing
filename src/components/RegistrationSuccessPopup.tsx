@@ -309,7 +309,7 @@ const RegistrationSuccessPopup: React.FC<RegistrationSuccessPopupProps> = ({
                     </a>
                 ) : (
                     <a
-                        href={mobileNumber ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard` : "https://class.healthyday.co.in/leaderboard"}
+                        href={mobileNumber ? `https://class.healthyday.co.in/${mobileNumber}/referrals` : "https://class.healthyday.co.in/referrals"}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-auto px-6 h-[55px] bg-[#f9a825] border-[2px] border-transparent hover:bg-white hover:border-[#f9a825] transition-all transform active:scale-95 rounded-full flex items-center justify-center cursor-pointer shadow-lg mt-2 group no-underline"

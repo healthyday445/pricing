@@ -21,8 +21,8 @@ const SunIcon = () => (
 
 const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => {
     const referralsUrl = mobileNumber
-        ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
-        : 'https://class.healthyday.co.in/leaderboard';
+        ? `https://class.healthyday.co.in/${mobileNumber}/referrals`
+        : 'https://class.healthyday.co.in/referrals';
 
     const shareLink = mobileNumber
         ? `https://yoga.healthyday.co.in/?ref=${mobileNumber}`
