@@ -88,10 +88,20 @@ This page is a special Rakhi offer for the 1 Year Plan at ₹2399/- which includ
 
 ---
 
+## 9. Vinayaka Chaturthi Offer Pages (`/vinayaka_chaturthi_offer_new` & `/vinayaka_chaturthi_offer_renew`)
+These pages are special Vinayaka Chaturthi offers for the 1 Year Plan at ₹1899/- using the **DYJ** Razorpay account.
+
+| Page URL | Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent (INR) | Razorpay Account | `isRenewalOnly` |
+| :--- | :--- | :--- | :--- | :--- | :--- | :--- |
+| `/vinayaka_chaturthi_offer_new` | **1 Year Plan (Including Diet)** | ₹1899/- | ₹5999/- | `"vinayaka_chaturthi_2026_offer_new"` | DYJ | `false` |
+| `/vinayaka_chaturthi_offer_renew` | **1 Year Plan (Including Diet)** | ₹1899/- | ₹5999/- | `"vinayaka_chaturthi_2026_offer_renew"` | DYJ | `true` |
+
+---
+
 ## How it works technically:
 - Each page defines its plans in an array (e.g., `plans` array) and passes the selected `plan` object to `PlanCheckout.tsx` via the router state.
 - Each `plan` object now explicitly contains an `inrPlanName` and a `usdPlanName`.
 - When the user selects a Country Dial Code in the checkout, `PlanCheckout.tsx` dynamically determines whether the user is an international buyer or an Indian buyer:
-  - If they are Indian (`+91`), it extracts the `inrPlanName` (e.g., `consistency_offer_1y`, `12m_new_inr` or `12m_renew_inr`) to pass to the Razorpay webhook.
+  - If they are Indian (`+91`), it extracts the `inrPlanName` (e.g., `vinayaka_chaturthi_2026_offer_new`, `12m_new_inr` or `12m_renew_inr`) to pass to the Razorpay webhook.
   - If they are International (anything other than `+91`), it automatically switches to the `usdPlanName` (e.g., `12m_new_usd`) and changes the currency to USD.
 
