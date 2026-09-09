@@ -225,10 +225,10 @@ const PlanCheckout = () => {
                 title: "1 Year Plan (Including Diet)",
                 duration: "1 Year Plan (Including Diet)",
                 originalPrice: "5999",
-                discountPrice: "1899",
+                discountPrice: "1599",
                 usdOriginalPrice: "149",
                 usdPrice: "49",
-                discount: "Save 68%!",
+                discount: "Save 73%!",
                 isBestValue: true,
                 inrPlanName: "vinayaka_chaturthi_2026_offer_renew",
                 usdPlanName: "12m_renew_usd",
@@ -556,7 +556,11 @@ const PlanCheckout = () => {
                                 <div className="bg-[#0D468B] text-white py-2.5 px-4 flex items-center gap-2">
                                     <BestValueRibbon />
                                     <span className="font-bold text-[15px]">
-                                        {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer')) ? 'Rakshabandhan Special Offer' : 'Best Value'}
+                                        {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer'))
+                                            ? 'Rakshabandhan Special Offer'
+                                            : (location.pathname.includes('vinayaka_chaturthi_offer') || planId?.includes('vinayaka_chaturthi') || plan?.inrPlanName?.includes('vinayaka_chaturthi'))
+                                            ? 'Vinayaka Chaturthi Offer'
+                                            : 'Best Value'}
                                     </span>
                                 </div>
                                 <div className="p-6">
