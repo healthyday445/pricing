@@ -219,6 +219,36 @@ const PlanCheckout = () => {
                 hasYogaMat: true,
                 isRakhiOffer: true
             };
+        } else if (location.pathname.includes('vinayaka_chaturthi_offer_renew') || planId === 'vinayaka_chaturthi_offer_renew') {
+            plan = {
+                id: "vinayaka_chaturthi_offer_renew",
+                title: "1 Year Plan (Including Diet)",
+                duration: "1 Year Plan (Including Diet)",
+                originalPrice: "5999",
+                discountPrice: "1599",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: "Save 73%!",
+                isBestValue: true,
+                inrPlanName: "vinayaka_chaturthi_2026_offer_renew",
+                usdPlanName: "12m_renew_usd",
+                isRenewalOnly: true
+            };
+        } else if (location.pathname.includes('vinayaka_chaturthi_offer_new') || planId === 'vinayaka_chaturthi_offer_new') {
+            plan = {
+                id: "vinayaka_chaturthi_offer_new",
+                title: "1 Year Plan (Including Diet)",
+                duration: "1 Year Plan (Including Diet)",
+                originalPrice: "5999",
+                discountPrice: "1899",
+                usdOriginalPrice: "149",
+                usdPrice: "49",
+                discount: "Save 68%!",
+                isBestValue: true,
+                inrPlanName: "vinayaka_chaturthi_2026_offer_new",
+                usdPlanName: "12m_new_usd",
+                isRenewalOnly: false
+            };
         } else if (location.pathname.includes('1899') || location.pathname.includes('ind26_offer_new') || planId === '1899' || planId === 'ind26_offer_new') {
             plan = {
                 id: "ind26_offer_new",
@@ -299,7 +329,7 @@ const PlanCheckout = () => {
         setLanguageError(false);
 
         // Verification check for renewal-only plans
-        if (plan.isRenewalOnly || plan.discountPrice === "1599" || plan.inrPlanName === "ind26_offer_renew") {
+        if (plan.isRenewalOnly || plan.discountPrice === "1599" || plan.inrPlanName === "ind26_offer_renew" || plan.inrPlanName === "vinayaka_chaturthi_2026_offer_renew") {
             setIsVerifying(true);
             try {
                 const fullContact = `${dialCode}${phoneNumber}`;
@@ -326,7 +356,7 @@ const PlanCheckout = () => {
         }
 
         const isUSD = dialCode !== '+91';
-        const isDYJ = !isUSD && (location.pathname.includes('_plan') || location.pathname === '/plans' || location.pathname.includes('old_plans') || location.pathname.includes('rakhi_offer') || (location.pathname.includes('consistency_offer') && !location.pathname.includes('consistency_offer_1y')) || Boolean(location.state?.isDYJFlow));
+        const isDYJ = !isUSD && (location.pathname.includes('_plan') || location.pathname === '/plans' || location.pathname.includes('old_plans') || location.pathname.includes('rakhi_offer') || location.pathname.includes('vinayaka_chaturthi_offer') || (location.pathname.includes('consistency_offer') && !location.pathname.includes('consistency_offer_1y')) || Boolean(location.state?.isDYJFlow));
         const razorpayKey = isDYJ
             ? (import.meta.env.VITE_RAZORPAY_KEY_ID_DYJ || import.meta.env.VITE_RAZORPAY_KEY_ID)
             : import.meta.env.VITE_RAZORPAY_KEY_ID;
@@ -526,7 +556,11 @@ const PlanCheckout = () => {
                                 <div className="bg-[#0D468B] text-white py-2.5 px-4 flex items-center gap-2">
                                     <BestValueRibbon />
                                     <span className="font-bold text-[15px]">
-                                        {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer')) ? 'Rakshabandhan Special Offer' : 'Best Value'}
+                                        {(plan.isRakhiOffer || location.pathname.includes('rakhi_offer'))
+                                            ? 'Rakshabandhan Special Offer'
+                                            : (location.pathname.includes('vinayaka_chaturthi_offer') || planId?.includes('vinayaka_chaturthi') || plan?.inrPlanName?.includes('vinayaka_chaturthi'))
+                                            ? 'Vinayaka Chaturthi Offer'
+                                            : 'Best Value'}
                                     </span>
                                 </div>
                                 <div className="p-6">
