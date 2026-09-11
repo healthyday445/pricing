@@ -356,7 +356,7 @@ const PlanCheckout = () => {
         }
 
         const isUSD = dialCode !== '+91';
-        const isDYJ = !isUSD && (location.pathname.includes('_plan') || location.pathname === '/plans' || location.pathname.includes('old_plans') || location.pathname.includes('rakhi_offer') || location.pathname.includes('vinayaka_chaturthi_offer') || (location.pathname.includes('consistency_offer') && !location.pathname.includes('consistency_offer_1y')) || Boolean(location.state?.isDYJFlow));
+        const isDYJ = !isUSD && (location.pathname.includes('_plan') || location.pathname === '/plans' || location.pathname.includes('old_plans') || location.pathname.includes('rakhi_offer') || (location.pathname.includes('consistency_offer') && !location.pathname.includes('consistency_offer_1y')) || Boolean(location.state?.isDYJFlow));
         const razorpayKey = isDYJ
             ? (import.meta.env.VITE_RAZORPAY_KEY_ID_DYJ || import.meta.env.VITE_RAZORPAY_KEY_ID)
             : import.meta.env.VITE_RAZORPAY_KEY_ID;
