@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChildPopupProps } from './types';
-import ReferWinCard from '../ReferWinCard';
+import ReferAndWin500 from '../ReferAndWin500';
 import { pushDataLayer } from '../../utils/pushDataLayer';
 import whatsappIcon from '../../assets/WhatsApp.svg';
 import { getProgramStartLabel } from '../../utils/programDates';
@@ -20,13 +20,9 @@ const SunIcon = () => (
 );
 
 const SuccessContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => {
-    const referralsUrl = mobileNumber
-        ? `https://class.healthyday.co.in/${mobileNumber}/referrals`
-        : 'https://class.healthyday.co.in/referrals';
-
-    const shareLink = mobileNumber
-        ? `https://yoga.healthyday.co.in/?ref=${mobileNumber}`
-        : 'https://yoga.healthyday.co.in/';
+    const leaderboardUrl = mobileNumber
+        ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
+        : 'https://class.healthyday.co.in/leaderboard';
 
     const startLabel = getProgramStartLabel();
     const startLabelMatch = startLabel.match(/^(\d+)([a-zA-Z]+)\s+(.+)$/);
@@ -34,8 +30,8 @@ const SuccessContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => 
     return (
         <div className="w-full max-w-[412px] rounded-2xl shadow-2xl max-h-[90dvh] overflow-y-auto overflow-x-hidden">
 
-            {/* Blue header */}
-            <div className="bg-[#0d468b] px-6 pt-6 pb-5 text-center relative">
+            {/* Blue gradient header */}
+            <div className="px-6 pt-6 pb-5 text-center relative" style={{ backgroundImage: 'linear-gradient(180deg, #022651 0%, #013a7d 37.5%, #024aa0 71.635%, #0057bf 100%)' }}>
 <h2 className="text-[28px] sm:text-[32px] md:text-[35px] lg:text-[40px]" style={{ color: '#FFF', textAlign: 'center', fontFamily: 'Playball', fontWeight: 400, lineHeight: 'normal', margin: '0 auto' }}>
                     Congratulations!
                 </h2>
@@ -80,11 +76,12 @@ const SuccessContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => 
                 </div>
 
                 {/* Refer & Win card */}
-                <ReferWinCard
-                    shareLink={shareLink}
-                    referralsUrl={referralsUrl}
-                    onCopyLink={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'copy_link', 'popup_status': status })}
-                    onWhatsAppShare={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'whatsapp_share', 'popup_status': status })}
+                <ReferAndWin500
+                    topN={100}
+                    onClick={() => {
+                        pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'view_more', 'popup_status': status });
+                        window.open(leaderboardUrl, '_blank', 'noopener,noreferrer');
+                    }}
                 />
 
             </div>
