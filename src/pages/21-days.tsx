@@ -286,7 +286,7 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                                         <span className="font-bold text-[18px] text-[#202020] uppercase tracking-wide group-hover:text-[#202020]">Register For Free</span>
                                     )}
                                 </button>
-                                <span className="font-semibold text-[16px] text-center text-[#0d468b]">6,04,017+ members participated</span>
+                                <span className="font-semibold text-[16px] text-center text-[#0d468b]">13,95,704+ members participated</span>
                             </form>
 
                             {/* Benefits Inside Card */}
