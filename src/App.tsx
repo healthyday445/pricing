@@ -16,6 +16,7 @@ const USDRenew = lazy(() => import('./pages/USDRenew'));
 const Upgrade = lazy(() => import('./pages/Upgrade'));
 const USDUpgrade = lazy(() => import('./pages/USDUpgrade'));
 const RakhiOfferExpired = lazy(() => import('./pages/RakhiOfferExpired'));
+const DevPopupPreview = lazy(() => import('./pages/dev-popup-preview'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -189,6 +190,7 @@ const App = () => {
 
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/:planId/checkout/old" element={<PlanCheckout />} />
+          <Route path="/dev/popup-preview" element={<DevPopupPreview />} />
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
           <Route path="/21days" element={<TwentyOneDays />} />

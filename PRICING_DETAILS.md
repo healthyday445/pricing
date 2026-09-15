@@ -89,12 +89,12 @@ This page is a special Rakhi offer for the 1 Year Plan at ₹2399/- which includ
 ---
 
 ## 9. Vinayaka Chaturthi Offer Pages (`/vinayaka_chaturthi_offer_new` & `/vinayaka_chaturthi_offer_renew`)
-These pages are special Vinayaka Chaturthi offers for the 1 Year Plan at ₹1899/- using the **DYJ** Razorpay account.
+These pages are special Vinayaka Chaturthi offers for the 1 Year Plan using the **HD** Razorpay account.
 
 | Page URL | Plan Title | Price Paid (INR) | Original Price | `plan_name` Sent (INR) | Razorpay Account | `isRenewalOnly` |
 | :--- | :--- | :--- | :--- | :--- | :--- | :--- |
-| `/vinayaka_chaturthi_offer_new` | **1 Year Plan (Including Diet)** | ₹1899/- | ₹5999/- | `"vinayaka_chaturthi_2026_offer_new"` | DYJ | `false` |
-| `/vinayaka_chaturthi_offer_renew` | **1 Year Plan (Including Diet)** | ₹1899/- | ₹5999/- | `"vinayaka_chaturthi_2026_offer_renew"` | DYJ | `true` |
+| `/vinayaka_chaturthi_offer_new` | **1 Year Plan (Including Diet)** | ₹1899/- | ₹5999/- | `"vinayaka_chaturthi_2026_offer_new"` | HD | `false` |
+| `/vinayaka_chaturthi_offer_renew` | **1 Year Plan (Including Diet)** | ₹1599/- | ₹5999/- | `"vinayaka_chaturthi_2026_offer_renew"` | HD | `true` |
 
 ---
 

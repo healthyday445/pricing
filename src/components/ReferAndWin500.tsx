@@ -6,9 +6,10 @@ import elementImg1x from "../assets/element@1x.webp";
 
 interface ReferAndWin500Props {
   onClick?: () => void;
+  topN?: number;
 }
 
-const ReferAndWin500: React.FC<ReferAndWin500Props> = ({ onClick }) => (
+const ReferAndWin500: React.FC<ReferAndWin500Props> = ({ onClick, topN = 500 }) => (
   <div
     onClick={onClick}
     style={{
@@ -56,7 +57,7 @@ const ReferAndWin500: React.FC<ReferAndWin500Props> = ({ onClick }) => (
       {/* Text side */}
       <div style={{ padding: "0 0 16px 16px", display: "flex", flexDirection: "column", gap: "2px", zIndex: 1 }}>
         <span style={{ color: "#0D468B", fontFamily: "Outfit", fontSize: "28px", fontWeight: 900, lineHeight: "1", whiteSpace: "nowrap" }}>
-          TOP 500
+          TOP {topN}
         </span>
         <span style={{ color: "#FF9D00", fontFamily: "Outfit", fontSize: "20px", fontWeight: 900, lineHeight: "1", whiteSpace: "nowrap" }}>
           WINNERS

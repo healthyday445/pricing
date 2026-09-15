@@ -1,6 +1,6 @@
 import React from 'react';
 import { ChildPopupProps } from './types';
-import ReferWinCard from '../ReferWinCard';
+import ReferAndWin500 from '../ReferAndWin500';
 import { pushDataLayer } from '../../utils/pushDataLayer';
 import whatsappIcon from '../../assets/WhatsApp.svg';
 import { getProgramStartLabel } from '../../utils/programDates';
@@ -20,13 +20,9 @@ const SunIcon = () => (
 );
 
 const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, status }) => {
-    const referralsUrl = mobileNumber
-        ? `https://class.healthyday.co.in/${mobileNumber}/referrals`
-        : 'https://class.healthyday.co.in/referrals';
-
-    const shareLink = mobileNumber
-        ? `https://yoga.healthyday.co.in/?ref=${mobileNumber}`
-        : 'https://yoga.healthyday.co.in/';
+    const leaderboardUrl = mobileNumber
+        ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
+        : 'https://class.healthyday.co.in/leaderboard';
 
     const startLabel = getProgramStartLabel();
     const startLabelMatch = startLabel.match(/^(\d+)([a-zA-Z]+)\s+(.+)$/);
@@ -36,7 +32,7 @@ const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, sta
 
             {/* Blue header — unchanged */}
             <div className="bg-[#0d468b] px-6 pt-6 pb-5 text-center relative">
-<h2 className="text-[22px] sm:text-[25px] md:text-[28px] lg:text-[32px]" style={{ fontFamily: 'Outfit', fontWeight: 800, color: '#fff', textAlign: 'center', lineHeight: 'normal', wordBreak: 'break-word' }}>
+<h2 className="text-[20px] sm:text-[22px] md:text-[25px] lg:text-[28px]" style={{ fontFamily: 'Outfit', fontWeight: 600, color: '#fff', textAlign: 'center', lineHeight: 'normal', wordBreak: 'break-word' }}>
                     You are already registered!
                 </h2>
                 <p className="text-[13px] sm:text-[14px] md:text-[15px] lg:text-[17px]" style={{ fontFamily: 'Outfit', fontWeight: 300, color: '#fff', textAlign: 'center', lineHeight: 'normal', marginTop: '4px' }}>
@@ -80,11 +76,12 @@ const AlreadyRegisteredContent: React.FC<ChildPopupProps> = ({ mobileNumber, sta
                 </div>
 
                 {/* Refer & Win card */}
-                <ReferWinCard
-                    shareLink={shareLink}
-                    referralsUrl={referralsUrl}
-                    onCopyLink={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'copy_link', 'popup_status': status })}
-                    onWhatsAppShare={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'whatsapp_share', 'popup_status': status })}
+                <ReferAndWin500
+                    topN={100}
+                    onClick={() => {
+                        pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'view_more', 'popup_status': status });
+                        window.open(leaderboardUrl, '_blank', 'noopener,noreferrer');
+                    }}
                 />
 
             </div>
