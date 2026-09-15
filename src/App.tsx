@@ -10,6 +10,7 @@ const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
 const Renew = lazy(() => import('./pages/Renew'));
 const ReferralContestRegistration = lazy(() => import('./pages/referral-contest-registration'));
 const ReferralTnc = lazy(() => import('./pages/ReferralTnc'));
+const ReferralTnc14Days = lazy(() => import('./pages/ReferralTnc14Days'));
 const USDPricing = lazy(() => import('./pages/USDPricing'));
 const USDRenew = lazy(() => import('./pages/USDRenew'));
 const Upgrade = lazy(() => import('./pages/Upgrade'));
@@ -204,6 +205,7 @@ const App = () => {
           <Route path="/21-day/telagu" element={<TwentyOneDays defaultLanguage="Telugu" />} />
           <Route path="/500yogakits" element={<ReferralContestRegistration />} />
           <Route path="/referral-tnc" element={<ReferralTnc />} />
+          <Route path="/referral-tnc-14days" element={<ReferralTnc14Days />} />
           <Route path="/join" element={<JoinRedirect />} />
           <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
