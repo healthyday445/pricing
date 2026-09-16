@@ -52,3 +52,7 @@
 [[edge_functions]]
   path = "/*"
   function = "meta-tags"
+
+[[edge_functions]]
+  path = "/metrics/*"
+  function = "tag-gateway"
