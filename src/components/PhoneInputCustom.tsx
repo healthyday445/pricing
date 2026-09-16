@@ -90,6 +90,7 @@ const countries: Country[] = [
     { name: "Qatar (قطر)", code: "qa", dialCode: "+974" },
     { name: "Romania (România)", code: "ro", dialCode: "+40" },
     { name: "Russia (Россия)", code: "ru", dialCode: "+7" },
+    { name: "Rwanda", code: "rw", dialCode: "+250" },
     { name: "Saudi Arabia (السعودية)", code: "sa", dialCode: "+966" },
     { name: "Singapore", code: "sg", dialCode: "+65" },
     { name: "South Africa", code: "za", dialCode: "+27" },
