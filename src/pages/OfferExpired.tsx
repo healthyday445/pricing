@@ -1,9 +1,19 @@
 import React, { useEffect } from 'react';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
-import RakhiOfferExpiredModal from '../components/RakhiOfferExpiredModal';
+import OfferExpiredModal from '../components/OfferExpiredModal';
 
-const RakhiOfferExpired: React.FC = () => {
+interface OfferExpiredProps {
+    title?: string;
+    subtitle?: string;
+    redirectUrl?: string;
+}
+
+const OfferExpired: React.FC<OfferExpiredProps> = ({
+    title,
+    subtitle,
+    redirectUrl = 'https://yoga.healthyday.co.in/plans'
+}) => {
     useEffect(() => {
         window.scrollTo(0, 0);
     }, []);
@@ -20,12 +30,14 @@ const RakhiOfferExpired: React.FC = () => {
 
             <SharedFooter />
 
-            <RakhiOfferExpiredModal
-                redirectUrl="https://yoga.healthyday.co.in/plans"
+            <OfferExpiredModal
+                title={title}
+                subtitle={subtitle}
+                redirectUrl={redirectUrl}
                 autoRedirectSeconds={10}
             />
         </div>
     );
 };
 
-export default RakhiOfferExpired;
+export default OfferExpired;

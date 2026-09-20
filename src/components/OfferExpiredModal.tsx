@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { AlertCircle, ArrowRight, Clock } from 'lucide-react';
 
-interface RakhiOfferExpiredModalProps {
+interface OfferExpiredModalProps {
     redirectUrl?: string;
     autoRedirectSeconds?: number;
+    title?: string;
+    subtitle?: string;
 }
 
-const RakhiOfferExpiredModal: React.FC<RakhiOfferExpiredModalProps> = ({
+const OfferExpiredModal: React.FC<OfferExpiredModalProps> = ({
     redirectUrl = 'https://yoga.healthyday.co.in/plans',
-    autoRedirectSeconds = 10
+    autoRedirectSeconds = 10,
+    title = 'This offer has been expired!',
+    subtitle = 'You can check our regular plans.'
 }) => {
     const [timeLeft, setTimeLeft] = useState(autoRedirectSeconds);
 
@@ -41,12 +45,12 @@ const RakhiOfferExpiredModal: React.FC<RakhiOfferExpiredModalProps> = ({
 
                 {/* Main Heading */}
                 <h2 className="text-2xl md:text-3xl font-extrabold text-slate-800 mb-3 tracking-tight leading-snug">
-                    This offer has been expired!
+                    {title}
                 </h2>
 
                 {/* Subtitle */}
                 <p className="text-slate-600 text-base md:text-lg mb-6 font-medium">
-                    You can check our regular plans.
+                    {subtitle}
                 </p>
 
                 {/* Countdown Progress Banner */}
@@ -72,4 +76,4 @@ const RakhiOfferExpiredModal: React.FC<RakhiOfferExpiredModalProps> = ({
     );
 };
 
-export default RakhiOfferExpiredModal;
+export default OfferExpiredModal;
