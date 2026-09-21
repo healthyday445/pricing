@@ -7,7 +7,7 @@ import PhoneInputCustom from '../components/PhoneInputCustom';
 import { validatePhone } from '../utils/phoneValidation';
 
 const StudentDetailsModal = lazy(() => import('../components/StudentDetailsModal'));
-const RakhiOfferExpiredModal = lazy(() => import('../components/RakhiOfferExpiredModal'));
+const OfferExpiredModal = lazy(() => import('../components/OfferExpiredModal'));
 
 const SolidCheckCircle = () => (
     <svg aria-hidden="true" className="w-[18px] h-[18px] text-[#0D468B] flex-shrink-0 mt-[2px]" fill="currentColor" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -715,9 +715,9 @@ const PlanCheckout = () => {
                 </Suspense>
             )}
 
-            {(plan?.isRakhiOffer || location.pathname.includes('rakhi_offer') || planId === 'rakhi_offer') && (
+            {(plan?.isRakhiOffer || location.pathname.includes('rakhi_offer') || planId === 'rakhi_offer' || location.pathname.includes('vinayaka_chaturthi_offer') || planId?.includes('vinayaka_chaturthi') || plan?.inrPlanName?.includes('vinayaka_chaturthi')) && (
                 <Suspense fallback={null}>
-                    <RakhiOfferExpiredModal
+                    <OfferExpiredModal
                         redirectUrl="https://yoga.healthyday.co.in/plans"
                         autoRedirectSeconds={10}
                     />

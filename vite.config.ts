@@ -65,7 +65,7 @@ export default defineConfig(({ mode }) => {
       legacy({
         targets: ['defaults', 'not IE 11']
       }),
-      mode === "development" && componentTagger()
+      mode === "development" && componentTagger(),
     ].filter(Boolean),
     resolve: {
       alias: {

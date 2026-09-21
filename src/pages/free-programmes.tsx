@@ -1,4 +1,4 @@
-import React, { lazy, Suspense, useState } from 'react';
+import React, { lazy, Suspense, useEffect, useState } from 'react';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import SharedTestimonials from '../components/SharedTestimonials';
@@ -27,6 +27,10 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
     const [phoneError, setPhoneError] = useState(false);
     const [popupStatus, setPopupStatus] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        (window as Window & { __PRERENDER_READY__?: boolean }).__PRERENDER_READY__ = true;
+    }, []);
 
     const pushDataLayer = (data: Record<string, unknown>) => {
         const win = window as Window & { dataLayer?: Record<string, unknown>[] };
