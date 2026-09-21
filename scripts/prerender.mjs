@@ -29,9 +29,25 @@ function waitForServer(url, timeoutMs) {
   return attempt();
 }
 
+function killServer(server) {
+  if (!server.pid || server.killed) return;
+  try {
+    // Spawned detached so it owns its own process group — killing the group
+    // (negative pid) reaches `serve`'s actual child process too. Killing just
+    // `server.pid` only signals the wrapper and can leave `serve` running,
+    // which is what made the Netlify build fail with a lingering background
+    // process after `npm run build` exited.
+    process.kill(-server.pid, 'SIGTERM');
+  } catch {
+    // process group may already be gone
+  }
+}
+
 async function main() {
-  const server = spawn('npx', ['serve', '-s', distDir, '-l', String(PORT)], {
+  const serveBin = path.resolve(__dirname, '../node_modules/.bin/serve');
+  const server = spawn(serveBin, ['-s', distDir, '-l', String(PORT)], {
     stdio: 'inherit',
+    detached: true,
   });
 
   try {
@@ -90,11 +106,19 @@ async function main() {
       await browser.close();
     }
   } finally {
-    server.kill();
+    killServer(server);
   }
 }
 
-main().catch((err) => {
-  console.error('[prerender] failed:', err);
-  process.exit(1);
-});
+main()
+  .then(() => {
+    // Force-exit even if Puppeteer, the static server, or some other handle
+    // left the event loop non-empty — otherwise `npm run build` never
+    // returns, and Netlify fails the deploy on "background executions" still
+    // running after the build command was supposed to finish.
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('[prerender] failed:', err);
+    process.exit(1);
+  });
