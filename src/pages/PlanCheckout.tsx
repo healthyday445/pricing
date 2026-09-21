@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { lazy, Suspense, useState, useEffect } from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import { ArrowLeft, Loader2 } from 'lucide-react';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { validatePhone } from '../utils/phoneValidation';
-import StudentDetailsModal from '../components/StudentDetailsModal';
-import OfferExpiredModal from '../components/OfferExpiredModal';
+
+const StudentDetailsModal = lazy(() => import('../components/StudentDetailsModal'));
+const RakhiOfferExpiredModal = lazy(() => import('../components/RakhiOfferExpiredModal'));
 
 const SolidCheckCircle = () => (
     <svg aria-hidden="true" className="w-[18px] h-[18px] text-[#0D468B] flex-shrink-0 mt-[2px]" fill="currentColor" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
@@ -693,28 +694,34 @@ const PlanCheckout = () => {
 
             <SharedFooter />
 
-            <StudentDetailsModal
-                isOpen={showModal}
-                paymentId={paymentId}
-                mobile={`${dialCode}${phoneNumber}`}
-                onClose={() => setShowModal(false)}
-                onSuccess={() => {
-                    setShowModal(false);
-                    const isRakhiOffer = Boolean(plan.isRakhiOffer || location.pathname.includes('rakhi_offer'));
-                    navigate(`/thank-you${isRakhiOffer ? '?offer=rakhi' : ''}`, {
-                        state: {
-                            language,
-                            isRakhiOffer
-                        }
-                    });
-                }}
-            />
+            {showModal && (
+                <Suspense fallback={null}>
+                    <StudentDetailsModal
+                        isOpen={showModal}
+                        paymentId={paymentId}
+                        mobile={`${dialCode}${phoneNumber}`}
+                        onClose={() => setShowModal(false)}
+                        onSuccess={() => {
+                            setShowModal(false);
+                            const isRakhiOffer = Boolean(plan.isRakhiOffer || location.pathname.includes('rakhi_offer'));
+                            navigate(`/thank-you${isRakhiOffer ? '?offer=rakhi' : ''}`, {
+                                state: {
+                                    language,
+                                    isRakhiOffer
+                                }
+                            });
+                        }}
+                    />
+                </Suspense>
+            )}
 
-            {(plan?.isRakhiOffer || location.pathname.includes('rakhi_offer') || planId === 'rakhi_offer' || location.pathname.includes('vinayaka_chaturthi_offer') || planId?.includes('vinayaka_chaturthi') || plan?.inrPlanName?.includes('vinayaka_chaturthi')) && (
-                <OfferExpiredModal
-                    redirectUrl="https://yoga.healthyday.co.in/plans"
-                    autoRedirectSeconds={10}
-                />
+            {(plan?.isRakhiOffer || location.pathname.includes('rakhi_offer') || planId === 'rakhi_offer') && (
+                <Suspense fallback={null}>
+                    <RakhiOfferExpiredModal
+                        redirectUrl="https://yoga.healthyday.co.in/plans"
+                        autoRedirectSeconds={10}
+                    />
+                </Suspense>
             )}
         </div>
     );

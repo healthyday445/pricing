@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import SharedTestimonials from '../components/SharedTestimonials';
-import RegistrationPopup from '../components/RegistrationPopup';
 import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'lucide-react';
+
+const RegistrationPopup = lazy(() => import('../components/RegistrationPopup'));
 import frame129 from '../assets/image (36) (1).webp';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
@@ -192,7 +193,7 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
                     {/* Left Column: Instructor Info */}
                     <div className="w-full lg:w-1/2 flex flex-col justify-center items-center gap-[13px] px-4 py-[20px] lg:py-[52px] order-2 lg:order-none">
                         <div className="w-full max-w-[650px] h-auto mb-3">
-                            <img src={frame129} alt="Jagan" className="w-full h-full object-contain transform scale-[1.15]" loading="lazy" />
+                            <img src={frame129} alt="Jagan" className="w-full h-full object-contain transform scale-[1.15]" loading="eager" fetchPriority="high" />
                         </div>
                         <div className="flex flex-col items-center gap-px">
                             <span className="font-semibold text-[16px] text-center underline text-[#202020]">WITH</span>
@@ -385,14 +386,18 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             </main>
 
             <SharedFooter />
-            <RegistrationPopup
-                isOpen={popupStatus !== null}
-                onClose={() => setPopupStatus(null)}
-                status={popupStatus}
-                language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
-                mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
-                variant="free"
-            />
+            {popupStatus !== null && (
+                <Suspense fallback={null}>
+                    <RegistrationPopup
+                        isOpen={popupStatus !== null}
+                        onClose={() => setPopupStatus(null)}
+                        status={popupStatus}
+                        language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
+                        mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                        variant="free"
+                    />
+                </Suspense>
+            )}
         </div>
     );
 };

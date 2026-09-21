@@ -1,4 +1,4 @@
-import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js';
+import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js/min';
 
 export function validatePhone(phone: string, dialCode: string): boolean {
     try {

@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import TwentyOneDaysHeader from '../components/TwentyOneDaysHeader';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import { getProgramStartLabel } from '../utils/programDates';
 import { validatePhone, formatPhone } from '../utils/phoneValidation';
 import { safeSessionStorageGet } from '../utils/storage';
 import { hashPhoneNumber, hashName } from '../utils/hashUserData';
-import RegistrationPopup from '../components/RegistrationPopup';
+
+const RegistrationPopup = lazy(() => import('../components/RegistrationPopup'));
 import heroImg from '../assets/Referral Poster for registration page.webp';
 interface FreeProgrammesProps {
     defaultLanguage?: 'Telugu' | 'English' | '';
@@ -225,14 +226,18 @@ const ReferralContestRegistration = ({ defaultLanguage = '' }: FreeProgrammesPro
                     </div>
                 </div>
             </main>
-            <RegistrationPopup
-                isOpen={popupStatus !== null}
-                onClose={() => setPopupStatus(null)}
-                status={popupStatus}
-                language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
-                mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
-                variant="free"
-            />
+            {popupStatus !== null && (
+                <Suspense fallback={null}>
+                    <RegistrationPopup
+                        isOpen={popupStatus !== null}
+                        onClose={() => setPopupStatus(null)}
+                        status={popupStatus}
+                        language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
+                        mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                        variant="free"
+                    />
+                </Suspense>
+            )}
         </div>
     );
 };

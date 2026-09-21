@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import TwentyOneDaysFooter from '../components/TwentyOneDaysFooter';
 import TwentyOneDaysTestimonials from '../components/TwentyOneDaysTestimonials';
-import RegistrationPopup from '../components/RegistrationPopup';
+
+const RegistrationPopup = lazy(() => import('../components/RegistrationPopup'));
 
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
 import iydHero from '../assets/IYD-reg-page-hero.webp';
@@ -328,14 +329,18 @@ const TwentyOneDays = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             </main>
 
             <TwentyOneDaysFooter />
-            <RegistrationPopup
-                isOpen={popupStatus !== null}
-                onClose={() => setPopupStatus(null)}
-                status={popupStatus}
-                language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
-                mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
-                variant="21days"
-            />
+            {popupStatus !== null && (
+                <Suspense fallback={null}>
+                    <RegistrationPopup
+                        isOpen={popupStatus !== null}
+                        onClose={() => setPopupStatus(null)}
+                        status={popupStatus}
+                        language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
+                        mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                        variant="21days"
+                    />
+                </Suspense>
+            )}
         </div>
     );
 };
