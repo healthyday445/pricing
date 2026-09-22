@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { lazy, Suspense, useState } from 'react';
 import SharedHeader from '../components/SharedHeader';
 import SharedFooter from '../components/SharedFooter';
 import SharedTestimonials from '../components/SharedTestimonials';
-import RegistrationPopup from '../components/RegistrationPopup';
 import { Award, Users, Sun, Moon, Dumbbell, Wind, HeartPulse, Clock } from 'lucide-react';
+
+const RegistrationPopup = lazy(() => import('../components/RegistrationPopup'));
 import frame129 from '../assets/image (36) (1).webp';
 import smileySick from '../assets/streamline-freehand_smiley-sick-contageous.webp';
 import PhoneInputCustom from '../components/PhoneInputCustom';
@@ -385,14 +386,18 @@ const FreeProgrammes = ({ defaultLanguage = '' }: FreeProgrammesProps) => {
             </main>
 
             <SharedFooter />
-            <RegistrationPopup
-                isOpen={popupStatus !== null}
-                onClose={() => setPopupStatus(null)}
-                status={popupStatus}
-                language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
-                mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
-                variant="free"
-            />
+            {popupStatus !== null && (
+                <Suspense fallback={null}>
+                    <RegistrationPopup
+                        isOpen={popupStatus !== null}
+                        onClose={() => setPopupStatus(null)}
+                        status={popupStatus}
+                        language={(formData.language || 'Telugu') as 'Telugu' | 'English'}
+                        mobileNumber={`${formData.dialCode.replace('+', '')}${formData.phone}`}
+                        variant="free"
+                    />
+                </Suspense>
+            )}
         </div>
     );
 };
