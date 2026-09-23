@@ -5,7 +5,7 @@ import SelfReferralContent from './SelfReferralContent';
 import OldUserContent from './OldUserContent';
 import IsReferralContent from './IsReferralContent';
 
-const OLD_USER_STATUSES = ['free_completed_recent', 'paid_user', 'subscription_expired_recently'];
+const OLD_USER_STATUSES = ['free_ongoing', 'free_completed_recent', 'paid_user', 'subscription_expired_recently'];
 
 const ExistingUserContent: React.FC<ChildPopupProps> = (props) => {
     if (props.status === 'isReferral') {
@@ -14,7 +14,7 @@ const ExistingUserContent: React.FC<ChildPopupProps> = (props) => {
     if (props.status === 'self_referral') {
         return <SelfReferralContent {...props} />;
     }
-    if (props.status === 'already_registered' || props.status === 'free_ongoing') {
+    if (props.status === 'already_registered') {
         return <AlreadyRegisteredContent {...props} />;
     }
     if (OLD_USER_STATUSES.includes(props.status)) {
