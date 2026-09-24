@@ -11,11 +11,28 @@ interface RegistrationPopupProps {
     language: 'Telugu' | 'English';
     mobileNumber?: string;
     variant?: PopupVariant;
+    isPmax?: boolean;
 }
 
-function getPopupId(status: string, language: 'Telugu' | 'English'): string {
+function getPopupId(status: string, language: 'Telugu' | 'English', isPmax?: boolean): string {
     const isNewReg = status === 'success' || status === 'new_registration';
     const isFreeAgain = status === 'free_eligible_again';
+
+    if (isPmax) {
+        if (language === 'Telugu') {
+            return isFreeAgain
+                ? 'elementor-popup-modal-2330'
+                : isNewReg
+                ? 'elementor-popup-modal-2317'
+                : 'elementor-popup-modal-2336';
+        }
+        return isFreeAgain
+            ? 'elementor-popup-modal-2331'
+            : isNewReg
+            ? 'elementor-popup-modal-2589'
+            : 'elementor-popup-modal-2592';
+    }
+
     if (language === 'Telugu') {
         return isFreeAgain
             ? 'elementor-popup-modal-1330'
@@ -37,15 +54,16 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({
     language,
     mobileNumber,
     variant = 'free',
+    isPmax = false,
 }) => {
     useEffect(() => {
         if (!isOpen || !status) return;
         pushDataLayer({
             'event': 'popup_viewed',
             'popup_status': status,
-            'popup_id': parseInt(getPopupId(status, language).replace('elementor-popup-modal-', ''), 10),
+            'popup_id': parseInt(getPopupId(status, language, isPmax).replace('elementor-popup-modal-', ''), 10),
         });
-    }, [isOpen, status, language]);
+    }, [isOpen, status, language, isPmax]);
 
     if (!isOpen || !status) return null;
 
@@ -55,7 +73,7 @@ const RegistrationPopup: React.FC<RegistrationPopupProps> = ({
 
     return (
         <div
-            id={getPopupId(status, language)}
+            id={getPopupId(status, language, isPmax)}
             className="elementor-popup-modal fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
             aria-modal="true"
             role="dialog"

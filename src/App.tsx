@@ -17,6 +17,7 @@ const Upgrade = lazy(() => import('./pages/Upgrade'));
 const USDUpgrade = lazy(() => import('./pages/USDUpgrade'));
 const OfferExpired = lazy(() => import('./pages/OfferExpired'));
 const DevPopupPreview = lazy(() => import('./pages/dev-popup-preview'));
+const Pmax = lazy(() => import('./pages/pmax'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -193,6 +194,18 @@ const App = () => {
           <Route path="/dev/popup-preview" element={<DevPopupPreview />} />
           <Route path="/free-programmes" element={<FreeProgrammes />} />
           <Route path="/FreeProgrammes" element={<FreeProgrammes />} />
+          <Route path="/pmax" element={<Pmax />} />
+          <Route path="/Pmax" element={<Pmax />} />
+          <Route path="/pmax/English" element={<Pmax defaultLanguage="English" />} />
+          <Route path="/pmax/english" element={<Pmax defaultLanguage="English" />} />
+          <Route path="/pmax/Telugu" element={<Pmax defaultLanguage="Telugu" />} />
+          <Route path="/pmax/telugu" element={<Pmax defaultLanguage="Telugu" />} />
+          <Route path="/pmax/telagu" element={<Pmax defaultLanguage="Telugu" />} />
+          <Route path="/Pmax/English" element={<Pmax defaultLanguage="English" />} />
+          <Route path="/Pmax/english" element={<Pmax defaultLanguage="English" />} />
+          <Route path="/Pmax/Telugu" element={<Pmax defaultLanguage="Telugu" />} />
+          <Route path="/Pmax/telugu" element={<Pmax defaultLanguage="Telugu" />} />
+          <Route path="/Pmax/telagu" element={<Pmax defaultLanguage="Telugu" />} />
           <Route path="/21days" element={<TwentyOneDays />} />
           <Route path="/21days/English" element={<TwentyOneDays defaultLanguage="English" />} />
           <Route path="/21days/english" element={<TwentyOneDays defaultLanguage="English" />} />
