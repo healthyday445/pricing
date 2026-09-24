@@ -126,6 +126,7 @@ interface PhoneInputCustomProps {
     placeholder?: string;
     required?: boolean;
     defaultCountry?: string;
+    dropUp?: boolean;
 }
 
 const PhoneInputCustom: React.FC<PhoneInputCustomProps> = ({
@@ -135,6 +136,7 @@ const PhoneInputCustom: React.FC<PhoneInputCustomProps> = ({
     placeholder = 'Enter Your Whatsapp Number',
     required = false,
     defaultCountry = 'in',
+    dropUp = false,
 }) => {
     const [selectedCountry, setSelectedCountry] = useState<Country>(
         countries.find(c => c.code === defaultCountry) || countries[0]
@@ -208,7 +210,7 @@ const PhoneInputCustom: React.FC<PhoneInputCustomProps> = ({
 
             {/* Country dropdown */}
             {isOpen && (
-                <div className="absolute top-[50px] left-0 w-full bg-white border border-[#D5D5D5] rounded-md shadow-lg z-50 max-h-[250px] overflow-hidden flex flex-col">
+                <div className={`absolute ${dropUp ? 'bottom-[50px]' : 'top-[50px]'} left-0 w-full bg-white border border-[#D5D5D5] rounded-md shadow-lg z-50 max-h-[250px] overflow-hidden flex flex-col`}>
                     {/* Search input */}
                     <div className="p-2 border-b border-[#eee]">
                         <input
