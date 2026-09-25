@@ -7,7 +7,6 @@ const FreeProgrammes = lazy(() => import('./pages/free-programmes'));
 const TwentyOneDays = lazy(() => import('./pages/21-days'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 const PlanCheckout = lazy(() => import('./pages/PlanCheckout'));
-const HdphCheckout = lazy(() => import('./pages/HdphCheckout'));
 const HdphLanding = lazy(() => import('./pages/HdphLanding'));
 const Renew = lazy(() => import('./pages/Renew'));
 const ReferralContestRegistration = lazy(() => import('./pages/referral-contest-registration'));
@@ -149,8 +148,8 @@ const App = () => {
           <Route path="/:planId/checkout" element={<PlanCheckout />} />
 
           <Route path="/12m" element={<PlanCheckout />} />
-          <Route path="/hdph" element={<HdphCheckout />} />
-          <Route path="/hdph-landing" element={<HdphLanding />} />
+          <Route path="/hdph-new" element={<HdphLanding variant="new" />} />
+          <Route path="/hdph-upgrade" element={<HdphLanding variant="upgrade" />} />
           <Route path="/6m" element={<PlanCheckout />} />
           <Route path="/3m" element={<PlanCheckout />} />
           <Route path="/12m_plan" element={<PlanCheckout />} />

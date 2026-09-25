@@ -64,6 +64,17 @@ export default {
           navy: "hsl(var(--healthyday-navy))",
           orange: "hsl(var(--healthyday-orange))",
         },
+        // Women's Hormonal Health landing pages (/hdph-new, /hdph-upgrade)
+        hdph: {
+          navy: "#0d468b",
+          blue: "#003a80",
+          ink: "#202020",
+          amber: "#feab27",
+          rose: "#e27c91",
+          blush: "#ffedf0",
+          cream: "#fff2dd",
+          error: "#e11d2e",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

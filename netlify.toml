@@ -5,6 +5,9 @@
 [dev]
   command = "npm run dev"
   targetPort = 8080
+  # Serve statics from public/, not dist/: a stale dist/index.html makes the
+  # "/*" SPA rewrite swallow Vite's module requests (/src/*.tsx, /@vite/client).
+  publish = "public"
 
 [[redirects]]
   from = "/api/register"

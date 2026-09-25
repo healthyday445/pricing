@@ -98,6 +98,16 @@ These pages are special Vinayaka Chaturthi offers for the 1 Year Plan using the 
 
 ---
 
+## 10. Women's Hormonal Health Programme (`/hdph-new` & `/hdph-upgrade`)
+Landing pages with a built-in checkout (`src/pages/HdphLanding.tsx`), using the **HD** Razorpay account. Indian (`+91`) numbers only, INR only; class language is always `Telugu`.
+
+| Page URL | Plan Title | Price Paid (INR) | `plan_name` Sent (INR) | Razorpay Account |
+| :--- | :--- | :--- | :--- | :--- |
+| `/hdph-new` | **12 Months Care Plan** | ₹4999/- | `"women_hormonal_care_new"` | HD |
+| `/hdph-upgrade` | **12 Months Care Plan (Upgrade)** | ₹2999/- | `"women_hormonal_care_upgrade"` | HD |
+
+---
+
 ## How it works technically:
 - Each page defines its plans in an array (e.g., `plans` array) and passes the selected `plan` object to `PlanCheckout.tsx` via the router state.
 - Each `plan` object now explicitly contains an `inrPlanName` and a `usdPlanName`.

@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import { useEffect, useState, type FormEvent, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Loader2 } from 'lucide-react';
 import SharedFooter from '../components/SharedFooter';
 import PhoneInputCustom from '../components/PhoneInputCustom';
 import StudentDetailsModal from '../components/StudentDetailsModal';
 import { validatePhone } from '../utils/phoneValidation';
-import { Loader2 } from 'lucide-react';
+import { cn } from '../lib/utils';
 
 import logo from '../assets/hdph-landing/logo.webp';
 import heroImg from '../assets/hdph-landing/hero.webp';
@@ -25,26 +26,41 @@ import stepDoctor from '../assets/hdph-landing/step-doctor.webp';
 import stepNutrition from '../assets/hdph-landing/step-nutrition.webp';
 import stepYoga from '../assets/hdph-landing/step-yoga.webp';
 import stepCircle from '../assets/hdph-landing/step-circle.svg';
-import stepLine from '../assets/hdph-landing/step-line.svg';
 
-const plan = {
-    title: "12 Months Care Plan",
-    discountPrice: "4999",
-    usdPrice: "49",
-    inrPlanName: "12m_new_inr",
-    usdPlanName: "12m_new_usd"
-};
+const PLANS = {
+    new: { title: '12 Months Care Plan', amount: 4999, planName: 'women_hormonal_care_new' },
+    upgrade: { title: '12 Months Care Plan (Upgrade)', amount: 2999, planName: 'women_hormonal_care_upgrade' },
+} as const;
 
-// Icon size/offset and crop values come straight from the Figma layers.
+export type HdphVariant = keyof typeof PLANS;
+type Plan = (typeof PLANS)[HdphVariant];
+
+const LANGUAGE = 'Telugu';
+const INDIA_DIAL_CODE = '+91';
+const RAZORPAY_SCRIPT_ID = 'razorpay-script';
+const RAZORPAY_SCRIPT_SRC = 'https://checkout.razorpay.com/v1/checkout.js';
+
+const heroFeatureRows = [
+    [
+        { label: 'Blood Tests', icon: iconBloodSample, iconClass: 'size-[13px]' },
+        { label: 'Individual Doctor Guidance', icon: iconDoctor, iconClass: 'size-[14px]' },
+    ],
+    [
+        { label: 'Expert Diet Plan', icon: iconDiet, iconClass: 'size-[13.5px]' },
+        { label: 'Daily Yoga', icon: iconYoga, iconClass: 'size-[18px]', gapClass: 'gap-[3px]' },
+    ],
+];
+
+// Icon box size/offset and crop percentages come straight from the Figma layers.
 const symptoms = [
-    { label: 'Irregular Periods', img: symptomIrregularPeriods, size: 45, top: 15, crop: { size: '128.57%', left: '-17.25%', top: '-12.84%' } },
-    { label: 'PCOS / PCOD', img: symptomPcos, size: 48, top: 15 },
-    { label: 'Weight Gain/Difficulty Losing Weight', img: symptomWeight, size: 42, top: 11, crop: { size: '114.29%', left: '-10.49%', top: '-10.82%' }, small: true },
-    { label: 'Acne / Skin Changes', img: symptomAcne, size: 42, top: 16 },
-    { label: 'Unwanted Hair Growth', img: symptomHair, size: 42, top: 15 },
-    { label: 'Low Energy', img: symptomEnergy, size: 48, top: 14 },
-    { label: 'Poor Sleep', img: symptomSleep, size: 45, top: 16 },
-    { label: 'Stress', img: symptomStress, size: 42, top: 17 },
+    { label: 'Irregular Periods', img: symptomIrregularPeriods, boxClass: 'size-[45px] top-[15px]', cropClass: 'size-[128.57%] left-[-17.25%] top-[-12.84%]' },
+    { label: 'PCOS / PCOD', img: symptomPcos, boxClass: 'size-[48px] top-[15px]' },
+    { label: 'Weight Gain/Difficulty Losing Weight', img: symptomWeight, boxClass: 'size-[42px] top-[11px]', cropClass: 'size-[114.29%] left-[-10.49%] top-[-10.82%]', twoLine: true },
+    { label: 'Acne / Skin Changes', img: symptomAcne, boxClass: 'size-[42px] top-[16px]' },
+    { label: 'Unwanted Hair Growth', img: symptomHair, boxClass: 'size-[42px] top-[15px]' },
+    { label: 'Low Energy', img: symptomEnergy, boxClass: 'size-[48px] top-[14px]' },
+    { label: 'Poor Sleep', img: symptomSleep, boxClass: 'size-[45px] top-[16px]' },
+    { label: 'Stress', img: symptomStress, boxClass: 'size-[42px] top-[17px]' },
 ];
 
 const steps = [
@@ -69,328 +85,335 @@ const included = [
     '12-Month Movement Programme',
 ];
 
-const Divider = () => <span className="h-0 w-[74px] border-t-2 border-[#feab27]" />;
+const formatInr = (amount: number) => `₹${amount.toLocaleString('en-IN')}`;
 
-const HdphLanding = () => {
+function useRazorpayScript() {
+    useEffect(() => {
+        if (document.getElementById(RAZORPAY_SCRIPT_ID)) return;
+        const script = document.createElement('script');
+        script.id = RAZORPAY_SCRIPT_ID;
+        script.src = RAZORPAY_SCRIPT_SRC;
+        script.async = true;
+        document.body.appendChild(script);
+    }, []);
+}
+
+// Server-side order creation is best-effort; checkout still opens without an order id.
+async function createOrder(plan: Plan, clientKeyId: string) {
+    try {
+        const res = await fetch('/.netlify/functions/create-order', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                amount: plan.amount * 100,
+                currency: 'INR',
+                isDYJ: false,
+                clientKeyId,
+                notes: { language: LANGUAGE, plan_name: plan.planName },
+            }),
+        });
+        if (!res.ok) {
+            console.warn('create-order response not OK, proceeding with direct client checkout');
+            return null;
+        }
+        const data: { id?: string; key_id?: string } = await res.json().catch(() => ({}));
+        return data.id ? { orderId: data.id, keyId: data.key_id ?? clientKeyId } : null;
+    } catch (err) {
+        console.warn('Could not reach create-order endpoint, proceeding with direct client checkout:', err);
+        return null;
+    }
+}
+
+const SectionHeading = ({ className, children }: { className?: string; children: ReactNode }) => (
+    <h2 className={cn('mx-auto max-w-[352px] text-center text-[25px] leading-[37.94px] font-bold text-hdph-navy', className)}>
+        {children}
+    </h2>
+);
+
+const Divider = () => <span className="h-0 w-[74px] border-t-2 border-hdph-amber" />;
+
+const Hero = ({ priceLabel }: { priceLabel: string }) => (
+    <section className="bg-[linear-gradient(to_bottom,theme(colors.hdph.cream)_0,#fff_172px)] pt-[30px] pb-[13px]">
+        <div className="mx-auto max-w-[430px]">
+            <div className="flex h-[22px] items-center justify-center gap-[14px]">
+                <Divider />
+                <img src={logo} alt="Healthyday" className="h-[22px] w-[111px] object-cover" />
+                <Divider />
+            </div>
+
+            <h1 className="mx-auto mt-2 max-w-[313px] px-1 text-center text-[28px] leading-[2.5rem] font-semibold">
+                Women's Hormonal Health Programme
+            </h1>
+            <p className="mx-auto mt-3 max-w-[313px] text-center text-[9px] leading-[13.2px] font-medium">
+                A Complete Care Programme for PCOS / PCOD &amp; Hormonal Health of Women
+            </p>
+
+            <ul className="mt-4 flex flex-col items-center whitespace-nowrap text-[14px] leading-[24.08px] font-semibold text-hdph-blue">
+                {heroFeatureRows.map((row) => (
+                    <li key={row[0].label} className="flex items-center gap-2">
+                        {row.map((feature, i) => (
+                            <span key={feature.label} className="contents">
+                                {i > 0 && <span aria-hidden className="text-[15px] font-bold">•</span>}
+                                <span className={cn('flex items-center gap-[5px]', feature.gapClass)}>
+                                    <img src={feature.icon} alt="" className={cn('object-contain', feature.iconClass)} />
+                                    {feature.label}
+                                </span>
+                            </span>
+                        ))}
+                    </li>
+                ))}
+            </ul>
+
+            <img
+                src={heroImg}
+                alt="Doctor, nutrition, yoga and health tracking around a woman meditating"
+                className="mt-px aspect-[2/1] w-full object-cover"
+            />
+
+            <div className="px-4">
+                <div className="mx-auto mt-3 flex h-[86px] max-w-[345px] items-center justify-between rounded-t-xl rounded-b-2xl bg-hdph-navy pl-[17px] pr-[12.5px]">
+                    <div className="leading-[1.45] font-medium text-white">
+                        <p className="text-[25px]">12-Month</p>
+                        <p className="-mt-1 text-[16px]">Care Programme</p>
+                    </div>
+                    <div className="flex h-[59px] w-[147px] items-center justify-center rounded-t-xl rounded-b-[15px] bg-white">
+                        <span className="whitespace-nowrap text-[30px] font-extrabold text-hdph-navy">{priceLabel}/-</span>
+                    </div>
+                </div>
+            </div>
+
+            <p className="mt-[11px] px-2 text-center text-[10px] leading-[26.4px] font-semibold text-hdph-navy">
+                Only 50 Women at a time. Click “Enroll now” to check availability
+            </p>
+        </div>
+    </section>
+);
+
+const Symptoms = () => (
+    <section className="mx-auto max-w-[430px] px-4">
+        <SectionHeading className="max-w-none font-semibold">Are you facing any of these?</SectionHeading>
+        <ul className="mt-[30px] grid grid-cols-2 gap-x-[15px] gap-y-3">
+            {symptoms.map((s) => (
+                <li key={s.label} className="relative h-[93px] rounded-2xl bg-hdph-navy">
+                    <div className={cn('absolute left-1/2 -translate-x-1/2 overflow-hidden', s.boxClass)}>
+                        <img
+                            src={s.img}
+                            alt=""
+                            className={s.cropClass ? cn('absolute max-w-none', s.cropClass) : 'size-full object-cover'}
+                        />
+                    </div>
+                    <p
+                        className={cn(
+                            'absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-semibold text-white',
+                            s.twoLine
+                                ? 'top-[70px] w-[142px] text-[11px] leading-[15px]'
+                                : 'top-[74px] whitespace-nowrap text-[12px] leading-[17.51px]'
+                        )}
+                    >
+                        {s.label}
+                    </p>
+                </li>
+            ))}
+        </ul>
+        <p className="mt-[25px] text-center text-[13px] leading-5">
+            Every woman's symptoms can be different.
+            <br />
+            So the approach shouldn't be the same for everyone.
+        </p>
+    </section>
+);
+
+const Journey = () => (
+    <section className="mx-auto mt-[50px] max-w-[430px]">
+        <SectionHeading>What happens after you join?</SectionHeading>
+        <p className="mx-auto mt-2.5 max-w-[311px] text-center text-[12px] leading-5">
+            A structured programme where multiple experts work together for your health journey
+        </p>
+
+        <ol className="mx-auto mt-10 flex w-fit flex-col gap-[25px]">
+            {steps.map((step, i) => (
+                <li key={step.title} className="flex items-stretch gap-7">
+                    <div className="flex w-[60px] shrink-0 flex-col items-center">
+                        <div className="relative size-[60px]">
+                            <img src={stepCircle} alt="" width={60} height={60} className="block" />
+                            <span className="absolute inset-0 flex items-center justify-center text-[26px] leading-[24.08px] font-bold text-white">
+                                {String(i + 1).padStart(2, '0')}
+                            </span>
+                        </div>
+                        {/* Negative margin stretches the connector across the row gap to the next circle. */}
+                        {i < steps.length - 1 && <div className="-mb-[25px] w-[3px] flex-1 bg-hdph-rose" />}
+                    </div>
+                    <div className="flex h-[215px] w-[224px] shrink-0 flex-col items-center rounded-[22px] bg-white px-[7px] pt-1.5 text-center shadow-[0_0_20px_rgba(0,0,0,0.1)]">
+                        <div className="h-36 w-full overflow-hidden rounded-t-[18px] rounded-br-[85px]">
+                            <img src={step.img} alt="" className="size-full object-cover" loading="lazy" />
+                        </div>
+                        {/* Size classes go first: tailwind-merge drops a leading-* that precedes a text-* size. */}
+                        <h3 className={cn(step.titleClass ?? 'max-w-[181px] text-[11px]', 'mt-[9px] leading-[18.97px] font-semibold uppercase text-hdph-navy')}>
+                            {step.title}
+                        </h3>
+                        <p className={cn(step.descClass ?? 'max-w-[190px] text-[10px]', 'mt-[3px] leading-3')}>
+                            {step.desc}
+                        </p>
+                    </div>
+                </li>
+            ))}
+        </ol>
+    </section>
+);
+
+const Included = () => (
+    <section className="mt-[50px] bg-hdph-blush">
+        <div className="mx-auto max-w-[430px] pt-7 pb-10">
+            <SectionHeading className="leading-[35px]">Everything Included in Your Programme</SectionHeading>
+            <ul className="mt-[33px] flex flex-col gap-[19.6px] px-[41px]">
+                {included.map((item) => (
+                    <li key={item} className="flex items-center gap-[18px]">
+                        <span aria-hidden className="flex size-[22px] shrink-0 items-center justify-center rounded-full bg-hdph-navy text-[12px] font-bold text-white">
+                            ✓
+                        </span>
+                        <span className="text-[16px] leading-[1.4] text-[#1c1c1c]">{item}</span>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </section>
+);
+
+type CheckoutSheetProps = {
+    phoneNumber: string;
+    error: string | null;
+    isSubmitting: boolean;
+    priceLabel: string;
+    onPhoneChange: (phone: string, dialCode: string) => void;
+    onSubmit: (e: FormEvent) => void;
+};
+
+const CheckoutSheet = ({ phoneNumber, error, isSubmitting, priceLabel, onPhoneChange, onSubmit }: CheckoutSheetProps) => (
+    <div className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[430px]">
+        <form
+            onSubmit={onSubmit}
+            className="flex flex-col gap-4 rounded-t-[22px] border-[0.5px] border-[#d8d8d8] bg-white p-[22px] shadow-[0_0_20px_rgba(0,0,0,0.1)]"
+        >
+            <label className="flex gap-1 text-[16px]">
+                <span className="font-semibold">Your WhatsApp Number</span>
+                <span className="font-bold text-hdph-error">*</span>
+            </label>
+            <div>
+                <PhoneInputCustom
+                    value={phoneNumber}
+                    onChange={onPhoneChange}
+                    placeholder="Enter Your Whatsapp Number"
+                    required
+                    defaultCountry="in"
+                    dropUp
+                />
+                {error && (
+                    <span role="alert" className="mt-1 block text-[12px] font-medium text-red-500">⚠ {error}</span>
+                )}
+            </div>
+            <button
+                type="submit"
+                disabled={isSubmitting}
+                className="flex h-[47px] w-full items-center justify-center gap-2 rounded-[30px] bg-hdph-amber px-5 text-[17px] font-semibold tracking-[0.17px] shadow-[0_0_10px_rgba(0,0,0,0.2)] transition-opacity hover:opacity-90 disabled:opacity-60"
+            >
+                {isSubmitting && <Loader2 className="size-5 animate-spin" />}
+                ENROLL NOW — {priceLabel}
+            </button>
+        </form>
+    </div>
+);
+
+const HdphLanding = ({ variant }: { variant: HdphVariant }) => {
+    const plan = PLANS[variant];
+    const priceLabel = formatInr(plan.amount);
     const navigate = useNavigate();
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [dialCode, setDialCode] = useState('+91');
-    const [phoneError, setPhoneError] = useState(false);
+    const [dialCode, setDialCode] = useState(INDIA_DIAL_CODE);
+    const [error, setError] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [showModal, setShowModal] = useState(false);
-    const [paymentId, setPaymentId] = useState('');
-    const language = 'Telugu';
-    const isUSD = dialCode !== '+91';
+    const [paymentId, setPaymentId] = useState<string | null>(null);
 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-        if (!document.getElementById('razorpay-script')) {
-            const script = document.createElement('script');
-            script.id = 'razorpay-script';
-            script.src = 'https://checkout.razorpay.com/v1/checkout.js';
-            script.async = true;
-            document.body.appendChild(script);
-        }
-    }, []);
+    useRazorpayScript();
+    useEffect(() => { window.scrollTo(0, 0); }, []);
 
-    const handleCheckout = async (e: React.FormEvent) => {
+    const handlePhoneChange = (phone: string, code: string) => {
+        setPhoneNumber(phone);
+        setDialCode(code);
+        setError(null);
+    };
+
+    const handleCheckout = async (e: FormEvent) => {
         e.preventDefault();
-        if (!validatePhone(phoneNumber, dialCode)) {
-            setPhoneError(true);
+        if (dialCode !== INDIA_DIAL_CODE) {
+            setError('This programme is available for Indian (+91) mobile numbers only.');
             return;
         }
-        setPhoneError(false);
-
+        if (!validatePhone(phoneNumber, dialCode)) {
+            setError('Please enter a valid mobile number.');
+            return;
+        }
         const razorpayKey = import.meta.env.VITE_RAZORPAY_KEY_ID;
         if (!razorpayKey) {
-            alert("Razorpay Key is missing! Please check your environment variables.");
+            setError('Payments are not configured. Please try again later.');
+            console.error('VITE_RAZORPAY_KEY_ID is missing');
             return;
         }
         if (!window.Razorpay) {
-            alert("Razorpay SDK failed to load. Please check your internet connection.");
+            setError('Payment gateway failed to load. Please check your internet connection.');
             return;
         }
-
-        const fullContact = `${dialCode}${phoneNumber}`;
-        const currency = isUSD ? "USD" : "INR";
-        const planNameId = isUSD ? plan.usdPlanName : plan.inrPlanName;
-        const amountInPaisa = Number(isUSD ? plan.usdPrice : plan.discountPrice) * 100;
-
+        setError(null);
         setIsSubmitting(true);
         try {
-            let orderId: string | undefined;
-            let activeRazorpayKey = razorpayKey;
-            try {
-                const orderResponse = await fetch('/.netlify/functions/create-order', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        amount: amountInPaisa,
-                        currency,
-                        isDYJ: false,
-                        clientKeyId: razorpayKey,
-                        notes: { language, plan_name: planNameId }
-                    })
-                });
-                if (orderResponse.ok) {
-                    const orderData = await orderResponse.json().catch(() => ({}));
-                    if (orderData?.id) {
-                        orderId = orderData.id;
-                        if (orderData.key_id) activeRazorpayKey = orderData.key_id;
-                    }
-                } else {
-                    console.warn("create-order response not OK, proceeding with direct client checkout");
-                }
-            } catch (err) {
-                console.warn("Could not reach create-order endpoint, proceeding with direct client checkout:", err);
-            }
-
-            const options: Record<string, unknown> = {
-                key: activeRazorpayKey,
-                amount: amountInPaisa,
-                currency,
-                name: "Healthyday",
+            const order = await createOrder(plan, razorpayKey);
+            new window.Razorpay({
+                key: order?.keyId ?? razorpayKey,
+                ...(order && { order_id: order.orderId }),
+                amount: plan.amount * 100,
+                currency: 'INR',
+                name: 'Healthyday',
                 description: `${plan.title} Subscription`,
-                image: "/logo.webp",
-                handler: (response: { razorpay_payment_id: string }) => {
-                    setPaymentId(response.razorpay_payment_id);
-                    setShowModal(true);
-                },
-                prefill: { name: "", email: "", contact: fullContact },
-                notes: { language, plan_name: planNameId },
-                theme: { color: "#004e8c" }
-            };
-            if (orderId) options.order_id = orderId;
-
-            new window.Razorpay(options).open();
-        } catch (error) {
-            console.error("Razorpay Error:", error);
-            alert("Something went wrong with the payment gateway.");
+                image: '/logo.webp',
+                handler: (response: { razorpay_payment_id: string }) => setPaymentId(response.razorpay_payment_id),
+                prefill: { name: '', email: '', contact: `${dialCode}${phoneNumber}` },
+                notes: { language: LANGUAGE, plan_name: plan.planName },
+                theme: { color: '#004e8c' },
+            }).open();
+        } catch (err) {
+            console.error('Razorpay Error:', err);
+            setError('Something went wrong with the payment gateway.');
         } finally {
             setIsSubmitting(false);
         }
     };
 
     return (
-        <div className="min-h-screen bg-white font-sans text-[#202020] overflow-x-hidden pb-[200px]">
-            {/* Hero */}
-            <section className="bg-[linear-gradient(to_bottom,#fff2dd_0,#fff_172px)] pt-[30px] pb-[13px]">
-                <div className="mx-auto max-w-[430px]">
-                    <div className="flex items-center justify-center gap-[14px] h-[22px]">
-                        <Divider />
-                        <img src={logo} alt="Healthyday" className="h-[22px] w-[111px] object-cover" />
-                        <Divider />
-                    </div>
-
-                    <h1 className="mt-[8px] mx-auto max-w-[313px] px-1 text-center text-[28px] leading-[2.5rem] font-semibold text-[#202020]">
-                        Women's Hormonal Health Programme
-                    </h1>
-                    <p className="mt-[12px] mx-auto max-w-[313px] text-center text-[9px] leading-[13.2px] font-medium text-[#202020]">
-                        A Complete Care Programme for PCOS / PCOD &amp; Hormonal Health of Women
-                    </p>
-
-                    <div className="mt-[16px] flex flex-col items-center text-[14px] leading-[24.08px] font-semibold text-[#003a80] whitespace-nowrap">
-                        <div className="flex items-center gap-[8px]">
-                            <span className="flex items-center gap-[5px]">
-                                <img src={iconBloodSample} alt="" className="size-[13px] object-contain" />
-                                Blood Tests
-                            </span>
-                            <span className="text-[15px] font-bold">•</span>
-                            <span className="flex items-center gap-[5px]">
-                                <img src={iconDoctor} alt="" className="size-[14px] object-contain" />
-                                Individual Doctor Guidance
-                            </span>
-                        </div>
-                        <div className="flex items-center gap-[8px]">
-                            <span className="flex items-center gap-[5px]">
-                                <img src={iconDiet} alt="" className="size-[13.5px] object-contain" />
-                                Expert Diet Plan
-                            </span>
-                            <span className="text-[15px] font-bold">•</span>
-                            <span className="flex items-center gap-[3px]">
-                                <img src={iconYoga} alt="" className="size-[18px] object-contain" />
-                                Daily Yoga
-                            </span>
-                        </div>
-                    </div>
-
-                    <img
-                        src={heroImg}
-                        alt="Doctor, nutrition, yoga and health tracking around a woman meditating"
-                        className="mt-[1px] w-full aspect-[2/1] object-cover"
-                    />
-
-                    <div className="px-4">
-                        <div className="mt-[12px] mx-auto max-w-[345px] h-[86px] bg-[#0d468b] rounded-t-[12px] rounded-b-[16px] flex items-center justify-between pl-[17px] pr-[12.5px]">
-                            <div className="text-white font-medium leading-[1.45]">
-                                <p className="text-[25px]">12-Month</p>
-                                <p className="text-[16px] -mt-[4px]">Care Programme</p>
-                            </div>
-                            <div className="w-[147px] h-[59px] bg-white rounded-t-[12px] rounded-b-[15px] flex items-center justify-center">
-                                <span className="text-[30px] font-extrabold text-[#0d468b] whitespace-nowrap">₹4,999/-</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <p className="mt-[11px] text-center text-[10px] leading-[26.4px] font-semibold text-[#0d468b] px-2">
-                        Only 50 Women at a time. Click “Enroll now” to check availability
-                    </p>
-                </div>
-            </section>
-
-            {/* Symptoms */}
-            <section className="mx-auto max-w-[430px] px-[16px]">
-                <h2 className="text-center text-[25px] leading-[37.94px] font-semibold text-[#0d468b]">
-                    Are you facing any of these?
-                </h2>
-                <div className="mt-[30px] grid grid-cols-2 gap-x-[15px] gap-y-[12px]">
-                    {symptoms.map((s) => (
-                        <div key={s.label} className="relative h-[93px] rounded-[16px] bg-[#0d468b]">
-                            <div
-                                className="absolute left-1/2 -translate-x-1/2 overflow-hidden"
-                                style={{ width: s.size, height: s.size, top: s.top }}
-                            >
-                                {s.crop ? (
-                                    <img
-                                        src={s.img}
-                                        alt=""
-                                        className="absolute max-w-none"
-                                        style={{ width: s.crop.size, height: s.crop.size, left: s.crop.left, top: s.crop.top }}
-                                    />
-                                ) : (
-                                    <img src={s.img} alt="" className="size-full object-cover" />
-                                )}
-                            </div>
-                            <p
-                                className={`absolute left-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-semibold text-white ${s.small
-                                    ? 'top-[70px] w-[142px] text-[11px] leading-[15px]'
-                                    : 'top-[74px] whitespace-nowrap text-[12px] leading-[17.51px]'
-                                    }`}
-                            >
-                                {s.label}
-                            </p>
-                        </div>
-                    ))}
-                </div>
-                <p className="mt-[25px] text-center text-[13px] leading-[20px] text-[#202020]">
-                    Every woman's symptoms can be different.
-                    <br />
-                    So the approach shouldn't be the same for everyone.
-                </p>
-            </section>
-
-            {/* Journey */}
-            <section className="mx-auto max-w-[430px] mt-[50px]">
-                <h2 className="mx-auto max-w-[352px] text-center text-[25px] leading-[37.94px] font-bold text-[#0d468b]">
-                    What happens after you join?
-                </h2>
-                <p className="mt-[10px] mx-auto max-w-[311px] text-center text-[12px] leading-[20px] text-[#202020]">
-                    A structured programme where multiple experts work together for your health journey
-                </p>
-
-                <div className="relative mt-[40px] pl-[42px] pr-[35px] flex flex-col gap-[25px]">
-                    <div className="absolute left-[70.5px] top-[60px] h-[690px] w-[3px]">
-                        <img
-                            src={stepLine}
-                            alt=""
-                            width={690}
-                            height={3}
-                            className="block max-w-none origin-top-left translate-x-[3px] rotate-90"
-                        />
-                    </div>
-                    {steps.map((step, i) => (
-                        <div key={step.title} className="relative flex items-start justify-between gap-2">
-                            <div className="relative size-[60px] shrink-0">
-                                <img src={stepCircle} alt="" width={60} height={60} className="block" />
-                                <span className="absolute inset-0 flex items-center justify-center text-[26px] leading-[24.08px] font-bold text-white">
-                                    {String(i + 1).padStart(2, '0')}
-                                </span>
-                            </div>
-                            <div className="w-full max-w-[224px] h-[215px] rounded-[22px] bg-white shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)] pt-[6px] px-[7px] flex flex-col items-center text-center">
-                                <div className="w-full h-[144px] overflow-hidden rounded-t-[18px] rounded-br-[85px]">
-                                    <img src={step.img} alt="" className="size-full object-cover" loading="lazy" />
-                                </div>
-                                <p className={`mt-[9px] leading-[18.97px] font-semibold uppercase text-[#0d468b] ${step.titleClass ?? 'text-[11px] max-w-[181px]'}`}>
-                                    {step.title}
-                                </p>
-                                <p className={`mt-[3px] leading-[12px] text-[#202020] ${step.descClass ?? 'text-[10px] max-w-[190px]'}`}>
-                                    {step.desc}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            </section>
-
-            {/* What's included */}
-            <section className="mt-[50px] bg-[#ffedf0]">
-                <div className="mx-auto max-w-[430px] pt-[28px] pb-[40px]">
-                    <h2 className="mx-auto max-w-[352px] text-center text-[25px] leading-[35px] font-bold text-[#0d468b]">
-                        Everything Included in Your Programme
-                    </h2>
-                    <ul className="mt-[33px] px-[41px] flex flex-col gap-[19.6px]">
-                        {included.map((item) => (
-                            <li key={item} className="flex items-center gap-[18px]">
-                                <span className="size-[22px] shrink-0 rounded-full bg-[#0e468a] flex items-center justify-center text-[12px] font-bold text-white">
-                                    ✓
-                                </span>
-                                <span className="text-[16px] leading-[1.4] text-[#1c1c1c]">{item}</span>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            </section>
-
+        <div className="min-h-screen overflow-x-hidden bg-white pb-[200px] font-sans text-hdph-ink">
+            <Hero priceLabel={priceLabel} />
+            <Symptoms />
+            <Journey />
+            <Included />
             <div className="mt-[50px]">
                 <SharedFooter />
             </div>
 
-            {/* Checkout form (sticky bottom sheet) */}
-            <div className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-[430px]">
-                <form
-                    onSubmit={handleCheckout}
-                    className="bg-white border-[0.5px] border-[#d8d8d8] rounded-t-[22px] shadow-[0px_0px_20px_0px_rgba(0,0,0,0.1)] p-[22px] flex flex-col gap-[16px]"
-                >
-                    <label className="flex gap-[4px] text-[16px]">
-                        <span className="font-semibold text-[#202020]">Your WhatsApp Number</span>
-                        <span className="font-bold text-[#e11d2e]">*</span>
-                    </label>
-                    <div>
-                        <PhoneInputCustom
-                            value={phoneNumber}
-                            onChange={(phone, code) => {
-                                setPhoneNumber(phone);
-                                setDialCode(code);
-                                setPhoneError(false);
-                            }}
-                            placeholder="Enter Your Whatsapp Number"
-                            required
-                            defaultCountry="in"
-                            dropUp
-                        />
-                        {phoneError && (
-                            <span className="text-red-500 text-[12px] font-medium mt-1 block">⚠ Please enter a valid mobile number.</span>
-                        )}
-                    </div>
-                    <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="h-[47px] w-full rounded-[30px] bg-[#feab27] shadow-[0px_0px_10px_0px_rgba(0,0,0,0.2)] px-[20px] flex items-center justify-center gap-2 text-[17px] font-semibold tracking-[0.17px] text-[#202020] transition-opacity hover:opacity-90 disabled:opacity-60"
-                    >
-                        {isSubmitting && <Loader2 className="w-5 h-5 animate-spin" />}
-                        ENROLL NOW — {isUSD ? `$${plan.usdPrice}` : '₹4,999'}
-                    </button>
-                </form>
-            </div>
+            <CheckoutSheet
+                phoneNumber={phoneNumber}
+                error={error}
+                isSubmitting={isSubmitting}
+                priceLabel={priceLabel}
+                onPhoneChange={handlePhoneChange}
+                onSubmit={handleCheckout}
+            />
 
             <StudentDetailsModal
-                isOpen={showModal}
-                paymentId={paymentId}
+                isOpen={paymentId !== null}
+                paymentId={paymentId ?? ''}
                 mobile={`${dialCode}${phoneNumber}`}
-                onClose={() => setShowModal(false)}
+                onClose={() => setPaymentId(null)}
                 onSuccess={() => {
-                    setShowModal(false);
-                    navigate('/thank-you', { state: { language } });
+                    setPaymentId(null);
+                    navigate('/thank-you', { state: { language: LANGUAGE } });
                 }}
             />
         </div>
