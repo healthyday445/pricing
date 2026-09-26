@@ -18,6 +18,7 @@ const USDUpgrade = lazy(() => import('./pages/USDUpgrade'));
 const OfferExpired = lazy(() => import('./pages/OfferExpired'));
 const DevPopupPreview = lazy(() => import('./pages/dev-popup-preview'));
 const Pmax = lazy(() => import('./pages/pmax'));
+const HormonalCarePlanAssessment = lazy(() => import('./pages/hormonal-care-plan-assessment'));
 
 const JoinRedirect = () => {
   useEffect(() => {
@@ -221,6 +222,7 @@ const App = () => {
           <Route path="/500yogakits" element={<ReferralContestRegistration />} />
           <Route path="/referral-tnc" element={<ReferralTnc />} />
           <Route path="/referral-tnc-14days" element={<ReferralTnc14Days />} />
+          <Route path="/forms/hormonal-care-plan-assessment" element={<HormonalCarePlanAssessment />} />
           <Route path="/join" element={<JoinRedirect />} />
           <Route path="/ofl/*" element={<OflRedirect />} />
           <Route path="*" element={<NotFound />} />
