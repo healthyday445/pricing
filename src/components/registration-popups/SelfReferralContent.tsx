@@ -6,9 +6,9 @@ import { pushDataLayer } from '../../utils/pushDataLayer';
 // Popup 3 (English) / Popup 4 (Telugu)
 // Triggered when the user enters their own referral number in the form.
 const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber, status }) => {
-    const referralsUrl = mobileNumber
-        ? `https://class.healthyday.co.in/${mobileNumber}/referrals`
-        : 'https://class.healthyday.co.in/referrals';
+    const leaderboardUrl = mobileNumber
+        ? `https://class.healthyday.co.in/${mobileNumber}/leaderboard`
+        : 'https://class.healthyday.co.in/leaderboard';
 
     const shareLink = mobileNumber
         ? `${window.location.origin}${window.location.pathname}?ref=${mobileNumber}`
@@ -50,7 +50,7 @@ const SelfReferralContent: React.FC<ChildPopupProps> = ({ language, mobileNumber
             <div className="px-4 pb-6">
                 <ReferWinCard
                 shareLink={shareLink}
-                referralsUrl={referralsUrl}
+                referralsUrl={leaderboardUrl}
                 onCopyLink={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'copy_link', 'popup_status': status })}
                 onWhatsAppShare={() => pushDataLayer({ 'event': 'popup_cta_click', 'cta': 'whatsapp_share', 'popup_status': status })}
             />
